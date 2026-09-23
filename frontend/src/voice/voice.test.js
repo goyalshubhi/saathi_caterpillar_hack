@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { TEMPLATES, render, hasTemplate, slotNames } from './templates.js';
+import { TEMPLATES, SAFETY_KEYS, render, hasTemplate, slotNames, variantCount, phrasing } from './templates.js';
+import { createPhraser, seededRandom } from './phrasing.js';
 import { MODES } from './modes.js';
 import { createSpeaker } from './speaker.js';
 import { createQueue } from './queue.js';
@@ -47,12 +48,44 @@ const ev = (priority, message_key, extra = {}) => ({
 // ---------- templates ----------
 
 describe('templates', () => {
-  it('every key has en and hi with the same slots', () => {
-    for (const [key, t] of Object.entries(TEMPLATES)) {
-      expect(t.en, key).toBeTruthy();
-      expect(t.hi, key).toBeTruthy();
-      expect(slotNames(t.hi).sort(), key).toEqual(slotNames(t.en).sort());
+  it('every phrasing has en and hi with the same slots, and all phrasings of a key use the same slots', () => {
+    for (const key of Object.keys(TEMPLATES)) {
+      const slots0 = slotNames(phrasing(key, 'en', 0)).sort();
+      for (let v = 0; v < variantCount(key); v += 1) {
+        const en = phrasing(key, 'en', v);
+        const hi = phrasing(key, 'hi', v);
+        expect(en && hi, `${key}#${v}`).toBeTruthy();
+        expect(slotNames(en).sort(), `${key}#${v} en`).toEqual(slots0);
+        expect(slotNames(hi).sort(), `${key}#${v} hi`).toEqual(slots0);
+      }
     }
+  });
+
+  it('safety lines have exactly one fixed phrasing', () => {
+    for (const key of SAFETY_KEYS) {
+      expect(hasTemplate(key), key).toBe(true);
+      expect(typeof TEMPLATES[key].en, key).toBe('string');
+      expect(typeof TEMPLATES[key].hi, key).toBe('string');
+      expect(variantCount(key), key).toBe(1);
+    }
+  });
+
+  it('every other key has 3 distinct, index-aligned phrasings in en and hi', () => {
+    for (const key of Object.keys(TEMPLATES).filter((k) => !SAFETY_KEYS.includes(k))) {
+      const { en, hi } = TEMPLATES[key];
+      expect(Array.isArray(en) && Array.isArray(hi), key).toBe(true);
+      expect(en.length, key).toBe(3);
+      expect(hi.length, key).toBe(en.length);
+      expect(new Set(en).size, key).toBe(en.length);
+      expect(new Set(hi).size, key).toBe(hi.length);
+    }
+  });
+
+  it('renders a chosen phrasing and wraps out-of-range variants', () => {
+    expect(render('greeting', { count: 3 }, 'en', 1)).toBe('Good morning! Saathi here. 3 tasks lined up for today.');
+    expect(render('greeting', { count: 3 }, 'hi', 1)).toBe('सुप्रभात! साथी बोल रहा हूँ। आज 3 काम तय हैं।');
+    expect(render('greeting', { count: 3 }, 'en', 3)).toBe(render('greeting', { count: 3 }, 'en', 0));
+    expect(render('belt_before_move', {}, 'en', 2)).toBe('Belt before you move! Fasten your seatbelt.');
   });
 
   it('fills slots in English', () => {
@@ -237,5 +270,76 @@ describe('commands', () => {
     expect(matchCommand('what is the weather like')).toBe(null);
     expect(matchCommand('')).toBe(null);
     expect(matchCommand('breakfast')).toBe(null);
+  });
+});
+
+// ---------- phrasing variants ----------
+
+describe('phraser', () => {
+  const sequence = (phraser, key, n) => Array.from({ length: n }, () => phraser.pick(key));
+
+  it('is deterministic for a seed (demo mode)', () => {
+    expect(sequence(createPhraser({ seed: 42 }), 'greeting', 10)).toEqual(sequence(createPhraser({ seed: 42 }), 'greeting', 10));
+    expect(sequence(createPhraser({ seed: 42 }), 'greeting', 10)).not.toEqual(sequence(createPhraser({ seed: 7 }), 'greeting', 10));
+  });
+
+  it('never repeats the same phrasing twice in a row and uses every phrasing', () => {
+    const seq = sequence(createPhraser({ seed: 1 }), 'break_time', 60);
+    for (let i = 1; i < seq.length; i += 1) expect(seq[i]).not.toBe(seq[i - 1]);
+    expect(new Set(seq)).toEqual(new Set([0, 1, 2]));
+  });
+
+  it('always picks the single phrasing for safety lines', () => {
+    const p = createPhraser({ seed: 3 });
+    expect(sequence(p, 'belt_before_move', 5)).toEqual([0, 0, 0, 0, 0]);
+    expect(sequence(p, 'warn.rain_slippery', 3)).toEqual([0, 0, 0]);
+  });
+
+  it('is random without a seed (injectable random source)', () => {
+    expect(createPhraser({ random: () => 0.99 }).pick('greeting')).toBe(2);
+    expect(createPhraser({ random: () => 0 }).pick('greeting')).toBe(0);
+  });
+
+  it('seededRandom yields floats in [0, 1)', () => {
+    const r = seededRandom(42);
+    for (let i = 0; i < 100; i += 1) {
+      const x = r();
+      expect(x >= 0 && x < 1).toBe(true);
+    }
+  });
+});
+
+describe('queue + speaker with phrasings', () => {
+  function recordingSpeaker() {
+    const events = [];
+    return { events, speak(e, { onEnd }) { events.push(e); onEnd(); return {}; }, cancel() {} };
+  }
+
+  it('assigns a variant to each accepted line; seeded runs are identical', () => {
+    const run = () => {
+      const sp = recordingSpeaker();
+      const q = createQueue({ speaker: sp, phraser: createPhraser({ seed: 42 }) });
+      ['greeting', 'break_time', 'greeting', 'belt_before_move'].forEach((k) => q.push(ev('info', k)));
+      return sp.events.map((e) => e.variant);
+    };
+    const a = run();
+    expect(a).toEqual(run());
+    expect(a[3]).toBe(0); // safety line
+    expect(a[2]).not.toBe(a[0]); // no immediate repeat for the same key
+  });
+
+  it('keeps an explicit variant and repeat() says the same words', () => {
+    const sp = recordingSpeaker();
+    const q = createQueue({ speaker: sp, phraser: createPhraser({ seed: 42 }) });
+    q.push(ev('info', 'greeting', { variant: 2 }));
+    q.repeat();
+    expect(sp.events.map((e) => e.variant)).toEqual([2, 2]);
+  });
+
+  it('speaker renders the chosen phrasing, and the English fallback uses the same phrasing', () => {
+    const f = fakeSynth(['en-US']);
+    const s = createSpeaker(f);
+    s.speak(ev('info', 'greeting', { slots: { count: 3 }, lang: 'hi', variant: 1 }));
+    expect(f.spoken[0].text).toBe('Good morning! Saathi here. 3 tasks lined up for today.');
   });
 });

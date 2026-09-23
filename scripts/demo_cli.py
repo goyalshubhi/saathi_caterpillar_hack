@@ -7,6 +7,7 @@ in Hindi and English. In-task lines come from the real JS replay engine via scri
 Run: make demo-cli
 """
 import json
+import random
 import re
 import subprocess
 import sys
@@ -24,6 +25,7 @@ from backend.api import config  # noqa: E402
 from backend.api.main import create_app  # noqa: E402
 
 MACHINE = "EXC001"
+DEMO_SEED = 42  # same demo seed as frontend/src/voice/phrasing.js
 TEMPLATES_JSON = ROOT / "scripts" / "out" / "templates.json"
 
 
@@ -51,16 +53,44 @@ def translate(value, lang):
     return str(value)
 
 
-def render(key, slots, lang):
+def variant_count(key):
+    en = T["templates"][key]["en"]
+    return len(en) if isinstance(en, list) else 1
+
+
+def render(key, slots, lang, variant=0):
     if key not in T["templates"]:
         raise KeyError(f"Unknown message key: {key}")
     text = T["templates"][key].get(lang) or T["templates"][key]["en"]
+    if isinstance(text, list):
+        text = text[variant % len(text)]
     return re.sub(r"\{(\w+)\}", lambda m: translate(slots[m.group(1)], lang)
                   if slots.get(m.group(1)) is not None else m.group(0), text)
 
 
-SPOKEN = []  # every line said during the run: {message_key, slots, mode, priority, text: {hi, en}}
+class Phraser:
+    """Seeded phrasing choice, same rules as phrasing.js (safety = 0, no immediate repeat).
+    Uses Python's PRNG, so the picks are deterministic but not the same sequence as the browser's."""
+
+    def __init__(self, seed=DEMO_SEED):
+        self.rand = random.Random(seed)
+        self.last = {}
+
+    def pick(self, key):
+        n = variant_count(key)
+        if n <= 1:
+            return 0
+        prev = self.last.get(key)
+        v = self.rand.randrange(n if prev is None else n - 1)
+        if prev is not None and v >= prev:
+            v += 1
+        self.last[key] = v
+        return v
+
+
+SPOKEN = []  # every line said: {message_key, slots, mode, priority, variant, text: {hi, en}}
 ECHO = True
+PHRASER = None
 
 
 def out(*args):
@@ -70,8 +100,10 @@ def out(*args):
 
 def say(key, slots=None, mode="friendly", priority="info"):
     slots = slots or {}
-    text = {"hi": render(key, slots, "hi"), "en": render(key, slots, "en")}
-    SPOKEN.append({"message_key": key, "slots": slots, "mode": mode, "priority": priority, "text": text})
+    variant = PHRASER.pick(key)
+    text = {"hi": render(key, slots, "hi", variant), "en": render(key, slots, "en", variant)}
+    SPOKEN.append({"message_key": key, "slots": slots, "mode": mode, "priority": priority,
+                   "variant": variant, "text": text})
     out(f"   [{priority}/{mode}] {key}")
     out(f"      hi: {text['hi']}")
     out(f"      en: {text['en']}")
@@ -127,11 +159,12 @@ def run_replay(scenario):
 
 def main(echo=True):
     """Run the demo; returns the list of spoken lines (see SPOKEN)."""
-    global T, ECHO
+    global T, ECHO, PHRASER
     ECHO = echo
     SPOKEN.clear()
     sys.stdout.reconfigure(encoding="utf-8")
     T = load_templates()
+    PHRASER = Phraser(DEMO_SEED)
     out(f"Saathi headless demo  (intel source: {'STAND-INS' if config.USE_STANDINS else 'real modules'})")
 
     with tempfile.TemporaryDirectory() as tmp, TestClient(create_app(db_path=str(Path(tmp) / "demo.db"))) as api:

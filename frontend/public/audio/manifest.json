@@ -10,6 +10,7 @@
    "mode": "alert",
    "text": "Belt before you move! Fasten your seatbelt.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/5fcc11350f5f592e.mp3"
   },
   {
@@ -18,7 +19,26 @@
    "mode": "alert",
    "text": "चलने से पहले बेल्ट! सीट बेल्ट बाँध लीजिए।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/5642a8d2e263b34f.mp3"
+  },
+  {
+   "message_key": "break_time",
+   "lang": "en",
+   "mode": "care",
+   "text": "Break time. Step down, stretch and have some water.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/1d91d0f044623a64.mp3"
+  },
+  {
+   "message_key": "break_time",
+   "lang": "en",
+   "mode": "care",
+   "text": "Let us pause here. Water first, then rest a little.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/cd1655bba638ec71.mp3"
   },
   {
    "message_key": "break_time",
@@ -26,6 +46,7 @@
    "mode": "care",
    "text": "Time for a break. Drink some water.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/5b3e73939dcaa0d3.mp3"
   },
   {
@@ -34,7 +55,26 @@
    "mode": "care",
    "text": "आराम का समय। थोड़ा पानी पी लीजिए।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/97e1366d5ff6c739.mp3"
+  },
+  {
+   "message_key": "break_time",
+   "lang": "hi",
+   "mode": "care",
+   "text": "आराम का समय। नीचे उतरिए, थोड़ा शरीर खोलिए और पानी पीजिए।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/493cd6eaf0cfe20e.mp3"
+  },
+  {
+   "message_key": "break_time",
+   "lang": "hi",
+   "mode": "care",
+   "text": "यहाँ थोड़ा रुकते हैं। पहले पानी, फिर थोड़ा आराम।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/b35cce4d21b093c5.mp3"
   },
   {
    "message_key": "breaks_planned",
@@ -47,7 +87,50 @@
      13
     ]
    },
+   "variant": 0,
    "file": "audio/en/871b1c881a555857.mp3"
+  },
+  {
+   "message_key": "breaks_planned",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "I have planned breaks at 10 and 13 o'clock.",
+   "slots": {
+    "hours": [
+     10,
+     13
+    ]
+   },
+   "variant": 1,
+   "file": "audio/en/b483cc04ee71761f.mp3"
+  },
+  {
+   "message_key": "breaks_planned",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Rest breaks at 10 and 13 o'clock. Please take them.",
+   "slots": {
+    "hours": [
+     10,
+     13
+    ]
+   },
+   "variant": 2,
+   "file": "audio/en/5e9a72996f55495b.mp3"
+  },
+  {
+   "message_key": "breaks_planned",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "आराम 10 और 13 बजे है। ज़रूर लीजिए।",
+   "slots": {
+    "hours": [
+     10,
+     13
+    ]
+   },
+   "variant": 2,
+   "file": "audio/hi/ac83cd86c319911f.mp3"
   },
   {
    "message_key": "breaks_planned",
@@ -60,7 +143,40 @@
      13
     ]
    },
+   "variant": 0,
    "file": "audio/hi/de5e76a33ebba4f2.mp3"
+  },
+  {
+   "message_key": "breaks_planned",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "मैंने 10 और 13 बजे आराम रखा है।",
+   "slots": {
+    "hours": [
+     10,
+     13
+    ]
+   },
+   "variant": 1,
+   "file": "audio/hi/576a473b72f1abfa.mp3"
+  },
+  {
+   "message_key": "care_break",
+   "lang": "en",
+   "mode": "care",
+   "text": "Time to recharge. Please take ten minutes, the work will wait.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/cf3c3d1f67554dc0.mp3"
+  },
+  {
+   "message_key": "care_break",
+   "lang": "en",
+   "mode": "care",
+   "text": "You have been at it for a while. A ten minute rest will help you stay sharp.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/0074e6198bce012e.mp3"
   },
   {
    "message_key": "care_break",
@@ -68,7 +184,17 @@
    "mode": "care",
    "text": "You have been working hard. Let us take a ten minute break.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/ff1638e0ab7b2346.mp3"
+  },
+  {
+   "message_key": "care_break",
+   "lang": "hi",
+   "mode": "care",
+   "text": "आप काफ़ी देर से लगे हैं। दस मिनट का आराम आपको चुस्त रखेगा।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/70835e5fc19a6daa.mp3"
   },
   {
    "message_key": "care_break",
@@ -76,7 +202,26 @@
    "mode": "care",
    "text": "आप बहुत मेहनत कर रहे हैं। चलिए दस मिनट का आराम करते हैं।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/4342c369aa9553fd.mp3"
+  },
+  {
+   "message_key": "care_break",
+   "lang": "hi",
+   "mode": "care",
+   "text": "थोड़ा सुस्ता लीजिए। दस मिनट का आराम कीजिए, काम इंतज़ार कर लेगा।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/e034c1d752e539d3.mp3"
+  },
+  {
+   "message_key": "cmd_break",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Enjoy your break. I will keep watch.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/73bcb72186c25cee.mp3"
   },
   {
    "message_key": "cmd_break",
@@ -84,7 +229,35 @@
    "mode": "friendly",
    "text": "Okay, take your break. I will be here.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/a6173fc86a3e889a.mp3"
+  },
+  {
+   "message_key": "cmd_break",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Sure, rest well. Call me when you are back.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/e1f66dbc5c2e171b.mp3"
+  },
+  {
+   "message_key": "cmd_break",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "आराम कीजिए। मैं ध्यान रखूँगा।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/0586fc1b0a0155f2.mp3"
+  },
+  {
+   "message_key": "cmd_break",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "ज़रूर, अच्छे से आराम कीजिए। लौटकर मुझे बुलाइए।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/9295627e9edb66d8.mp3"
   },
   {
    "message_key": "cmd_break",
@@ -92,7 +265,26 @@
    "mode": "friendly",
    "text": "ठीक है, आराम कीजिए। मैं यहीं हूँ।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/e60f0229e8f8e789.mp3"
+  },
+  {
+   "message_key": "cmd_log_incident",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Okay, reporting an incident. What was it?",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/db6826a6128fd225.mp3"
+  },
+  {
+   "message_key": "cmd_log_incident",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Tell me what happened, or tap one of the buttons.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/264d43a20a796725.mp3"
   },
   {
    "message_key": "cmd_log_incident",
@@ -100,6 +292,7 @@
    "mode": "friendly",
    "text": "What happened? Tap a button or tell me.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/49f168e1fcbfe73d.mp3"
   },
   {
@@ -108,7 +301,35 @@
    "mode": "friendly",
    "text": "क्या हुआ? बटन दबाइए या मुझे बताइए।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/471b8064983cf55a.mp3"
+  },
+  {
+   "message_key": "cmd_log_incident",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "ठीक है, घटना दर्ज करते हैं। क्या हुआ था?",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/912a45aa8ae4a6a6.mp3"
+  },
+  {
+   "message_key": "cmd_log_incident",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "बताइए क्या हुआ, या कोई बटन दबाइए।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/6ddec1e65989973a.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_off",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "I am back. Quiet mode is off.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/5d90a0276ea57bd7.mp3"
   },
   {
    "message_key": "cmd_quiet_off",
@@ -116,7 +337,26 @@
    "mode": "friendly",
    "text": "Quiet mode off.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/2f6dd240fcd5e8ac.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_off",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Quiet mode off. I will speak normally again.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/3a017567f456963e.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_off",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "मैं वापस हूँ। शांत मोड बंद।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/d2f0e5a30a78b2ed.mp3"
   },
   {
    "message_key": "cmd_quiet_off",
@@ -124,7 +364,35 @@
    "mode": "friendly",
    "text": "शांत मोड बंद।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/daabc6f5fcf74d0f.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_off",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "शांत मोड बंद। अब मैं फिर से सामान्य रूप से बोलूँगा।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/2df38eed94f364c1.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_on",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Going quiet. Only safety alerts from now on.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/7fb7f0e7d91e91e4.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_on",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Quiet mode is on. You will still hear safety warnings.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/c0df37b9f651dee8.mp3"
   },
   {
    "message_key": "cmd_quiet_on",
@@ -132,7 +400,26 @@
    "mode": "friendly",
    "text": "Quiet mode on. I will speak only for safety.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/dec81c10bb3585f6.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_on",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "अब मैं चुप रहूँगा। सिर्फ़ सुरक्षा चेतावनियाँ दूँगा।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/4e51152f0685ee33.mp3"
+  },
+  {
+   "message_key": "cmd_quiet_on",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "शांत मोड चालू है। सुरक्षा चेतावनियाँ फिर भी सुनाई देंगी।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/d8b75040a5290d28.mp3"
   },
   {
    "message_key": "cmd_quiet_on",
@@ -140,7 +427,26 @@
    "mode": "friendly",
    "text": "शांत मोड चालू। अब मैं सिर्फ़ सुरक्षा के लिए बोलूँगा।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/e0b2a0b642da998d.mp3"
+  },
+  {
+   "message_key": "debrief_not_your_fault",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Do not worry, most of this came from conditions, not from you.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/90697ebd626ecb74.mp3"
+  },
+  {
+   "message_key": "debrief_not_your_fault",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Most of the delay was outside your control.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/5afbe9bd32de3f28.mp3"
   },
   {
    "message_key": "debrief_not_your_fault",
@@ -148,6 +454,7 @@
    "mode": "debrief",
    "text": "Most of this was not in your hands.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/18313e3e8c4ad963.mp3"
   },
   {
@@ -156,7 +463,35 @@
    "mode": "debrief",
    "text": "इसमें ज़्यादातर आपके हाथ में नहीं था।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/8b39da0b622016e3.mp3"
+  },
+  {
+   "message_key": "debrief_not_your_fault",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "चिंता मत कीजिए, इसमें ज़्यादातर हालात की वजह से था, आपकी वजह से नहीं।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/1d5451bfb775411c.mp3"
+  },
+  {
+   "message_key": "debrief_not_your_fault",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "ज़्यादातर देरी आपके बस में नहीं थी।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/42ef855453e05da5.mp3"
+  },
+  {
+   "message_key": "debrief_on_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Done within the estimate. Nicely done.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/20a51409c5309962.mp3"
   },
   {
    "message_key": "debrief_on_time",
@@ -164,7 +499,26 @@
    "mode": "debrief",
    "text": "Finished on time. Well done.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/443f2c89e8c3a777.mp3"
+  },
+  {
+   "message_key": "debrief_on_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Right on time. Good work.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/c7d30bea2c776a4a.mp3"
+  },
+  {
+   "message_key": "debrief_on_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "अनुमान के अंदर पूरा हुआ। बढ़िया।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/cb98327cabeac69a.mp3"
   },
   {
    "message_key": "debrief_on_time",
@@ -172,7 +526,17 @@
    "mode": "debrief",
    "text": "काम समय पर पूरा हुआ। बहुत बढ़िया।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/5f9148bbdde47141.mp3"
+  },
+  {
+   "message_key": "debrief_on_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "बिलकुल समय पर। अच्छा काम।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/416932d0b1a7a9ae.mp3"
   },
   {
    "message_key": "debrief_over",
@@ -188,7 +552,42 @@
      "machine_age"
     ]
    },
+   "variant": 0,
    "file": "audio/en/983a0d9d7827b879.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 9 minutes long: about 6 because of rain and machine age, and about 3 from idle gaps.",
+   "slots": {
+    "over_min": 9,
+    "uncontrollable_min": 6,
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ]
+   },
+   "variant": 1,
+   "file": "audio/en/089d79e6449f0058.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 9 minutes over the CAT estimate. Around 6 of that was rain and machine age, around 3 was idle time.",
+   "slots": {
+    "over_min": 9,
+    "uncontrollable_min": 6,
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ]
+   },
+   "variant": 2,
+   "file": "audio/en/444a4c8ce9182a5b.mp3"
   },
   {
    "message_key": "debrief_over",
@@ -204,7 +603,53 @@
      "machine_age"
     ]
    },
+   "variant": 0,
    "file": "audio/hi/51546391c4785e6c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 9 मिनट ज़्यादा चला: लगभग 6 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "over_min": 9,
+    "uncontrollable_min": 6,
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ]
+   },
+   "variant": 1,
+   "file": "audio/hi/73a2dba1f838579f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 9 मिनट ऊपर गए। इसमें करीब 6 मिनट बारिश और मशीन की उम्र की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "over_min": 9,
+    "uncontrollable_min": 6,
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ]
+   },
+   "variant": 2,
+   "file": "audio/hi/ca30b34a62ea416c.mp3"
+  },
+  {
+   "message_key": "finding.excessive_idling",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "The engine ran idle for 30 minutes.",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 1,
+   "file": "audio/en/85d480cc416e0484.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
@@ -214,7 +659,41 @@
    "slots": {
     "minutes": 30
    },
+   "variant": 0,
    "file": "audio/en/6503e8a07e6fe5ff.mp3"
+  },
+  {
+   "message_key": "finding.excessive_idling",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "There were 30 minutes of idling.",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 2,
+   "file": "audio/en/4723cf0990864d57.mp3"
+  },
+  {
+   "message_key": "finding.excessive_idling",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "30 मिनट तक मशीन बेकार चलती रही।",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 2,
+   "file": "audio/hi/72946e946be7fca3.mp3"
+  },
+  {
+   "message_key": "finding.excessive_idling",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "इंजन 30 मिनट खाली चलता रहा।",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 1,
+   "file": "audio/hi/3a3a9ee75e9899b2.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
@@ -224,7 +703,26 @@
    "slots": {
     "minutes": 30
    },
+   "variant": 0,
    "file": "audio/hi/851f96b6b6818358.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "You seem to be slowing down. A short rest would help.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/f778592cf71c7a33.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Your pace has dropped over the last hour. Time for a quick break.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/72ea3fc802256e80.mp3"
   },
   {
    "message_key": "finding.fatigue_drift",
@@ -232,6 +730,7 @@
    "mode": "debrief",
    "text": "Your rhythm is slowing down. A short break will help.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/912249c493ceb95d.mp3"
   },
   {
@@ -240,7 +739,26 @@
    "mode": "debrief",
    "text": "आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/df994a599254584f.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "पिछले घंटे में आपकी रफ़्तार कम हुई है। थोड़े आराम का समय है।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/f030c117ae3187c5.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "लगता है आप थक रहे हैं। थोड़ा आराम अच्छा रहेगा।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/8dd2c9c4c0f3a148.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
@@ -251,7 +769,32 @@
     "fuel_l": 1.7,
     "load_cycles": 0
    },
+   "variant": 0,
    "file": "audio/en/f4181cf31873b4ff.mp3"
+  },
+  {
+   "message_key": "finding.fuel_without_work",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "About 1.7 litres of fuel went into idling rather than work.",
+   "slots": {
+    "fuel_l": 1.7,
+    "load_cycles": 0
+   },
+   "variant": 1,
+   "file": "audio/en/449441d9aa092136.mp3"
+  },
+  {
+   "message_key": "finding.fuel_without_work",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Around 1.7 litres of fuel were used with almost nothing to show for it.",
+   "slots": {
+    "fuel_l": 1.7,
+    "load_cycles": 0
+   },
+   "variant": 2,
+   "file": "audio/en/86bfde3561754e20.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
@@ -262,7 +805,54 @@
     "fuel_l": 1.7,
     "load_cycles": 0
    },
+   "variant": 0,
    "file": "audio/hi/4174ffbc1d43b86f.mp3"
+  },
+  {
+   "message_key": "finding.fuel_without_work",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "लगभग 1.7 लीटर ईंधन काम की जगह खाली चलने में गया।",
+   "slots": {
+    "fuel_l": 1.7,
+    "load_cycles": 0
+   },
+   "variant": 1,
+   "file": "audio/hi/db11872cc8182937.mp3"
+  },
+  {
+   "message_key": "finding.fuel_without_work",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "लगभग बिना काम के करीब 1.7 लीटर ईंधन लग गया।",
+   "slots": {
+    "fuel_l": 1.7,
+    "load_cycles": 0
+   },
+   "variant": 2,
+   "file": "audio/hi/fba435fd69a0694c.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "For 15 minutes the belt was off during work. Please keep it on.",
+   "slots": {
+    "minutes": 15
+   },
+   "variant": 2,
+   "file": "audio/en/63fd48a43ad673de.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "The machine was working for 15 minutes without the seatbelt on.",
+   "slots": {
+    "minutes": 15
+   },
+   "variant": 1,
+   "file": "audio/en/e45621756b363fdd.mp3"
   },
   {
    "message_key": "finding.unbelted_active",
@@ -272,7 +862,19 @@
    "slots": {
     "minutes": 15
    },
+   "variant": 0,
    "file": "audio/en/05da67aa73f10a73.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "15 मिनट काम के दौरान बेल्ट खुली थी। कृपया इसे बाँधे रखें।",
+   "slots": {
+    "minutes": 15
+   },
+   "variant": 2,
+   "file": "audio/hi/74f40dcfcedd1edb.mp3"
   },
   {
    "message_key": "finding.unbelted_active",
@@ -282,7 +884,19 @@
    "slots": {
     "minutes": 15
    },
+   "variant": 0,
    "file": "audio/hi/3b031c3cfe7c54b5.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "मशीन 15 मिनट बिना सीट बेल्ट के चली।",
+   "slots": {
+    "minutes": 15
+   },
+   "variant": 1,
+   "file": "audio/hi/9d633e39c2e73c13.mp3"
   },
   {
    "message_key": "greeting",
@@ -292,7 +906,41 @@
    "slots": {
     "count": 3
    },
+   "variant": 0,
    "file": "audio/en/5bf6ffd5407bc76c.mp3"
+  },
+  {
+   "message_key": "greeting",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Good morning! Saathi here. 3 tasks lined up for today.",
+   "slots": {
+    "count": 3
+   },
+   "variant": 1,
+   "file": "audio/en/af40f6e3229cb40e.mp3"
+  },
+  {
+   "message_key": "greeting",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Morning! I am Saathi, your companion. Today we have 3 tasks.",
+   "slots": {
+    "count": 3
+   },
+   "variant": 2,
+   "file": "audio/en/a5a59cb9d6c76ca2.mp3"
+  },
+  {
+   "message_key": "greeting",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नमस्कार! मैं आपका साथी हूँ। आज हमें 3 काम करने हैं।",
+   "slots": {
+    "count": 3
+   },
+   "variant": 2,
+   "file": "audio/hi/7adb84de890bd83e.mp3"
   },
   {
    "message_key": "greeting",
@@ -302,7 +950,30 @@
    "slots": {
     "count": 3
    },
+   "variant": 0,
    "file": "audio/hi/4928d8304fcf5a83.mp3"
+  },
+  {
+   "message_key": "greeting",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सुप्रभात! साथी बोल रहा हूँ। आज 3 काम तय हैं।",
+   "slots": {
+    "count": 3
+   },
+   "variant": 1,
+   "file": "audio/hi/c091a0d8bb2a5628.mp3"
+  },
+  {
+   "message_key": "heat_today",
+   "lang": "en",
+   "mode": "care",
+   "text": "A hot day ahead, up to 39 degrees in the afternoon.",
+   "slots": {
+    "max_temp": 39
+   },
+   "variant": 1,
+   "file": "audio/en/d78280527fc5020b.mp3"
   },
   {
    "message_key": "heat_today",
@@ -312,7 +983,19 @@
    "slots": {
     "max_temp": 39
    },
+   "variant": 0,
    "file": "audio/en/4f5f22794a859fc5.mp3"
+  },
+  {
+   "message_key": "heat_today",
+   "lang": "en",
+   "mode": "care",
+   "text": "The temperature will climb to 39 degrees today.",
+   "slots": {
+    "max_temp": 39
+   },
+   "variant": 2,
+   "file": "audio/en/712f215fa743386b.mp3"
   },
   {
    "message_key": "heat_today",
@@ -322,7 +1005,30 @@
    "slots": {
     "max_temp": 39
    },
+   "variant": 0,
    "file": "audio/hi/1b006d9d35b20616.mp3"
+  },
+  {
+   "message_key": "heat_today",
+   "lang": "hi",
+   "mode": "care",
+   "text": "आज तापमान 39 डिग्री तक पहुँचेगा।",
+   "slots": {
+    "max_temp": 39
+   },
+   "variant": 2,
+   "file": "audio/hi/e500350428422d56.mp3"
+  },
+  {
+   "message_key": "heat_today",
+   "lang": "hi",
+   "mode": "care",
+   "text": "आज दिन गर्म रहेगा, दोपहर में 39 डिग्री तक।",
+   "slots": {
+    "max_temp": 39
+   },
+   "variant": 1,
+   "file": "audio/hi/85d5a74e5fe2a140.mp3"
   },
   {
    "message_key": "incident_logged",
@@ -332,7 +1038,41 @@
    "slots": {
     "category": "person_in_zone"
    },
+   "variant": 0,
    "file": "audio/en/26adec01957befcf.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Noted: a person in the work zone. I will tell the next shift.",
+   "slots": {
+    "category": "person_in_zone"
+   },
+   "variant": 1,
+   "file": "audio/en/b8cc4dc1267ff6e6.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Thanks for reporting a person in the work zone. It is saved for this machine.",
+   "slots": {
+    "category": "person_in_zone"
+   },
+   "variant": 2,
+   "file": "audio/en/db8424d29cc48490.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "काम के क्षेत्र में व्यक्ति बताने के लिए धन्यवाद। यह इस मशीन के लिए सहेज लिया गया है।",
+   "slots": {
+    "category": "person_in_zone"
+   },
+   "variant": 2,
+   "file": "audio/hi/5e24381d75cf0411.mp3"
   },
   {
    "message_key": "incident_logged",
@@ -342,7 +1082,19 @@
    "slots": {
     "category": "person_in_zone"
    },
+   "variant": 0,
    "file": "audio/hi/c5b72a97702bd976.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नोट कर लिया: काम के क्षेत्र में व्यक्ति। अगली शिफ्ट को बता दूँगा।",
+   "slots": {
+    "category": "person_in_zone"
+   },
+   "variant": 1,
+   "file": "audio/hi/d35ae4a5076a5dfc.mp3"
   },
   {
    "message_key": "lesson_hydration",
@@ -350,7 +1102,26 @@
    "mode": "friendly",
    "text": "Quick tip: in the heat, drink a glass of water every hour, even if you are not thirsty.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/4d59df733b79b36f.mp3"
+  },
+  {
+   "message_key": "lesson_hydration",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Remember: heat tires you before you notice. A glass of water every hour keeps you sharp.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/92d4687bfdb5a757.mp3"
+  },
+  {
+   "message_key": "lesson_hydration",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Tip: in this heat, sip water every hour, even before you feel thirsty.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/fc3bc33fd6d0b290.mp3"
   },
   {
    "message_key": "lesson_hydration",
@@ -358,7 +1129,35 @@
    "mode": "friendly",
    "text": "छोटी सलाह: गर्मी में हर घंटे एक गिलास पानी पिएँ, प्यास न लगे तब भी।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/575b5e8942f45f8d.mp3"
+  },
+  {
+   "message_key": "lesson_hydration",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "याद रखें: गर्मी पता चलने से पहले थका देती है। हर घंटे एक गिलास पानी आपको चुस्त रखेगा।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/bf78efaa5a650c14.mp3"
+  },
+  {
+   "message_key": "lesson_hydration",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सलाह: इस गर्मी में प्यास लगने से पहले ही हर घंटे पानी पीते रहें।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/a0cbcc81bf13ee64.mp3"
+  },
+  {
+   "message_key": "lesson_idle_engine_off",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "A tip for this pause: for long stops, turn the engine off. It saves fuel and wear.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/58621a6c820b6cfa.mp3"
   },
   {
    "message_key": "lesson_idle_engine_off",
@@ -366,7 +1165,35 @@
    "mode": "friendly",
    "text": "Quick tip while we wait: if you will idle for more than five minutes, switch the engine off. It saves fuel.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/801ca19e62aecf1a.mp3"
+  },
+  {
+   "message_key": "lesson_idle_engine_off",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "While we wait: an engine idling for five minutes or more is just burning fuel. Switch it off.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/f4128bb06de8e038.mp3"
+  },
+  {
+   "message_key": "lesson_idle_engine_off",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "इंतज़ार के बीच: पाँच मिनट या ज़्यादा खाली चलता इंजन सिर्फ़ ईंधन जलाता है। इसे बंद कर दीजिए।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/fdaced717295845a.mp3"
+  },
+  {
+   "message_key": "lesson_idle_engine_off",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "इस रुकावट में एक सलाह: लंबे समय रुकना हो तो इंजन बंद कर दें। ईंधन और घिसाई दोनों बचते हैं।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/cd95fa6fdb5a6807.mp3"
   },
   {
    "message_key": "lesson_idle_engine_off",
@@ -374,6 +1201,7 @@
    "mode": "friendly",
    "text": "रुकते हुए एक छोटी सलाह: अगर पाँच मिनट से ज़्यादा रुकना हो, तो इंजन बंद कर दें। ईंधन बचता है।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/541b777f40041be3.mp3"
   },
   {
@@ -382,7 +1210,26 @@
    "mode": "friendly",
    "text": "Quick tip: smooth, full bucket cycles use less fuel than many short, jerky ones.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/7e81e56a0df65896.mp3"
+  },
+  {
+   "message_key": "lesson_smooth_cycles",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Remember: jerky controls waste fuel. Full, smooth cycles do more with less.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/1468de33c4dd15be.mp3"
+  },
+  {
+   "message_key": "lesson_smooth_cycles",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Tip: smooth, steady movements fill the bucket better and burn less fuel.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/a48fdec5fc54ca04.mp3"
   },
   {
    "message_key": "lesson_smooth_cycles",
@@ -390,7 +1237,26 @@
    "mode": "friendly",
    "text": "छोटी सलाह: आराम से भरे हुए बाल्टी चक्र, कई छोटे झटकेदार चक्रों से कम ईंधन खाते हैं।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/772e8cf52e24bc48.mp3"
+  },
+  {
+   "message_key": "lesson_smooth_cycles",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "याद रखें: झटके से चलाने में ईंधन बर्बाद होता है। पूरे और आराम से चक्र कम में ज़्यादा काम करते हैं।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/7f4be3c4fabcc8fc.mp3"
+  },
+  {
+   "message_key": "lesson_smooth_cycles",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सलाह: आराम और एक लय में चलाने से बाल्टी अच्छी भरती है और ईंधन कम लगता है।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/f88d5e132bcb2187.mp3"
   },
   {
    "message_key": "lesson_three_points",
@@ -398,7 +1264,26 @@
    "mode": "friendly",
    "text": "Quick tip: keep three points of contact when climbing in or out of the cab.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/1275867703e7afd3.mp3"
+  },
+  {
+   "message_key": "lesson_three_points",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Remember: face the machine and keep three points of contact on the steps.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/2d24aff03a975ce2.mp3"
+  },
+  {
+   "message_key": "lesson_three_points",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Tip: two hands and a foot, or two feet and a hand, whenever you climb in or out.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/9d4b5a9ee1fdc996.mp3"
   },
   {
    "message_key": "lesson_three_points",
@@ -406,7 +1291,26 @@
    "mode": "friendly",
    "text": "छोटी सलाह: केबिन में चढ़ते और उतरते समय तीन जगह पकड़ बनाए रखें।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/42987b762248f6ca.mp3"
+  },
+  {
+   "message_key": "lesson_three_points",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "याद रखें: सीढ़ी पर मशीन की ओर मुँह करके तीन जगह पकड़ बनाए रखें।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/eaa6707757ca0e54.mp3"
+  },
+  {
+   "message_key": "lesson_three_points",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सलाह: चढ़ते-उतरते समय हमेशा दो हाथ और एक पैर, या दो पैर और एक हाथ टिकाए रखें।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/79d38df0ed4c08ec.mp3"
   },
   {
    "message_key": "lesson_trench_edge",
@@ -414,7 +1318,26 @@
    "mode": "friendly",
    "text": "Quick tip: keep the tracks at least one metre back from a trench edge, more when the ground is wet.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/710b26ff25f60f7d.mp3"
+  },
+  {
+   "message_key": "lesson_trench_edge",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Remember: wet soil near a trench is weak. Stay at least one metre from the edge.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/ccc2770552f426f6.mp3"
+  },
+  {
+   "message_key": "lesson_trench_edge",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Tip: trench edges can give way. Keep the tracks a metre or more back, further when wet.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/12bf98db50300353.mp3"
   },
   {
    "message_key": "lesson_trench_edge",
@@ -422,7 +1345,26 @@
    "mode": "friendly",
    "text": "छोटी सलाह: खाई के किनारे से पटरियों को कम से कम एक मीटर पीछे रखें, गीली ज़मीन पर और ज़्यादा।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/c03a73c7bf827d9c.mp3"
+  },
+  {
+   "message_key": "lesson_trench_edge",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "याद रखें: खाई के पास गीली मिट्टी कमज़ोर होती है। किनारे से कम से कम एक मीटर दूर रहें।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/c5ddd358e96ea723.mp3"
+  },
+  {
+   "message_key": "lesson_trench_edge",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सलाह: खाई का किनारा धँस सकता है। पटरियों को एक मीटर या ज़्यादा पीछे रखें, गीली ज़मीन पर और दूर।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/5800a91b4bbb7539.mp3"
   },
   {
    "message_key": "lesson_walkaround",
@@ -430,7 +1372,26 @@
    "mode": "friendly",
    "text": "Quick tip: walk once around the machine before moving. You will see what the seat cannot show you.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/9c87c232d8bd25d4.mp3"
+  },
+  {
+   "message_key": "lesson_walkaround",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Remember: check all sides of the machine before you start moving.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/8e7e8f3be2964c23.mp3"
+  },
+  {
+   "message_key": "lesson_walkaround",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Tip: a quick walk around the machine before moving shows you people and obstacles you cannot see from the seat.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/c86bfd8432edca1b.mp3"
   },
   {
    "message_key": "lesson_walkaround",
@@ -438,7 +1399,26 @@
    "mode": "friendly",
    "text": "छोटी सलाह: चलने से पहले मशीन का एक चक्कर लगाएँ। जो सीट से नहीं दिखता, वह दिख जाएगा।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/7efb249b5f06aed2.mp3"
+  },
+  {
+   "message_key": "lesson_walkaround",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "याद रखें: चलना शुरू करने से पहले मशीन के चारों तरफ़ देख लें।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/47cf847049013aec.mp3"
+  },
+  {
+   "message_key": "lesson_walkaround",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सलाह: चलने से पहले मशीन का एक चक्कर लगाएँ, सीट से न दिखने वाले लोग और रुकावटें दिख जाएँगी।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/3ca7774d0f1f2e1d.mp3"
   },
   {
    "message_key": "memory_incident",
@@ -448,6 +1428,7 @@
    "slots": {
     "category": "person_in_zone"
    },
+   "variant": 0,
    "file": "audio/en/7973f7218016840d.mp3"
   },
   {
@@ -458,7 +1439,38 @@
    "slots": {
     "category": "person_in_zone"
    },
+   "variant": 0,
    "file": "audio/hi/37feffd2085608ac.mp3"
+  },
+  {
+   "message_key": "plan_order",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Best order for today: trenching, material loading and grading.",
+   "slots": {
+    "order": [
+     "Trenching",
+     "Material Loading",
+     "Grading"
+    ]
+   },
+   "variant": 2,
+   "file": "audio/en/f3eb777c95ca7b70.mp3"
+  },
+  {
+   "message_key": "plan_order",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "I suggest this order: trenching, material loading and grading.",
+   "slots": {
+    "order": [
+     "Trenching",
+     "Material Loading",
+     "Grading"
+    ]
+   },
+   "variant": 1,
+   "file": "audio/en/4f47e9ccd1b872d2.mp3"
   },
   {
    "message_key": "plan_order",
@@ -472,7 +1484,38 @@
      "Grading"
     ]
    },
+   "variant": 0,
    "file": "audio/en/44d35a52e68f28c7.mp3"
+  },
+  {
+   "message_key": "plan_order",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "आज के लिए सबसे अच्छा क्रम: खाई की खुदाई, माल की लदाई और ज़मीन समतल करना।",
+   "slots": {
+    "order": [
+     "Trenching",
+     "Material Loading",
+     "Grading"
+    ]
+   },
+   "variant": 2,
+   "file": "audio/hi/c9f31ccc18abea8f.mp3"
+  },
+  {
+   "message_key": "plan_order",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "मेरा सुझाव है यह क्रम: खाई की खुदाई, माल की लदाई और ज़मीन समतल करना।",
+   "slots": {
+    "order": [
+     "Trenching",
+     "Material Loading",
+     "Grading"
+    ]
+   },
+   "variant": 1,
+   "file": "audio/hi/8f37322d895e2dd3.mp3"
   },
   {
    "message_key": "plan_order",
@@ -486,7 +1529,36 @@
      "Grading"
     ]
    },
+   "variant": 0,
    "file": "audio/hi/31aa1576e6310716.mp3"
+  },
+  {
+   "message_key": "pretask_estimate",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Next up: trenching, light rain. Plan for about 52 minutes instead of the CAT 45.",
+   "slots": {
+    "task_type": "Trenching",
+    "weather": "Rainy",
+    "cat_min": 45,
+    "predicted_min": 52
+   },
+   "variant": 2,
+   "file": "audio/en/0198dd4f0792a7ce.mp3"
+  },
+  {
+   "message_key": "pretask_estimate",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Now trenching, weather: light rain. The CAT estimate is 45 minutes; mine is about 52.",
+   "slots": {
+    "task_type": "Trenching",
+    "weather": "Rainy",
+    "cat_min": 45,
+    "predicted_min": 52
+   },
+   "variant": 1,
+   "file": "audio/en/4790b1e0565dd6f7.mp3"
   },
   {
    "message_key": "pretask_estimate",
@@ -499,7 +1571,36 @@
     "cat_min": 45,
     "predicted_min": 52
    },
+   "variant": 0,
    "file": "audio/en/7e53a7b03e0e24a5.mp3"
+  },
+  {
+   "message_key": "pretask_estimate",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "अगला काम: खाई की खुदाई, हल्की बारिश। CAT के 45 मिनट की जगह लगभग 52 मिनट मानकर चलिए।",
+   "slots": {
+    "task_type": "Trenching",
+    "weather": "Rainy",
+    "cat_min": 45,
+    "predicted_min": 52
+   },
+   "variant": 2,
+   "file": "audio/hi/92ad8ae7cd43647f.mp3"
+  },
+  {
+   "message_key": "pretask_estimate",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "अब खाई की खुदाई, मौसम: हल्की बारिश। CAT का अनुमान 45 मिनट है; मेरा अनुमान लगभग 52 मिनट।",
+   "slots": {
+    "task_type": "Trenching",
+    "weather": "Rainy",
+    "cat_min": 45,
+    "predicted_min": 52
+   },
+   "variant": 1,
+   "file": "audio/hi/9dcb774e265bac79.mp3"
   },
   {
    "message_key": "pretask_estimate",
@@ -512,6 +1613,7 @@
     "cat_min": 45,
     "predicted_min": 52
    },
+   "variant": 0,
    "file": "audio/hi/44553231927c4e43.mp3"
   },
   {
@@ -522,6 +1624,7 @@
    "slots": {
     "distance_m": 2.1
    },
+   "variant": 0,
    "file": "audio/en/2547b91a651ada69.mp3"
   },
   {
@@ -532,6 +1635,7 @@
    "slots": {
     "distance_m": 2.5
    },
+   "variant": 0,
    "file": "audio/en/30e66ca18b776058.mp3"
   },
   {
@@ -542,6 +1646,7 @@
    "slots": {
     "distance_m": 2.1
    },
+   "variant": 0,
    "file": "audio/hi/f3fc0223ab4da5c5.mp3"
   },
   {
@@ -552,7 +1657,26 @@
    "slots": {
     "distance_m": 2.5
    },
+   "variant": 0,
    "file": "audio/hi/0d257752bdcc09c4.mp3"
+  },
+  {
+   "message_key": "rain_today",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Expect some light rain early today.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/04ef8a81cab6fcf6.mp3"
+  },
+  {
+   "message_key": "rain_today",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Light rain this morning, so the ground may be soft.",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/en/926bc651bf971147.mp3"
   },
   {
    "message_key": "rain_today",
@@ -560,7 +1684,17 @@
    "mode": "friendly",
    "text": "There is light rain this morning.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/368612daf568c321.mp3"
+  },
+  {
+   "message_key": "rain_today",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "आज सुबह थोड़ी बारिश होने की उम्मीद है।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/5608eadd239adea5.mp3"
   },
   {
    "message_key": "rain_today",
@@ -568,7 +1702,17 @@
    "mode": "friendly",
    "text": "आज सुबह हल्की बारिश है।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/5142fdcf4140f193.mp3"
+  },
+  {
+   "message_key": "rain_today",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "सुबह हल्की बारिश है, ज़मीन नरम हो सकती है।",
+   "slots": {},
+   "variant": 1,
+   "file": "audio/hi/9f0d59f212622149.mp3"
   },
   {
    "message_key": "safety_alert",
@@ -576,6 +1720,7 @@
    "mode": "alert",
    "text": "Safety alert. Check all around the machine.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/67a795e4efbfa49c.mp3"
   },
   {
@@ -584,6 +1729,7 @@
    "mode": "alert",
    "text": "सुरक्षा चेतावनी। मशीन के चारों ओर देख लीजिए।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/577d1541db2f8ee4.mp3"
   },
   {
@@ -592,6 +1738,7 @@
    "mode": "alert",
    "text": "Your seatbelt is off. Please fasten it.",
    "slots": {},
+   "variant": 0,
    "file": "audio/en/302ac9bae8d375cc.mp3"
   },
   {
@@ -600,6 +1747,7 @@
    "mode": "alert",
    "text": "आपकी सीट बेल्ट खुली है। कृपया बाँध लीजिए।",
    "slots": {},
+   "variant": 0,
    "file": "audio/hi/00a3d5e8d1dde7e9.mp3"
   },
   {
@@ -610,7 +1758,30 @@
    "slots": {
     "machine_id": "EXC001"
    },
+   "variant": 0,
    "file": "audio/en/46aadd70b512362f.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Hi, Saathi here on machine EXC001. Let us have a safe shift.",
+   "slots": {
+    "machine_id": "EXC001"
+   },
+   "variant": 2,
+   "file": "audio/en/884781d4ffb2b74f.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Welcome to machine EXC001. I am Saathi, I will be with you this shift.",
+   "slots": {
+    "machine_id": "EXC001"
+   },
+   "variant": 1,
+   "file": "audio/en/400a7c5b2009dad4.mp3"
   },
   {
    "message_key": "shift_hello",
@@ -620,7 +1791,82 @@
    "slots": {
     "machine_id": "EXC001"
    },
+   "variant": 0,
    "file": "audio/hi/7f198281d6cc474a.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नमस्ते, मैं साथी, मशीन EXC001 पर। चलिए, शिफ्ट सुरक्षित रखें।",
+   "slots": {
+    "machine_id": "EXC001"
+   },
+   "variant": 2,
+   "file": "audio/hi/aef3da3c707e7350.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "मशीन EXC001 पर आपका स्वागत है। मैं साथी हूँ, इस शिफ्ट में आपके साथ रहूँगा।",
+   "slots": {
+    "machine_id": "EXC001"
+   },
+   "variant": 1,
+   "file": "audio/hi/039d0f6268559f79.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Number 1 is trenching. It should take about 52 minutes.",
+   "slots": {
+    "n": 1,
+    "task_type": "Trenching",
+    "predicted_min": 52
+   },
+   "variant": 1,
+   "file": "audio/en/2a11e12cedb9f345.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Number 2 is material loading. It should take about 33 minutes.",
+   "slots": {
+    "n": 2,
+    "task_type": "Material Loading",
+    "predicted_min": 33
+   },
+   "variant": 1,
+   "file": "audio/en/8446d0902646676c.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Number 3 is grading. It should take about 39 minutes.",
+   "slots": {
+    "n": 3,
+    "task_type": "Grading",
+    "predicted_min": 39
+   },
+   "variant": 1,
+   "file": "audio/en/8f098e6210a97cac.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Task 1 is trenching; plan for about 52 minutes.",
+   "slots": {
+    "n": 1,
+    "task_type": "Trenching",
+    "predicted_min": 52
+   },
+   "variant": 2,
+   "file": "audio/en/2bcef5a53882ab83.mp3"
   },
   {
    "message_key": "task_card",
@@ -632,7 +1878,21 @@
     "task_type": "Trenching",
     "predicted_min": 52
    },
+   "variant": 0,
    "file": "audio/en/a45a31477e7313f5.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Task 2 is material loading; plan for about 33 minutes.",
+   "slots": {
+    "n": 2,
+    "task_type": "Material Loading",
+    "predicted_min": 33
+   },
+   "variant": 2,
+   "file": "audio/en/0b95d1dd3ddcb389.mp3"
   },
   {
    "message_key": "task_card",
@@ -644,7 +1904,21 @@
     "task_type": "Material Loading",
     "predicted_min": 33
    },
+   "variant": 0,
    "file": "audio/en/43260ee55445ddee.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Task 3 is grading; plan for about 39 minutes.",
+   "slots": {
+    "n": 3,
+    "task_type": "Grading",
+    "predicted_min": 39
+   },
+   "variant": 2,
+   "file": "audio/en/1b13a3c735514aee.mp3"
   },
   {
    "message_key": "task_card",
@@ -656,7 +1930,21 @@
     "task_type": "Grading",
     "predicted_min": 39
    },
+   "variant": 0,
    "file": "audio/en/65132f1cb84210c1.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "काम 1 है खाई की खुदाई; लगभग 52 मिनट मानकर चलिए।",
+   "slots": {
+    "n": 1,
+    "task_type": "Trenching",
+    "predicted_min": 52
+   },
+   "variant": 2,
+   "file": "audio/hi/0eabd2113462de08.mp3"
   },
   {
    "message_key": "task_card",
@@ -668,7 +1956,21 @@
     "task_type": "Trenching",
     "predicted_min": 52
    },
+   "variant": 0,
    "file": "audio/hi/d4fca0e9bfe42501.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "काम 2 है माल की लदाई; लगभग 33 मिनट मानकर चलिए।",
+   "slots": {
+    "n": 2,
+    "task_type": "Material Loading",
+    "predicted_min": 33
+   },
+   "variant": 2,
+   "file": "audio/hi/7d185f2eecc0150e.mp3"
   },
   {
    "message_key": "task_card",
@@ -680,7 +1982,21 @@
     "task_type": "Material Loading",
     "predicted_min": 33
    },
+   "variant": 0,
    "file": "audio/hi/ef128253a77be3f3.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "काम 3 है ज़मीन समतल करना; लगभग 39 मिनट मानकर चलिए।",
+   "slots": {
+    "n": 3,
+    "task_type": "Grading",
+    "predicted_min": 39
+   },
+   "variant": 2,
+   "file": "audio/hi/cf1d0cf350223256.mp3"
   },
   {
    "message_key": "task_card",
@@ -692,7 +2008,47 @@
     "task_type": "Grading",
     "predicted_min": 39
    },
+   "variant": 0,
    "file": "audio/hi/65a10c4f94a54d7c.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नंबर 1: खाई की खुदाई। इसमें लगभग 52 मिनट लगेंगे।",
+   "slots": {
+    "n": 1,
+    "task_type": "Trenching",
+    "predicted_min": 52
+   },
+   "variant": 1,
+   "file": "audio/hi/52b4fb90938c392d.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नंबर 2: माल की लदाई। इसमें लगभग 33 मिनट लगेंगे।",
+   "slots": {
+    "n": 2,
+    "task_type": "Material Loading",
+    "predicted_min": 33
+   },
+   "variant": 1,
+   "file": "audio/hi/65e3c5eb7503aff4.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नंबर 3: ज़मीन समतल करना। इसमें लगभग 39 मिनट लगेंगे।",
+   "slots": {
+    "n": 3,
+    "task_type": "Grading",
+    "predicted_min": 39
+   },
+   "variant": 1,
+   "file": "audio/hi/3762cd942337a170.mp3"
   },
   {
    "message_key": "warn.rain_slippery",
@@ -702,6 +2058,7 @@
    "slots": {
     "task_type": "Trenching"
    },
+   "variant": 0,
    "file": "audio/en/37087ca02035ddea.mp3"
   },
   {
@@ -712,6 +2069,7 @@
    "slots": {
     "task_type": "Trenching"
    },
+   "variant": 0,
    "file": "audio/hi/863d8d369c98e95e.mp3"
   },
   {
@@ -722,6 +2080,7 @@
    "slots": {
     "distance_m": 2
    },
+   "variant": 0,
    "file": "audio/en/0a52a1b9330a2d51.mp3"
   },
   {
@@ -732,6 +2091,7 @@
    "slots": {
     "distance_m": 2
    },
+   "variant": 0,
    "file": "audio/hi/5b6a333a51dacd95.mp3"
   }
  ]

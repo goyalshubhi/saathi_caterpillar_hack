@@ -4,6 +4,10 @@
 // - care, coaching and info wait their turn (in that order)
 // - interruption budget: at most ONE coaching line per task (safety/care/info are exempt)
 // - quiet mode drops coaching lines only; safety is never muted
+// - each accepted line gets a phrasing (event.variant) from the phraser, unless it already has one;
+//   repeat() replays the exact same words
+import { createPhraser } from './phrasing.js';
+
 export const PRIORITY_ORDER = ['safety', 'care', 'coaching', 'info'];
 
 const rank = (p) => {
@@ -11,7 +15,7 @@ const rank = (p) => {
   return i === -1 ? PRIORITY_ORDER.length : i;
 };
 
-export function createQueue({ speaker }) {
+export function createQueue({ speaker, phraser = createPhraser() }) {
   let current = null; // { event, token }
   let token = 0;
   const pending = [];
@@ -51,6 +55,7 @@ export function createQueue({ speaker }) {
       if (coachedTasks.has(key)) return { accepted: false, reason: 'budget' };
       coachedTasks.add(key);
     }
+    if (event.variant === undefined) event = { ...event, variant: phraser.pick(event.message_key) };
     if (event.priority === 'safety' && current && current.event.priority !== 'safety') {
       const interrupted = current.event;
       current = null; // clear first: cancel() may fire the old onEnd synchronously

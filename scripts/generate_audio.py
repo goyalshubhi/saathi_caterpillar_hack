@@ -2,6 +2,7 @@
 
 Lines rendered:
   - every line Saathi says in the headless demo (scripts/demo_cli.py, same template rendering), and
+  - every phrasing (variant) of each of those lines, and
   - every fixed line (templates without slots: safety alerts, belt-before-you-move, breaks,
     lessons, quiet-mode confirmations ...),
 in English (en-IN) and Hindi (hi-IN). Each voice mode's pitch/rate/volume from modes.js is mapped
@@ -55,24 +56,28 @@ def prosody(mode):
 
 
 def collect_lines():
-    """Unique ((message_key, lang, mode, text), slots) pairs from the demo run plus fixed lines."""
+    """Unique ((message_key, lang, mode, text), (slots, variant)) pairs: demo lines + fixed lines, all phrasings."""
     spoken = demo_cli.main(echo=False)
     lines = {}
+
+    def add(key, slots, mode):
+        # every phrasing, so whichever variant the app picks has an MP3
+        for v in range(demo_cli.variant_count(key)):
+            for lang in LANGS:
+                lines[(key, lang, mode, demo_cli.render(key, slots, lang, v))] = (slots, v)
+
     for s in spoken:
-        for lang in LANGS:
-            lines[(s["message_key"], lang, s["mode"], s["text"][lang])] = s["slots"]
+        add(s["message_key"], s["slots"], s["mode"])
     # In-task lines of the real demo scenario (exported by make export-scenario), via the JS replay engine.
     real = ROOT / "contracts" / "examples" / "demo_scenario.json"
     if real.exists():
         for e in demo_cli.run_replay(json.loads(real.read_text(encoding="utf-8"))):
             for s in e["saathi"]:
-                for lang in LANGS:
-                    lines[(s["message_key"], lang, s["mode"], demo_cli.render(s["message_key"], s["slots"], lang))] = s["slots"]
+                add(s["message_key"], s["slots"], s["mode"])
     for key, t in demo_cli.T["templates"].items():
-        if "{" in t["en"]:
+        if "{" in json.dumps(t["en"], ensure_ascii=False):
             continue
-        for lang in LANGS:
-            lines[(key, lang, default_mode(key), demo_cli.render(key, {}, lang))] = {}
+        add(key, {}, default_mode(key))
     return sorted(lines.items())
 
 
@@ -99,11 +104,11 @@ async def main():
     lines = collect_lines()
     entries, jobs = [], []
     sem = asyncio.Semaphore(CONCURRENCY)
-    for (key, lang, mode, text), slots in lines:
+    for (key, lang, mode, text), (slots, variant) in lines:
         rel = file_for(lang, mode, text)
         path = ROOT / "frontend" / "public" / rel
         path.parent.mkdir(parents=True, exist_ok=True)
-        entries.append({"message_key": key, "lang": lang, "mode": mode, "text": text, "slots": slots, "file": rel})
+        entries.append({"message_key": key, "lang": lang, "mode": mode, "text": text, "slots": slots, "variant": variant, "file": rel})
         if not path.exists():
             jobs.append(synth(sem, lang, mode, text, path))
     print(f"{len(entries)} lines, {len(jobs)} to synthesize")

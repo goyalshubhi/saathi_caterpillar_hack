@@ -56,6 +56,7 @@ The `demo` scenario must contain, in order: active and belted work, then an idle
 ## SaathiEvent (`examples/saathi_event.json`)
 `{priority, mode, message_key, slots, lang}`
 - priority ∈ safety | care | coaching | info. mode ∈ friendly | alert | care | debrief. lang ∈ en | hi.
+- Optional `variant`: index of the phrasing to speak. The voice queue sets it when a line is accepted (seeded in demo mode, random otherwise). Safety keys always use 0 (a single fixed phrasing).
 
 ## Message keys
 Every `message_key` above must exist in `frontend/src/voice/templates.js`. A test enforces this for the examples.

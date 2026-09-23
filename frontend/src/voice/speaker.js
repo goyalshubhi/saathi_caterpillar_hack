@@ -3,7 +3,7 @@
 //   const speaker = createSpeaker({ manifest: await loadManifest() });   // browser
 //   const speaker = createSpeaker({ synth, Utterance, Audio, manifest });  // tests: fakes
 //
-// speaker.speak(event, { onEnd }) renders the event's line, then:
+// speaker.speak(event, { onEnd }) renders the event's line (phrasing event.variant, default 0), then:
 //   1. plays the pre-generated MP3 if the manifest has this exact (message_key, lang, text)
 //      (offline neural voice, see scripts/generate_audio.py);
 //   2. otherwise uses speechSynthesis. If Hindi is asked for but no Hindi voice is installed, it
@@ -114,20 +114,21 @@ export function createSpeaker({
     const requested = event.lang ?? 'en';
 
     // 1. Pre-generated audio in the requested language (works even without a Hindi TTS voice).
-    const text = render(key, slots, requested);
+    const variant = event.variant ?? 0;
+    const text = render(key, slots, requested, variant);
     const clip = findClip(key, requested, text, event.mode);
     if (clip) {
       if (requested === 'hi') fallbackToEnglish = false;
       playClip(clip, onEnd, () => {
         const lang = effectiveLang(requested);
-        speakTts(event, lang, render(key, slots, lang), onEnd);
+        speakTts(event, lang, render(key, slots, lang, variant), onEnd);
       });
       return { text, lang: requested, source: 'audio' };
     }
 
     // 2. speechSynthesis, falling back to English when there is no Hindi voice.
     const lang = effectiveLang(requested);
-    const spokenText = lang === requested ? text : render(key, slots, lang);
+    const spokenText = lang === requested ? text : render(key, slots, lang, variant);
     const fallbackClip = lang !== requested ? findClip(key, lang, spokenText, event.mode) : null;
     if (fallbackClip) {
       playClip(fallbackClip, onEnd, () => speakTts(event, lang, spokenText, onEnd));

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createSpeaker, loadManifest } from './speaker.js';
-import { render } from './templates.js';
+import { render, variantCount } from './templates.js';
 
 const BELT_HI = render('belt_before_move', {}, 'hi');
 const BELT_EN = render('belt_before_move', {}, 'en');
@@ -162,7 +162,7 @@ describe('committed audio manifest', () => {
   it('every entry matches what render() produces in JS, and its MP3 exists', () => {
     expect(manifest.entries.length).toBeGreaterThan(20);
     for (const e of manifest.entries) {
-      expect(render(e.message_key, e.slots, e.lang), `${e.message_key}/${e.lang}`).toBe(e.text);
+      expect(render(e.message_key, e.slots, e.lang, e.variant), `${e.message_key}#${e.variant}/${e.lang}`).toBe(e.text);
       expect(existsSync(publicDir + e.file), e.file).toBe(true);
     }
   });
@@ -172,5 +172,15 @@ describe('committed audio manifest', () => {
     for (const key of ['belt_before_move', 'seatbelt_unfastened', 'safety_alert', 'break_time', 'care_break', 'cmd_quiet_on', 'cmd_quiet_off']) {
       for (const lang of ['en', 'hi']) expect(have.has(`${key}/${lang}`), `${key}/${lang}`).toBe(true);
     }
+  });
+
+  it('has an MP3 for every phrasing of each recorded line', () => {
+    const variants = new Map();
+    for (const e of manifest.entries) {
+      const k = `${e.message_key}|${e.lang}|${e.mode}|${JSON.stringify(e.slots)}`;
+      if (!variants.has(k)) variants.set(k, { key: e.message_key, seen: new Set() });
+      variants.get(k).seen.add(e.variant);
+    }
+    for (const { key, seen } of variants.values()) expect(seen.size, key).toBe(variantCount(key));
   });
 });
