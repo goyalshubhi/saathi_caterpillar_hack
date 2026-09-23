@@ -350,13 +350,14 @@ def test_first_shift_debrief_uses_neutral_template():
     assert _keys(debrief_lines(_pred(1.0, 0.5), history_available=False)) == ["debrief_near_time"]
 
 
-def test_first_shift_drift_line_is_neutral_other_findings_unchanged():
-    found = findings(scenario("demo"))
-    first = _keys(finding_lines(found, history_available=False))
-    usual = _keys(finding_lines(found, history_available=True))
-    assert "finding.fatigue_drift_first_shift" in first and "finding.fatigue_drift" not in first
-    assert usual == [f["message_key"] for f in found]
-    assert [k for k in first if "fatigue" not in k] == [k for k in usual if "fatigue" not in k]
+def test_drift_line_identical_for_new_and_experienced_operators():
+    # The detector only compares within the shift, so the drift wording never depends on history.
+    new_op = [dict(w, operator_id="OP9999") for w in scenario("demo")]
+    assert not operator_history("OP9999")["history_available"] and operator_history("OP1001")["history_available"]
+    lines_new, lines_known = finding_lines(findings(new_op)), finding_lines(findings(scenario("demo")))
+    assert lines_new == lines_known
+    assert {"message_key": "finding.fatigue_drift", "slots": {"windows": 2}} in lines_known
+    assert _keys(lines_known) == [f["message_key"] for f in findings(scenario("demo"))]
 
 
 def test_new_operator_gets_no_drift_until_two_hours():

@@ -62,4 +62,4 @@ Every `message_key` above must exist in `frontend/src/voice/templates.js`. A tes
 
 ## OperatorHistory (`examples/operator_history.json`)
 `GET /operators/{operator_id}/history` -> `{operator_id, shift_count, history_available}`. Counts the operator's past shifts in the on-device telemetry; read-only, nothing is stored.
-- `history_available: false` = first tracked shift: use `debrief_lines(..., history_available=False)` / `finding_lines(...)` so no line claims a personal comparison (`debrief_over_first_shift`, `finding.fatigue_drift_first_shift`).
+- `history_available: false` = first tracked shift: use `debrief_lines(..., history_available=False)` so the overrun line is `debrief_over_first_shift`. Finding lines (`finding_lines(findings)`) are the same for every operator.

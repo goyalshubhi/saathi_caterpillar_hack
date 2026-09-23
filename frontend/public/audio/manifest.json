@@ -457,29 +457,15 @@
    "message_key": "finding.fatigue_drift",
    "lang": "en",
    "mode": "care",
-   "text": "Your rhythm is slowing down. A short break will help.",
-   "file": "audio/en/e938f4530317e95b.mp3"
+   "text": "The pace has slowed compared with earlier in this shift. A short break will help.",
+   "file": "audio/en/0e2c48122a0506f9.mp3"
   },
   {
    "message_key": "finding.fatigue_drift",
    "lang": "hi",
    "mode": "care",
-   "text": "आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।",
-   "file": "audio/hi/e3c58bdd27f1cdae.mp3"
-  },
-  {
-   "message_key": "finding.fatigue_drift_first_shift",
-   "lang": "en",
-   "mode": "friendly",
-   "text": "The pace has slowed compared with earlier in this shift. A short break will help.",
-   "file": "audio/en/7f3fabfd814359f7.mp3"
-  },
-  {
-   "message_key": "finding.fatigue_drift_first_shift",
-   "lang": "hi",
-   "mode": "friendly",
    "text": "इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।",
-   "file": "audio/hi/40d09431caf00c8f.mp3"
+   "file": "audio/hi/fdea180f782afdf0.mp3"
   },
   {
    "message_key": "cmd_log_incident",

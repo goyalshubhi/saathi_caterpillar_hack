@@ -167,12 +167,8 @@ def debrief_lines(prediction: dict, history_available: bool = True) -> list[dict
     return lines
 
 
-# Finding lines that imply knowing the operator's own habits -> neutral first-shift variant.
-FIRST_SHIFT_VARIANTS = {"finding.fatigue_drift": "finding.fatigue_drift_first_shift"}
-
-
-def finding_lines(findings: list[dict], history_available: bool = True) -> list[dict]:
-    """[{message_key, slots}] to speak for BehaviorFindings; neutral wording on a first shift."""
-    return [{"message_key": f["message_key"] if history_available
-             else FIRST_SHIFT_VARIANTS.get(f["message_key"], f["message_key"]), "slots": f["slots"]}
-            for f in findings]
+def finding_lines(findings: list[dict]) -> list[dict]:
+    """[{message_key, slots}] to speak for BehaviorFindings. Same for every operator: no finding
+    compares against a personal history (drift compares the last hour with earlier in the same
+    shift), so no line may claim one."""
+    return [{"message_key": f["message_key"], "slots": f["slots"]} for f in findings]

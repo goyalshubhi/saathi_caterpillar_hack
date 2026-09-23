@@ -161,11 +161,8 @@ export const TEMPLATES = {
     en: '{count} safety alerts within {minutes} minutes.',
     hi: '{minutes} मिनट में {count} सुरक्षा चेतावनियाँ आईं।',
   },
+  // Intra-shift comparison only (the detector never uses personal history): same for every operator.
   'finding.fatigue_drift': {
-    en: 'Your rhythm is slowing down. A short break will help.',
-    hi: 'आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।',
-  },
-  'finding.fatigue_drift_first_shift': {
     en: 'The pace has slowed compared with earlier in this shift. A short break will help.',
     hi: 'इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।',
   },

@@ -160,7 +160,7 @@ def main():
         for line in debrief_lines(d, history["history_available"]):   # attribution only for overruns >= 3 min
             say(line["message_key"], line["slots"], mode="debrief")
         findings = ok(api.post("/behavior/analyze", json={"windows": scenario["windows"]}))
-        for f, line in zip(findings, finding_lines(findings, history["history_available"])):
+        for f, line in zip(findings, finding_lines(findings)):
             print(f"   finding: {f['type']} ({f['severity']}) at {f['window_timestamp']}")
             say(line["message_key"], line["slots"], mode="debrief")
 
@@ -177,7 +177,7 @@ def main():
             fatigue = [f for f in ok(api.post("/behavior/analyze", json={"windows": ok(r)["windows"]}))
                        if f["type"] == "fatigue_drift"]
             if fatigue:
-                line = finding_lines(fatigue[:1], history["history_available"])[0]
+                line = finding_lines(fatigue[:1])[0]
                 say(line["message_key"], line["slots"], mode="care", priority="care")
                 say("care_break", mode="care", priority="care")
             else:
