@@ -226,6 +226,9 @@ kbd {
 .saathi-chip--quiet .saathi-chip__dot { background: var(--text-dim); }
 .saathi-chip--listening { border-color: var(--success); }
 .saathi-chip--listening .saathi-chip__state { color: var(--success); }
+.saathi-chip--listening .saathi-chip__dot { background: var(--success); animation: chip-pulse 1s ease-in-out infinite; }
+@keyframes chip-pulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .saathi-chip--listening .saathi-chip__dot { animation: none; } }
 
 /* rail */
 .rail {
@@ -361,3 +364,4 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+

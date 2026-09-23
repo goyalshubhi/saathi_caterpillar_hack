@@ -112,7 +112,7 @@ export default function PreTask() {
       <footer className="screen-foot">
         <button type="button" className="btn btn--primary btn--xl" onClick={() => go(`/intask/${taskId}`)} data-testid="go-intask"
           title={t('startThisTaskTip')}>
-          <Play size={34} fill="currentColor" aria-hidden="true" /> {t('startThisTask')}: {taskTypeLabel(task.task_type, lang)}
+          <Play size={34} fill="currentColor" aria-hidden="true" /> {t('beginWork')}: {taskTypeLabel(task.task_type, lang)}
         </button>
       </footer>
     </div>
