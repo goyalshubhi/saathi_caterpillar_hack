@@ -15,3 +15,5 @@
 - [services] Replay idle = machine_active false OR idling_time_min >= 10 in the window; idle lesson plays once per idle stretch once it reaches 10 min.
 - [services] demo-cli drives the API in-process with FastAPI TestClient on a temp DB (no server to start); in-task lines come from the real JS replay via scripts/replay_cli.mjs.
 - [services] Makefile sets APPDATA via cygpath when MSYS make drops it (otherwise pip --user packages are invisible).
+- [services] Contracts aligned to what intel built (PLAN.md left these open): weather is a list `{hour, temperature_c, rain, wind_kmh}`; `scenario()` returns a window list and the API wraps it as `{name, task_id, windows}` with task_id = first task of today's plan; message keys are dotted (`warn.*`, `finding.*`); break reason `regular|heat`; telemetry timestamps in CSV style.
+- [services] `contracts/examples/demo_scenario.json` is exported from the real API by `make export-scenario`; the JS integration test replays it through replay -> rules -> queue.

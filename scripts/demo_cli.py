@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message="Using `httpx`")
 from fastapi.testclient import TestClient  # noqa: E402
 
 from backend.api import config  # noqa: E402

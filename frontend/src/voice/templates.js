@@ -141,8 +141,8 @@ export const TEMPLATES = {
     hi: 'मशीन {minutes} मिनट तक खाली चलती रही।',
   },
   'finding.fuel_without_work': {
-    en: '{fuel_l} litres of fuel were used for only {load_cycles} load cycles.',
-    hi: 'सिर्फ़ {load_cycles} लोड चक्र के लिए {fuel_l} लीटर ईंधन खर्च हुआ।',
+    en: '{fuel_l} litres of fuel were burned with little or no work done.',
+    hi: 'बहुत कम या बिना काम के {fuel_l} लीटर ईंधन खर्च हुआ।',
   },
   'finding.unbelted_active': {
     en: 'The seatbelt was off while working for {minutes} minutes.',
