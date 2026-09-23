@@ -7,7 +7,7 @@ ifeq ($(APPDATA),)
 export APPDATA := $(shell cygpath -w -F 26 2>/dev/null)
 endif
 
-.PHONY: setup test test-backend test-js dev demo-cli
+.PHONY: setup test test-backend test-js dev demo-cli export-scenario
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -27,3 +27,6 @@ dev:
 demo-cli:
 	node scripts/export_templates.mjs
 	$(PY) scripts/demo_cli.py
+
+export-scenario:
+	$(PY) scripts/export_scenario.py

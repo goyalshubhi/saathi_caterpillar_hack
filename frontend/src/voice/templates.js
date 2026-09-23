@@ -196,7 +196,7 @@ export const VOCAB = {
   time_of_day: { en: 'time of day', hi: 'दिन के समय' },
 };
 
-const AND = { en: 'and', hi: 'और' };
+export const AND = { en: 'and', hi: 'और' };
 
 export const LANGS = ['en', 'hi'];
 

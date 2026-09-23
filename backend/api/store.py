@@ -4,6 +4,7 @@ Neither table has an operator_id column: behaviour data about a person never lan
 """
 import json
 import sqlite3
+from contextlib import contextmanager
 from datetime import datetime, timedelta
 
 from backend.api.config import MEMORY_TTL_HOURS
@@ -39,10 +40,16 @@ class Store:
         with self._conn() as c:
             c.executescript(SCHEMA)
 
+    @contextmanager
     def _conn(self):
+        """One short-lived connection per operation: commit on success, always close."""
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
-        return conn
+        try:
+            yield conn
+            conn.commit()
+        finally:
+            conn.close()
 
     def reset(self):
         with self._conn() as c:
