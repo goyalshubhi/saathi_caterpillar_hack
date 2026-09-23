@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import pytest
 from fastapi.testclient import TestClient
 
+from backend.api import config
 from backend.api.main import create_app
 
 
@@ -121,6 +122,27 @@ def test_memory_note_expires_after_48h(client):
     note = client.post("/memory/EXC001", json={"message_key": "memory_incident", "slots": {"category": "other"}}).json()
     assert note["expires_at"] == "2026-09-25T09:00:00"
     assert set(note) == {"id", "machine_id", "created_at", "expires_at", "message_key", "slots"}
+
+
+def test_weather_note_expires_after_12h_other_notes_48h(client, clock):
+    weather = client.post("/memory/EXC001", json={"message_key": "warn.rain_trench_edge", "slots": {"distance_m": 2}}).json()
+    incident = client.post("/incidents", json={"machine_id": "EXC001", "category": "near_miss"}).json()
+    assert weather["expires_at"] == "2026-09-23T21:00:00"                        # 12 h
+    notes = client.get("/memory/EXC001").json()
+    assert {n["message_key"] for n in notes} == {"warn.rain_trench_edge", "memory_incident"}
+    assert next(n for n in notes if n["message_key"] == "memory_incident")["expires_at"] == "2026-09-25T09:00:00"
+    clock.t += timedelta(hours=12, minutes=1)                                    # weather note is stale
+    assert [n["message_key"] for n in client.get("/memory/EXC001").json()] == ["memory_incident"]
+    clock.t += timedelta(hours=35, minutes=58)                                   # 47:59 after creation
+    assert [n["message_key"] for n in client.get("/memory/EXC001").json()] == ["memory_incident"]
+    clock.t += timedelta(minutes=2)                                              # 48:01
+    assert client.get("/memory/EXC001").json() == []
+    assert incident["category"] == "near_miss"
+
+
+def test_note_ttl_lookup():
+    assert config.note_ttl_hours("warn.heat_hydration") == config.WEATHER_NOTE_TTL_HOURS == 12
+    assert config.note_ttl_hours("memory_incident") == config.MEMORY_TTL_HOURS == 48
 
 
 def test_expired_notes_hidden(client, clock):

@@ -286,3 +286,44 @@ def test_gate_keeps_demo_and_crafted_drift():
     earlier, last = drift._split_last_hour(demo)
     assert drift.looks_like_fatigue(earlier, last)
     assert _drift(findings(demo)) and _drift(findings(_drifting()))
+
+
+# ---------- debrief wording: no attribution for trivial overruns ----------
+
+from backend.ml import MIN_ATTRIBUTION_OVERRUN_MIN, debrief_lines  # noqa: E402
+
+
+def _pred(unc, ctl, factors=(("weather", None),)):
+    return {"task_id": "T1", "cat_estimate_min": 45, "predicted_min": 45 + unc, "uncontrollable_min": unc,
+            "controllable_min": ctl, "top_factors": [{"name": n, "minutes": m if m is not None else unc} for n, m in factors]}
+
+
+def _keys(lines):
+    return [line["message_key"] for line in lines]
+
+
+def test_slightly_over_gets_numbers_only_no_attribution():
+    assert MIN_ATTRIBUTION_OVERRUN_MIN == 3
+    for unc, ctl in [(1.0, 0.0), (1.5, 0.4), (0.8, 1.2), (2.9, 0.0)]:
+        lines = debrief_lines(_pred(unc, ctl))
+        assert _keys(lines) == ["debrief_near_time"], (unc, ctl)
+        assert "debrief_not_your_fault" not in _keys(lines) and "debrief_over" not in _keys(lines)
+        assert lines[0]["slots"] == {"over_min": round(unc + ctl)}
+
+
+def test_on_time_is_neutral():
+    assert _keys(debrief_lines(_pred(0.0, 0.0, factors=()))) == ["debrief_on_time"]
+    assert _keys(debrief_lines(_pred(0.3, 0.1))) == ["debrief_on_time"]      # rounds to 0 minutes
+
+
+def test_attribution_from_threshold_up():
+    assert _keys(debrief_lines(_pred(3.0, 0.0))) == ["debrief_over", "debrief_not_your_fault"]
+    assert _keys(debrief_lines(_pred(1.0, 4.0))) == ["debrief_over"]         # mostly controllable: no excuse
+
+
+def test_demo_debrief_lines_unchanged():
+    d = debrief(todays_tasks()[0], scenario("demo"))
+    lines = debrief_lines(d)
+    assert _keys(lines) == ["debrief_over", "debrief_not_your_fault"]
+    assert lines[0]["slots"] == {"over_min": 9, "uncontrollable_min": 6, "controllable_min": 3,
+                                 "factors": ["weather", "machine_age"]}

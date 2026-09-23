@@ -22,6 +22,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 from backend.api import config  # noqa: E402
 from backend.api.main import create_app  # noqa: E402
+from backend.ml.estimator import debrief_lines  # noqa: E402
 
 MACHINE = "EXC001"
 TEMPLATES_JSON = ROOT / "scripts" / "out" / "templates.json"
@@ -153,15 +154,8 @@ def main():
 
         step(5, "Debrief")
         d = ok(api.post("/debrief", json={"task_id": task["task_id"], "windows": scenario["windows"]}))
-        over = mins(d["uncontrollable_min"] + d["controllable_min"])
-        if over > 0:
-            factors = [f["name"] for f in sorted(d["top_factors"], key=lambda f: -f["minutes"]) if f["minutes"] > 0][:2]
-            say("debrief_over", {"over_min": over, "uncontrollable_min": mins(d["uncontrollable_min"]),
-                                 "controllable_min": mins(d["controllable_min"]), "factors": factors}, mode="debrief")
-            if d["uncontrollable_min"] >= d["controllable_min"]:
-                say("debrief_not_your_fault", mode="debrief")
-        else:
-            say("debrief_on_time", mode="debrief")
+        for line in debrief_lines(d):     # attribution only for overruns >= MIN_ATTRIBUTION_OVERRUN_MIN
+            say(line["message_key"], line["slots"], mode="debrief")
         findings = ok(api.post("/behavior/analyze", json={"windows": scenario["windows"]}))
         for f in findings:
             print(f"   finding: {f['type']} ({f['severity']}) at {f['window_timestamp']}")

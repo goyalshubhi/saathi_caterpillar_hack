@@ -43,7 +43,7 @@ FIXED_MODES = {
     "belt_before_move": "alert", "seatbelt_unfastened": "alert", "proximity_alert": "alert",
     "safety_alert": "alert", "memory_incident": "alert",
     "break_time": "care", "care_break": "care", "finding.fatigue_drift": "care",
-    "debrief_on_time": "debrief", "debrief_not_your_fault": "debrief",
+    "debrief_on_time": "debrief", "debrief_near_time": "debrief", "debrief_not_your_fault": "debrief",
 }
 MACHINES = ["EXC001", "EXC002"]
 CATEGORIES = ["near_miss", "person_in_zone", "machine_issue", "other"]
@@ -51,6 +51,7 @@ FIXED_SLOT_LINES = (
     [("shift_hello", {"machine_id": m}) for m in MACHINES]
     + [("memory_incident", {"category": c}) for c in CATEGORIES]
     + [("incident_logged", {"category": c}) for c in CATEGORIES]
+    + [("debrief_near_time", {"over_min": m}) for m in (1, 2)]   # below the attribution threshold
 )
 
 

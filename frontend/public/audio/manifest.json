@@ -620,6 +620,34 @@
    "mode": "friendly",
    "text": "दर्ज कर लिया: एक समस्या। धन्यवाद, अगली शिफ्ट को पता रहेगा।",
    "file": "audio/hi/4a32c24029dcec62.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "1 minutes over. Close to plan.",
+   "file": "audio/en/6baa020af028db64.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "1 मिनट ज़्यादा लगे। लगभग योजना के अनुसार।",
+   "file": "audio/hi/1022bfa1bb23c6c4.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "2 minutes over. Close to plan.",
+   "file": "audio/en/6e7e9fa10ad60d37.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "2 मिनट ज़्यादा लगे। लगभग योजना के अनुसार।",
+   "file": "audio/hi/61e8aabd520ce1e1.mp3"
   }
  ]
 }

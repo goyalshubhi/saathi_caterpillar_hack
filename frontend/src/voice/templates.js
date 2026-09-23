@@ -127,6 +127,10 @@ export const TEMPLATES = {
     en: '{over_min} minutes over. About {uncontrollable_min} from {factors}, about {controllable_min} from idle gaps.',
     hi: '{over_min} मिनट ज़्यादा लगे। लगभग {uncontrollable_min} मिनट {factors} की वजह से, और लगभग {controllable_min} मिनट रुकावटों से।',
   },
+  debrief_near_time: {
+    en: '{over_min} minutes over. Close to plan.',
+    hi: '{over_min} मिनट ज़्यादा लगे। लगभग योजना के अनुसार।',
+  },
   debrief_on_time: {
     en: 'Finished on time. Well done.',
     hi: 'काम समय पर पूरा हुआ। बहुत बढ़िया।',

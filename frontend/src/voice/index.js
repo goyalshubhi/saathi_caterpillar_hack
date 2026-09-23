@@ -3,4 +3,5 @@ export { TEMPLATES, VOCAB, LANGS, render, hasTemplate, slotNames } from './templ
 export { MODES, modeSettings } from './modes.js';
 export { createSpeaker, VOICE_LANGS } from './speaker.js';
 export { createQueue, PRIORITY_ORDER } from './queue.js';
-export { COMMANDS, matchCommand } from './commands.js';
+export { createBriefingGuard } from './briefing.js';
+export { COMMANDS, MIN_COMMAND_CONFIDENCE, MIN_PHRASE_WORDS, matchCommand } from './commands.js';
