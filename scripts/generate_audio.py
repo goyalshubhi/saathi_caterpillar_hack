@@ -4,7 +4,8 @@ Lines rendered:
   - every line Saathi says in the headless demo (scripts/demo_cli.py, same template rendering), and
   - every phrasing (variant) of each of those lines, and
   - every fixed line (templates without slots: safety alerts, belt-before-you-move, breaks,
-    lessons, quiet-mode confirmations ...),
+    lessons, quiet-mode confirmations ...), plus greetings, memory notes and incident
+    confirmations per machine / incident category and the near-time debrief (FIXED_SLOT_LINES),
 in English (en-IN) and Hindi (hi-IN). Each voice mode's pitch/rate/volume from modes.js is mapped
 to edge-tts prosody parameters.
 
@@ -30,9 +31,19 @@ VOICES = {"en": "en-IN-PrabhatNeural", "hi": "hi-IN-MadhurNeural"}
 LANGS = ("hi", "en")
 CONCURRENCY = 4
 
-# Mode used for fixed (slot-free) lines; matches what the replay rules / demo use for these keys.
-ALERT_KEYS = {"belt_before_move", "seatbelt_unfastened", "safety_alert", "proximity_alert"}
-CARE_KEYS = {"break_time", "care_break"}
+# Mode used for fixed lines; matches what the replay rules / demo / UI use for these keys.
+ALERT_KEYS = {"belt_before_move", "seatbelt_unfastened", "safety_alert", "proximity_alert", "memory_incident"}
+CARE_KEYS = {"break_time", "care_break", "finding.fatigue_drift"}   # drift as spoken on the care break
+
+# Lines with slots that the app says outside the scripted demo run, so they get MP3s too.
+MACHINES = ["EXC001", "EXC002"]
+CATEGORIES = ["near_miss", "person_in_zone", "machine_issue", "other"]
+FIXED_SLOT_LINES = (
+    [("shift_hello", {"machine_id": m}) for m in MACHINES]
+    + [("memory_incident", {"category": c}) for c in CATEGORIES]
+    + [("incident_logged", {"category": c}) for c in CATEGORIES]
+    + [("debrief_near_time", {"over_min": m}) for m in (1, 2)]   # below the attribution threshold
+)
 
 
 def default_mode(key):
@@ -78,6 +89,8 @@ def collect_lines():
         if "{" in json.dumps(t["en"], ensure_ascii=False):
             continue
         add(key, {}, default_mode(key))
+    for key, slots in FIXED_SLOT_LINES:
+        add(key, slots, default_mode(key))
     return sorted(lines.items())
 
 

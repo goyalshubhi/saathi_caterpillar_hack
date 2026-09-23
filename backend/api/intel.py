@@ -44,3 +44,7 @@ def findings(windows):
 
 def day_plan(tasks, weather):
     return planner.day_plan(tasks, weather)
+
+
+def operator_history(operator_id):
+    return ml.operator_history(operator_id)

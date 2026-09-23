@@ -1,7 +1,11 @@
 """Fatigue drift (P1): IsolationForest on per-window behaviour, checked over the last hour of a shift.
 
+A sustained anomaly only counts as fatigue if it also looks like fatigue rather than harder work:
+completed load cycles dropped versus earlier in the shift, or safety lapses (unbelted / alerts).
+Harder terrain makes cycles slower and costlier but still completes them, so it is not flagged.
 Falls back to a simple rule when no trained model is available.
 """
+import statistics
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -20,6 +24,9 @@ MIN_FLAGGED = 2             # anomalous working windows needed in the last hour
 MIN_HISTORY = 8             # need at least 2 h of windows before judging drift
 RULE_IDLE_RISE = 0.1        # fallback: last-hour idle share this much above the earlier average
 RULE_MIN_LAPSES = 2         # fallback: unbelted-while-active or alert windows in the last hour
+THROUGHPUT_DROP = 0.8       # fatigue-like: last-hour median cycles <= 80% of the shift's earlier median
+GATE_MIN_LAPSES = 2         # ...or at least this many unbelted/alert windows in the last hour
+SHIFT_GAP = timedelta(minutes=WINDOW_MIN)
 
 _model = None
 
@@ -66,6 +73,32 @@ def _split_last_hour(group):
     return [w for w in active if w not in last], last
 
 
+def _current_shift(group):
+    """Windows after the last gap longer than one window (one operator's windows can span days)."""
+    start = 0
+    for i in range(1, len(group)):
+        gap = datetime.strptime(group[i]["timestamp"], TS_FORMAT) - datetime.strptime(group[i - 1]["timestamp"], TS_FORMAT)
+        if gap > SHIFT_GAP:
+            start = i
+    return group[start:]
+
+
+def _lapses(windows):
+    return [w for w in windows if w["seatbelt_status"] == "Unfastened" or w["safety_alert_triggered"] == "Yes"]
+
+
+def throughput_ratio(earlier, last):
+    """Median load cycles in the last hour / median over the earlier working windows (None if unknown)."""
+    base = statistics.median(w["load_cycles"] for w in earlier) if earlier else 0
+    return statistics.median(w["load_cycles"] for w in last) / base if base else None
+
+
+def looks_like_fatigue(earlier, last):
+    """Throughput fell, or safety lapses: things harder terrain alone does not explain."""
+    ratio = throughput_ratio(earlier, last)
+    return (ratio is not None and ratio <= THROUGHPUT_DROP) or len(_lapses(last)) >= GATE_MIN_LAPSES
+
+
 def _model_flags(model, last):
     """Last-hour windows the forest scores below its threshold (decision_function < 0).
     Drift = sustained: at least MIN_FLAGGED of them, including the latest MIN_FLAGGED in a row,
@@ -78,7 +111,7 @@ def _model_flags(model, last):
 
 
 def _rule_flags(earlier, last):
-    lapses = [w for w in last if w["seatbelt_status"] == "Unfastened" or w["safety_alert_triggered"] == "Yes"]
+    lapses = _lapses(last)
     if not earlier or len(lapses) < RULE_MIN_LAPSES:
         return []
     idle = lambda ws: sum(w["idling_time_min"] for w in ws) / (WINDOW_MIN * len(ws))
@@ -92,7 +125,13 @@ def fatigue_drift(windows, use_model=True):
         earlier, last = _split_last_hour(group)
         if not last:
             continue
-        flagged = _model_flags(model, last) if model is not None else _rule_flags(earlier, last)
+        if model is not None:
+            shift = _current_shift(group)
+            flagged = _model_flags(model, last)
+            if flagged and not looks_like_fatigue([w for w in earlier if w in shift], last):
+                flagged = []            # anomalous but throughput kept and no lapses: harder work, not fatigue
+        else:
+            flagged = _rule_flags(earlier, last)
         if flagged:
             out.append({"type": "fatigue_drift", "severity": "medium", "window_timestamp": flagged[0]["timestamp"],
                         "message_key": "finding.fatigue_drift", "slots": {"windows": len(flagged)}})
