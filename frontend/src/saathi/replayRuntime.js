@@ -5,9 +5,13 @@ import { createPlayer, createRules } from '../replay/index.js';
 import { store, addLog, markArch, patchReplay } from '../state/store.js';
 import { say, startTask } from './voiceRuntime.js';
 
+// Speeds are multiples of the demo pace: 1× plays one 15-min window every 5 s (engine speed 180),
+// so 10× is one every 0.5 s and 60× one every ~0.08 s. The store keeps the multiple.
 export const SPEEDS = [1, 10, 60];
-export const DEMO_SPEED = 180; // demo pace: one 15-min window every 5 s
-export const MAX_SPEED = 6000;
+export const BASE_SPEED = 180;
+export const DEMO_SPEED = 1;
+export const MAX_SPEED = 60;
+const engineSpeed = (speed) => speed * BASE_SPEED;
 
 let player = null;
 let doneWaiters = [];
@@ -26,7 +30,7 @@ export function startReplay(scenario, { speed = store.get().replay.speed, lesson
   patchReplay({ taskId: scenario.task_id, index: 0, total: scenario.windows.length, idle: false, playing: true, done: false, speed, window: null });
   store.set({ safety: null, lesson: null });
   const p = createPlayer(scenario.windows, {
-    speed,
+    speed: engineSpeed(speed),
     onEvent(e) {
       if (e.type === 'tick') {
         const w = e.window;
@@ -83,7 +87,7 @@ export function resumeReplay() {
 
 export function setReplaySpeed(speed) {
   patchReplay({ speed });
-  player?.setSpeed(speed);
+  player?.setSpeed(engineSpeed(speed));
 }
 
 export function replayActive() {

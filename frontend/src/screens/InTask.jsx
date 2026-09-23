@@ -9,6 +9,7 @@ import { store, useStore } from '../state/store.js';
 import { useT, taskTypeLabel, lessonTitle } from '../i18n.js';
 import { loadDay, loadScenario, ensurePrediction } from '../saathi/actions.js';
 import { startReplay, pauseReplay, resumeReplay, setReplaySpeed, replayActive, SPEEDS } from '../saathi/replayRuntime.js';
+import { togglePause } from '../demo/demo.js';
 import { SafetyBanner } from '../components/Overlays.jsx';
 import IncidentButtons from '../components/IncidentButtons.jsx';
 import { TaskIcon } from '../components/icons.jsx';
@@ -23,6 +24,14 @@ export default function InTask() {
   const prediction = useStore((s) => s.predictions[taskId]);
   const replay = useStore((s) => s.replay);
   const lesson = useStore((s) => s.lesson);
+  const demoRunning = useStore((s) => s.demo.running);
+
+  // During the demo, pause holds the whole demo (its step would otherwise time out and move on).
+  const togglePlay = () => {
+    if (demoRunning) togglePause();
+    else if (replay.playing) pauseReplay();
+    else resumeReplay();
+  };
 
   // Start the replay for this task unless it is already running (e.g. coming back from Incidents).
   useEffect(() => {
@@ -57,15 +66,15 @@ export default function InTask() {
           {working ? t('working') : t('idle')}
         </span>
         <div className="speed-control" role="group" aria-label="Replay speed">
-          <button type="button" className="speed-control__btn" onClick={() => (replay.playing ? pauseReplay() : resumeReplay())} aria-label={replay.playing ? 'Pause replay' : 'Play replay'} title={replay.playing ? 'Pause replay' : 'Play replay'} disabled={replay.done}>
+          <button type="button" className="speed-control__btn" onClick={togglePlay} data-testid="replay-toggle" aria-label={replay.playing ? 'Pause replay' : 'Play replay'} title={replay.playing ? 'Pause replay' : 'Play replay'} disabled={replay.done}>
             {replay.playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
           </button>
           {SPEEDS.map((s) => (
-            <button key={s} type="button" className={`speed-control__btn ${replay.speed === s ? 'is-on' : ''}`} onClick={() => setReplaySpeed(s)} aria-pressed={replay.speed === s} title={`Replay speed ${s}×`}>
+            <button key={s} type="button" className={`speed-control__btn ${replay.speed === s ? 'is-on' : ''}`} onClick={() => setReplaySpeed(s)} aria-pressed={replay.speed === s} title={`Replay speed ${s}×`} data-testid={`speed-${s}`}>
               {s}×
             </button>
           ))}
-          {!SPEEDS.includes(replay.speed) && <span className="speed-control__btn is-on" title="Demo pace">{replay.speed > 1000 ? 'max' : `${replay.speed}×`}</span>}
+          {!SPEEDS.includes(replay.speed) && <span className="speed-control__btn is-on" title="Instant">max</span>}
         </div>
       </header>
 

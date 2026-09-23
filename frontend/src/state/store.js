@@ -44,7 +44,7 @@ export function initialState() {
     incidentFlash: null, // category the demo "taps", so the button lights up
 
     // replay
-    replay: { taskId: null, index: 0, total: 0, idle: false, playing: false, done: false, speed: 60, window: null },
+    replay: { taskId: null, index: 0, total: 0, idle: false, playing: false, done: false, speed: 1, window: null },
 
     // Stage View logs (newest first)
     log: { telemetry: [], events: [], queue: [], model: [] },

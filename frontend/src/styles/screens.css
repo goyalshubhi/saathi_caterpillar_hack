@@ -159,7 +159,8 @@
 }
 .machine-state__dot { width: 18px; height: 18px; border-radius: 50%; background: currentColor; }
 .machine-state.is-idle { background: var(--surface-2); color: var(--text-muted); border-color: var(--line-strong); }
-.speed-control { display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+/* Above the safety banner (z-index 40) so the replay stays controllable during an alert. */
+.speed-control { position: relative; z-index: 41; display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
 .speed-control__btn {
   display: grid;
   place-items: center;
