@@ -38,6 +38,10 @@ def debrief(task, windows):
     return ml.debrief(task, windows)
 
 
+def debrief_lines(prediction, history_available):
+    return ml.debrief_lines(prediction, history_available)
+
+
 def findings(windows):
     return ml.findings(windows)
 

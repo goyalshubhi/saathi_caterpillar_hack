@@ -30,6 +30,7 @@ The `demo` scenario must contain, in order: active and belted work, then an idle
 `{task_id, cat_estimate_min, predicted_min, uncontrollable_min, controllable_min, top_factors: [{name, minutes}]}`
 - `predict(task)`: controllable_min = 0.
 - `debrief(task, windows)`: the overrun against the CAT estimate is `uncontrollable_min + controllable_min` (this is "9 minutes over" in the demo).
+- `POST /debrief` body `{task_id, windows, operator_id?}` returns the above plus `lines: [{message_key, slots}]` = `debrief_lines(debrief, history_available)` for that operator (no or unknown operator = no history). Clients show and speak these lines as given; they never rebuild them. `debrief_over` / `debrief_over_first_shift` carry the split; `debrief_near_time` (under 3 min over, `examples/debrief_near_time.json`) and `debrief_on_time` carry no attribution. `operator_id` is only read to look up history, never stored or returned.
 - top_factors[].name ∈ weather | temperature | machine_age | operator_skill | time_of_day
 
 ## BehaviorFinding (`examples/behavior_findings.json`)
@@ -63,4 +64,4 @@ Every `message_key` above must exist in `frontend/src/voice/templates.js`. A tes
 
 ## OperatorHistory (`examples/operator_history.json`)
 `GET /operators/{operator_id}/history` -> `{operator_id, shift_count, history_available}`. Counts the operator's past shifts in the on-device telemetry; read-only, nothing is stored.
-- `history_available: false` = first tracked shift: use `debrief_lines(..., history_available=False)` so the overrun line is `debrief_over_first_shift`. Finding lines (`finding_lines(findings)`) are the same for every operator.
+- `history_available: false` = first tracked shift: use `debrief_lines(..., history_available=False)` so the overrun line is `debrief_over_first_shift` (`POST /debrief` does this itself when given `operator_id`). Finding lines (`finding_lines(findings)`) are the same for every operator.

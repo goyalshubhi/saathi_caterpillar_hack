@@ -49,26 +49,21 @@ export function pretaskEvents({ task, prediction, plan }) {
   ];
 }
 
-// The overrun against the CAT estimate, split as the debrief contract defines it.
+// The raw model split (Stage View "Model outputs"); the Debrief screen shows the backend's lines instead.
 export function debriefSplit(d) {
   const uncontrollable = Math.max(0, mins(d.uncontrollable_min));
   const controllable = Math.max(0, mins(d.controllable_min));
   return { over: uncontrollable + controllable, uncontrollable, controllable };
 }
 
-export function topFactorNames(d, n = 2) {
-  return [...(d.top_factors ?? [])].filter((f) => f.minutes > 0).sort((a, b) => b.minutes - a.minutes).slice(0, n).map((f) => f.name);
+// The debrief lines are the backend's (POST /debrief -> lines, from backend.ml.debrief_lines), spoken
+// as given: whether to attribute the overrun, and the first-shift wording, are decided there.
+export const ATTRIBUTED_KEYS = ['debrief_over', 'debrief_over_first_shift'];
+
+export function debriefHeadline(d) {
+  return d?.lines?.[0] ?? null;
 }
 
 export function debriefEvents(d, findings = []) {
-  const { over, uncontrollable, controllable } = debriefSplit(d);
-  const out = [];
-  if (over > 0) {
-    out.push(ev('debrief_over', { over_min: over, uncontrollable_min: uncontrollable, controllable_min: controllable, factors: topFactorNames(d) }, 'info', 'debrief'));
-    if (uncontrollable >= controllable) out.push(ev('debrief_not_your_fault', {}, 'info', 'debrief'));
-  } else {
-    out.push(ev('debrief_on_time', {}, 'info', 'debrief'));
-  }
-  findings.slice(0, 4).forEach((f) => out.push(ev(f.message_key, f.slots, 'info', 'debrief')));
-  return out;
+  return [...(d.lines ?? []), ...findings.slice(0, 4)].map((l) => ev(l.message_key, l.slots, 'info', 'debrief'));
 }

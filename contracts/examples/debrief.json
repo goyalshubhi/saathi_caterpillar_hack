@@ -7,5 +7,9 @@
   "top_factors": [
     {"name": "weather", "minutes": 4},
     {"name": "machine_age", "minutes": 2}
+  ],
+  "lines": [
+    {"message_key": "debrief_over", "slots": {"over_min": 9, "uncontrollable_min": 6, "controllable_min": 3, "factors": ["weather", "machine_age"]}},
+    {"message_key": "debrief_not_your_fault", "slots": {}}
   ]
 }

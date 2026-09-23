@@ -1,5 +1,7 @@
 // Debrief (shown once per task): one stacked bar splitting the overrun into "not in your control" vs
 // "yours to win back", and 2–4 plain-language behaviour-finding cards. Supportive; never a score.
+// What to say is the backend's call (POST /debrief -> lines): the bar shows only when its headline line
+// attributes the overrun (3+ min over); a smaller overrun shows the number alone.
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -8,26 +10,27 @@ import { render } from '../voice/index.js';
 import { store, useStore } from '../state/store.js';
 import { useT, taskTypeLabel, factorLabel, findingTitle } from '../i18n.js';
 import { loadDay, runDebrief } from '../saathi/actions.js';
-import { debriefEvents, debriefSplit } from '../saathi/briefings.js';
+import { ATTRIBUTED_KEYS, debriefEvents, debriefHeadline } from '../saathi/briefings.js';
 import { useBriefing } from '../saathi/useBriefing.js';
 import { LiveAvatar } from '../avatar/Avatar.jsx';
 import { FindingIcon } from '../components/icons.jsx';
 import CountUp from '../components/CountUp.jsx';
 import { useGo } from '../components/routing.js';
 
-export function OverrunBar({ debrief, lang, t }) {
-  const { over, uncontrollable, controllable } = debriefSplit(debrief);
-  if (over <= 0) return null;
+// `line` = the backend's debrief_over / debrief_over_first_shift line; its slots are the split it speaks.
+export function OverrunBar({ debrief, line, lang, t }) {
+  const { over_min: over, uncontrollable_min: uncontrollable, controllable_min: controllable } = line.slots;
+  const parts = Math.max(1, uncontrollable + controllable); // each part is rounded on its own
   const factors = (debrief.top_factors ?? []).filter((f) => f.minutes > 0);
   return (
     <div className="overrun" data-testid="overrun-bar" data-over={over}>
       <div className="overrun__bar" role="img" aria-label={`${uncontrollable} + ${controllable} = ${over} min`}>
         <motion.div className="overrun__seg overrun__seg--uncontrollable" data-testid="seg-uncontrollable" data-minutes={uncontrollable}
-          initial={{ width: 0 }} animate={{ width: `${(uncontrollable / over) * 100}%` }} transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}>
+          initial={{ width: 0 }} animate={{ width: `${(uncontrollable / parts) * 100}%` }} transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}>
           <span>{uncontrollable}</span>
         </motion.div>
         <motion.div className="overrun__seg overrun__seg--controllable" data-testid="seg-controllable" data-minutes={controllable}
-          initial={{ width: 0 }} animate={{ width: `${(controllable / over) * 100}%` }} transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}>
+          initial={{ width: 0 }} animate={{ width: `${(controllable / parts) * 100}%` }} transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}>
           <span>{controllable}</span>
         </motion.div>
       </div>
@@ -84,26 +87,28 @@ export default function Debrief() {
     );
   }
 
-  const split = debrief ? debriefSplit(debrief) : null;
+  const head = debriefHeadline(debrief);
+  const over = head?.slots?.over_min ?? 0;
   return (
     <div className="screen debrief" data-testid="screen-debrief">
       <header className="debrief__head">
         <LiveAvatar size={120} />
         <div>
           <p className="eyebrow">{t('taskDone')} · {task ? taskTypeLabel(task.task_type, lang) : ''}</p>
-          {split && split.over > 0 ? (
-            <h1 className="display debrief__headline">
-              <span className="num-xl num--strong"><CountUp value={split.over} /></span>
+          {over > 0 ? (
+            <h1 className="display debrief__headline" data-testid="debrief-headline" data-over={over}>
+              <span className="num-xl num--strong"><CountUp value={over} /></span>
               <span className="debrief__unit">{t('min')} {t('overEstimate')}</span>
             </h1>
           ) : (
-            <h1 className="display debrief__headline">{split ? t('onTime') : ''}</h1>
+            <h1 className="display debrief__headline" data-testid="debrief-headline">{head ? t('onTime') : ''}</h1>
           )}
+          {head?.message_key === 'debrief_near_time' && <p className="debrief__note" data-testid="debrief-near-time">{t('closeToPlan')}</p>}
         </div>
         <button type="button" className="btn btn--secondary" onClick={() => go('/morning')}><CalendarDays size={26} aria-hidden="true" /> {t('nextTask')}</button>
       </header>
 
-      {debrief && <OverrunBar debrief={debrief} lang={lang} t={t} />}
+      {ATTRIBUTED_KEYS.includes(head?.message_key) && <OverrunBar debrief={debrief} line={head} lang={lang} t={t} />}
 
       <section className="findings" aria-label={t('whatWeNoticed')}>
         <p className="eyebrow">{t('whatWeNoticed')}</p>

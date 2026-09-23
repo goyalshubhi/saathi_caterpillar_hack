@@ -50,7 +50,7 @@ export async function logIncident(category, source = 'tap', note = '') {
 export async function runDebrief(taskId) {
   const scenario = await loadScenario();
   const windows = scenario?.task_id === taskId ? scenario.windows : [];
-  const [debrief, findings] = await Promise.all([api.postDebrief(taskId, windows), api.analyze(windows)]);
+  const [debrief, findings] = await Promise.all([api.postDebrief(taskId, windows, store.get().operator), api.analyze(windows)]);
   store.set({ debrief, findings });
   return { debrief, findings };
 }

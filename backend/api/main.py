@@ -15,6 +15,7 @@ from backend.api.store import Store
 class DebriefIn(BaseModel):
     task_id: str
     windows: list[dict]
+    operator_id: Optional[str] = None  # read-only: picks the first-shift wording, never stored
 
 
 class WindowsIn(BaseModel):
@@ -85,7 +86,11 @@ def create_app(db_path=None, now=datetime.now, train=True):
 
     @app.post("/debrief")
     def debrief(body: DebriefIn):
-        return intel.debrief(find_task(body.task_id), body.windows)
+        # `lines` are ml.debrief_lines(): no attribution below 3 min over, and the CAT-anchored
+        # wording on a first tracked shift. Unknown operator = no history (the neutral wording).
+        d = intel.debrief(find_task(body.task_id), body.windows)
+        history = bool(body.operator_id) and intel.operator_history(body.operator_id)["history_available"]
+        return {**d, "lines": intel.debrief_lines(d, history)}
 
     @app.get("/telemetry/scenario/{name}")
     def scenario(name: str):

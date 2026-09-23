@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore", message="Using `httpx`")
 from fastapi.testclient import TestClient  # noqa: E402
 
 from backend.api.main import create_app  # noqa: E402
-from backend.ml.estimator import debrief_lines, finding_lines  # noqa: E402
+from backend.ml.estimator import finding_lines  # noqa: E402
 
 MACHINE = "EXC001"
 DEMO_SEED = 42  # same demo seed as frontend/src/voice/phrasing.js
@@ -199,11 +199,13 @@ def main(echo=True):
             out(f"   incident list: #{i['id']} {i['timestamp']} {i['category']} ({i['source']})")
 
         step(5, "Debrief")
-        d = ok(api.post("/debrief", json={"task_id": task["task_id"], "windows": scenario["windows"]}))
         # Cold start: on an operator's first tracked shift, no line claims a personal comparison.
-        history = ok(api.get(f"/operators/{scenario['windows'][0]['operator_id']}/history"))
+        operator = scenario["windows"][0]["operator_id"]
+        history = ok(api.get(f"/operators/{operator}/history"))
         out(f"   operator history: {history['shift_count']} past shifts on this device")
-        for line in debrief_lines(d, history["history_available"]):   # attribution only for overruns >= 3 min
+        d = ok(api.post("/debrief", json={"task_id": task["task_id"], "windows": scenario["windows"],
+                                          "operator_id": operator}))
+        for line in d["lines"]:   # the endpoint's debrief_lines(): attribution only for overruns >= 3 min
             say(line["message_key"], line["slots"], mode="debrief")
         findings = ok(api.post("/behavior/analyze", json={"windows": scenario["windows"]}))
         for f, line in zip(findings, finding_lines(findings)):

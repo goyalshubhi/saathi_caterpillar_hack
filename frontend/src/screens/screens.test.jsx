@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // Every operator screen renders with fixture data (API in FIXTURE mode) and speaks what it should.
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, within, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { resetApp, renderAt } from '../test/helpers.jsx';
@@ -8,6 +8,9 @@ import { store, initialState, patchDemo, UNLOCK_KEY } from '../state/store.js';
 import { say, setQuiet, configureVoice } from '../saathi/voiceRuntime.js';
 import { StartOverlay } from '../components/Overlays.jsx';
 import Morning from './Morning.jsx';
+import { fixture } from '../fixtures.js';
+import { forceMode } from '../api.js';
+import nearTime from '../../../contracts/examples/debrief_near_time.json';
 
 let speaker;
 beforeEach(() => {
@@ -87,7 +90,27 @@ describe('In-task', () => {
   });
 });
 
+// A live API (the real api.js client, fetch stubbed) answering from contracts/examples, with POST /debrief
+// returning `debrief`. Returns the POSTed requests.
+function liveApi(debrief) {
+  const posted = [];
+  const answers = {
+    '/tasks/today': fixture('tasksToday'), '/weather/today': fixture('weatherToday'), '/plan/today': fixture('dayPlan'),
+    '/telemetry/scenario/demo': fixture('scenarioDemo'), '/behavior/analyze': fixture('findings'), '/debrief': debrief,
+  };
+  vi.stubGlobal('fetch', async (url, init = {}) => {
+    const path = new URL(url).pathname;
+    if (init.method === 'POST') posted.push({ path, body: JSON.parse(init.body) });
+    const body = path.startsWith('/predict/') ? fixture('prediction') : answers[path] ?? [];
+    return { ok: true, status: 200, json: async () => body, text: async () => JSON.stringify(body) };
+  });
+  forceMode('live');
+  return posted;
+}
+
 describe('Debrief', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
   it('splits the overrun into two segments that sum to it, and shows finding cards', async () => {
     renderAt('/debrief/T101');
     const bar = await screen.findByTestId('overrun-bar');
@@ -99,6 +122,31 @@ describe('Debrief', () => {
     expect(screen.getAllByTestId('finding-card').length).toBeGreaterThanOrEqual(2);
     expect(within(screen.getByLabelText('What Saathi noticed')).getByText(/idled for 30 minutes/)).toBeTruthy();
     await waitFor(() => expect(speaker.said[0]?.message_key).toBe('debrief_over'));
+  });
+
+  // debrief_near_time.json is what POST /debrief returns for a 1 min overrun (checked against the real
+  // backend.ml.debrief_lines in backend/tests/test_api.py): under 3 min there is no attribution.
+  it('a 1-minute overrun shows the number only, without the attribution breakdown (backend rule)', async () => {
+    const posted = liveApi(nearTime);
+    renderAt('/debrief/T101');
+    await waitFor(() => expect(screen.getByTestId('debrief-headline').dataset.over).toBe('1'));
+    expect(screen.getByTestId('debrief-near-time').textContent).toBe('Close to plan');
+    expect(screen.queryByTestId('overrun-bar')).toBeNull();
+    expect(screen.queryByTestId('seg-uncontrollable')).toBeNull();
+    expect(screen.queryByText(/Not in your control|Yours to win back/)).toBeNull();
+    await waitFor(() => expect(speaker.said[0]?.message_key).toBe('debrief_near_time'));
+    expect(speaker.said[0].slots).toEqual({ over_min: 1 });
+    expect(speaker.said.map((e) => e.message_key)).not.toContain('debrief_not_your_fault');
+    expect(posted.find((r) => r.path === '/debrief').body).toMatchObject({ task_id: 'T101', operator_id: 'OP1001' });
+  });
+
+  it('speaks the first-shift wording when the backend picks it', async () => {
+    const d = fixture('debrief');
+    d.lines[0].message_key = 'debrief_over_first_shift';
+    liveApi(d);
+    renderAt('/debrief/T101');
+    expect(await screen.findByTestId('overrun-bar')).toBeTruthy();
+    await waitFor(() => expect(speaker.said[0]?.message_key).toBe('debrief_over_first_shift'));
   });
 });
 

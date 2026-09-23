@@ -1,6 +1,7 @@
 // Briefing builders, lessons and the voice runtime (no DOM).
 import { describe, it, expect, beforeEach } from 'vitest';
 import { fixture } from '../fixtures.js';
+import nearTime from '../../../contracts/examples/debrief_near_time.json';
 import { morningEvents, pretaskEvents, debriefEvents, debriefSplit } from './briefings.js';
 import { recommendedLessons } from './lessons.js';
 import { configureVoice, say, sayInOrder, whenIdle, setQuiet, triggerLines } from './voiceRuntime.js';
@@ -28,13 +29,15 @@ describe('briefings', () => {
     expect(ev[0].slots).toMatchObject({ cat_min: 45, predicted_min: 52 });
   });
 
-  it('debrief: "9 minutes over — 6 + 3", not your fault, then findings', () => {
+  it('debrief: speaks the backend lines as given ("9 minutes over — 6 + 3", not your fault), then findings', () => {
     const d = fixture('debrief');
     expect(debriefSplit(d)).toEqual({ over: 9, uncontrollable: 6, controllable: 3 });
     const ev = debriefEvents(d, fixture('findings'));
+    expect(ev[0]).toMatchObject({ priority: 'info', mode: 'debrief' });
     expect(ev[0].slots).toMatchObject({ over_min: 9, uncontrollable_min: 6, controllable_min: 3, factors: ['weather', 'machine_age'] });
     expect(ev.map((e) => e.message_key).slice(0, 2)).toEqual(['debrief_over', 'debrief_not_your_fault']);
-    expect(debriefEvents({ ...d, uncontrollable_min: 0, controllable_min: 0 })[0].message_key).toBe('debrief_on_time');
+    // Nothing is rebuilt from the split: a 1 min overrun says only what the backend said (no attribution).
+    expect(debriefEvents(nearTime).map((e) => [e.message_key, e.slots])).toEqual([['debrief_near_time', { over_min: 1 }]]);
   });
 
   it('recommends lessons from findings, then conditions', () => {

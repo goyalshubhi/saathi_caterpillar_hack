@@ -46,6 +46,7 @@ const L = {
   taskDone: ['Task done', 'काम पूरा हुआ'],
   overEstimate: ['over the CAT estimate', 'CAT अनुमान से ज़्यादा'],
   onTime: ['On time', 'समय पर'],
+  closeToPlan: ['Close to plan', 'लगभग योजना के अनुसार'],
   notYourControl: ['Not in your control', 'आपके बस में नहीं'],
   yoursToWin: ['Yours to win back', 'आप बचा सकते हैं'],
   whatWeNoticed: ['What Saathi noticed', 'साथी ने क्या देखा'],

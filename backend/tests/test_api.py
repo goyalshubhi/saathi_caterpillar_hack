@@ -2,12 +2,15 @@
 import json
 import sqlite3
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
-from backend.api import config
+from backend.api import config, intel
 from backend.api.main import create_app
+
+EXAMPLES = Path(__file__).resolve().parents[2] / "contracts" / "examples"
 
 
 class Clock:
@@ -199,3 +202,32 @@ def test_operator_history_endpoint(client):
     assert h["operator_id"] == "OP1001" and h["history_available"] is True
     new = client.get("/operators/OP9999/history").json()
     assert new == {"operator_id": "OP9999", "shift_count": 0, "history_available": False}
+
+
+def _keys(debrief):
+    return [line["message_key"] for line in debrief["lines"]]
+
+
+def test_debrief_lines_follow_operator_history(client):
+    sc = client.get("/telemetry/scenario/demo").json()
+    body = {"task_id": sc["task_id"], "windows": sc["windows"]}
+    d = client.post("/debrief", json={**body, "operator_id": "OP1001"}).json()
+    assert _keys(d) == ["debrief_over", "debrief_not_your_fault"]
+    assert d["lines"][0]["slots"] == {"over_min": 9, "uncontrollable_min": 6, "controllable_min": 3,
+                                      "factors": ["weather", "machine_age"]}
+    first = client.post("/debrief", json={**body, "operator_id": "OP9999"}).json()  # first tracked shift
+    assert _keys(first) == ["debrief_over_first_shift", "debrief_not_your_fault"]
+    assert _keys(client.post("/debrief", json=body).json())[0] == "debrief_over_first_shift"  # operator unknown
+    assert "OP1001" not in json.dumps(d)
+
+
+@pytest.mark.parametrize("name", ["debrief.json", "debrief_near_time.json"])
+def test_debrief_examples_carry_the_endpoint_lines(client, monkeypatch, name):
+    """The frontend fixtures (9 min over; 1 min over = no attribution) hold exactly what POST /debrief says."""
+    example = json.loads((EXAMPLES / name).read_text(encoding="utf-8"))
+    split = {k: v for k, v in example.items() if k != "lines"}
+    monkeypatch.setattr(intel, "debrief", lambda task, windows: dict(split))
+    d = client.post("/debrief", json={"task_id": "T101", "windows": [], "operator_id": "OP1001"}).json()
+    assert d["lines"] == example["lines"]
+    if name == "debrief_near_time.json":
+        assert _keys(d) == ["debrief_near_time"]

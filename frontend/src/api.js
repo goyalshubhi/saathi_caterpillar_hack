@@ -132,9 +132,12 @@ export async function predictTask(task) {
   }
 }
 
-export async function postDebrief(taskId, windows) {
+// The answer carries `lines`, the backend's debrief wording (attribution only from 3 min over; the
+// first-shift variant when this operator has no history). operator_id is read there, never stored.
+export async function postDebrief(taskId, windows, operatorId) {
   markArch('models');
-  const d = await call('POST', '/debrief', { task_id: taskId, windows }, () => ({ ...fixture('debrief'), task_id: taskId }));
+  const d = await call('POST', '/debrief', { task_id: taskId, windows, operator_id: operatorId },
+    () => ({ ...fixture('debrief'), task_id: taskId }));
   addLog('model', { kind: 'debrief', data: d });
   return d;
 }

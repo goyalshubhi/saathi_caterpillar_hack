@@ -244,7 +244,7 @@ export async function sayInOrder(events, { alive = () => true } = {}) {
 // Lines that open a screen: its one headline line
 // plus any safety lines, in their original order. Saathi speaks on triggers, it does not read out
 // the whole screen; the rest is on screen.
-const HEADLINE_KEYS = ['greeting', 'pretask_estimate', 'debrief_over', 'debrief_on_time'];
+const HEADLINE_KEYS = ['greeting', 'pretask_estimate', 'debrief_over', 'debrief_over_first_shift', 'debrief_near_time', 'debrief_on_time'];
 export function triggerLines(events) {
   const lead = events.find((e) => HEADLINE_KEYS.includes(e.message_key)) ?? events.find((e) => e.priority !== 'safety');
   return events.filter((e) => e === lead || e.priority === 'safety');
