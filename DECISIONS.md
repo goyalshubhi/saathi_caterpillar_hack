@@ -1,0 +1,19 @@
+# Decisions
+
+- [intel] Interface file names written as `_init_.py` in the brief are taken to mean `__init__.py` (Python package init).
+- [intel] Work lives on branch `intel`; no `backend/__init__.py` or conftest created (shared files) — `backend` imports as a namespace package; run tests with `python -m pytest` from the repo root.
+- [intel] Given-table loaders return lists of dicts with ints/floats typed; any column/value/timestamp mismatch raises `SchemaError` with the file name.
+- [intel] Synthetic tasks: 400 records (not 300) so the estimator reproduces the demo numbers (~52 min, ~6 min uncontrollable) stably.
+- [intel] Synthetic actual time = CAT estimate x skill x weather x machine age x heat (>30 C) x afternoon multipliers + 3% noise, plus two interactions (rain x trenching, beginner x heat >35 C).
+- [intel] Synthetic telemetry: 2 machines x 3 shifts/day (06/14/22 h, 32 windows each) x 14 days; operators rotate so every operator runs both machines.
+- [intel] `scenario(name)` supports `demo` and `clean` (clean = the no-findings fixture); unknown names raise `KeyError`. Both are hand-written, no RNG.
+- [intel] Demo scenario = one 6 h shift 08:00-13:45 on EXC001/OP1001, "today" is 2025-05-03; the Trenching task T101 (Rainy, 26 C, age 4, CAT 45) is the task debriefed.
+- [intel] Today's weather: light rain 06-08 h, hot afternoon (36-39 C, 13-16 h).
+- [intel] `generate_all()` also refreshes committed JSON fixtures in `data/fixtures/` (today's tasks/weather, demo/clean scenarios) for frontend fixture mode.
+- [intel] Estimator predicts the ratio actual/estimate with GradientBoostingRegressor (one-hot type/weather, ordinal skill), then x estimate; trained on synthetic + given rows (given rows get default temperature by weather and hour 9).
+- [intel] Counterfactual ideal = Sunny, 25 C, machine age 2 (skill and hour unchanged). Top factors = one-at-a-time deltas scaled so they sum exactly to `uncontrollable_min`; factors under 0.5 min are folded into the largest.
+- [intel] `predict()` returns `controllable_min = 0`; `debrief()` sets controllable = idle minutes above 4 min per window, apportioned to the task by predicted_min / observed minutes, and floors uncontrollable at 0.
+- [intel] Models saved to `backend/ml/models/` (gitignored); `predict()` loads or trains lazily; `train_all()` generates synthetic data first if missing.
+- [intel] Findings are evaluated per (machine, operator), sorted by time. excessive_idling: run of windows with idle >= 60%. fuel_without_work: active window with 0 cycles and >= 1 L, or fuel/cycle > 3x the median. unbelted_active: run of active unbelted windows. repeated_alerts: an alert within 60 min of the previous one.
+- [intel] Message keys for the voice templates: `finding.<type>` (slots: excessive_idling {minutes}, fuel_without_work {fuel_l, load_cycles}, unbelted_active {minutes}, repeated_alerts {count, minutes}, fatigue_drift {}); `warn.rain_slippery` {task_type}, `warn.rain_trench_edge` {distance_m}, `warn.wind_caution` {task_type}, `warn.heat_hydration` {temperature_c}.
+- [intel] Planner: tasks take whole hours from their slot (back-to-back if they overrun); a break goes in the first free hour after 2 working hours (1 h when > 35 C), reason `regular` or `heat`; windy = task weather Windy or forecast wind >= 30 km/h; wind warning for Demolition and Material Loading.
