@@ -1,0 +1,106 @@
+/* Saathi design tokens. Every colour, size and duration used by the app lives here. */
+:root,
+[data-theme='dark'] {
+  --font-display: 'Barlow Condensed', 'Arial Narrow', 'Nirmala UI', 'Noto Sans Devanagari', sans-serif;
+  --font-body: 'Inter', 'Nirmala UI', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', Consolas, 'Courier New', monospace;
+
+  /* surfaces */
+  --bg: #111111;
+  --surface-1: #1a1c1f;
+  --surface-2: #22262a;
+  --surface-3: #2c3136;
+  --line: #363c42;
+  --line-strong: #4a525a;
+  --avatar-disc: #262b30;
+
+  /* text */
+  --text: #f3f3ef;
+  --text-muted: #aab0b6;
+  --text-dim: #737a81;
+
+  /* the single accent + status colours (status only) */
+  --accent: #ffcd11;
+  --accent-ink: #111111;
+  --accent-text: #ffcd11;
+  --accent-soft: rgba(255, 205, 17, 0.12);
+  --danger: #e5383b;
+  --danger-soft: rgba(229, 56, 59, 0.16);
+  --caution: #f5a524;
+  --caution-soft: rgba(245, 165, 36, 0.14);
+  --success: #3ecf6e;
+  --success-soft: rgba(62, 207, 110, 0.14);
+  --care: #2ec4b6;
+  --care-soft: rgba(46, 196, 182, 0.14);
+  --steel: #7b8a97; /* neutral data colour ("not in your control") */
+
+  /* texture */
+  --grid-line: rgba(255, 255, 255, 0.028);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+  /* type scale */
+  --fs-label: 16px;
+  --fs-body: 20px;
+  --fs-lead: 24px;
+  --fs-h2: 30px;
+  --fs-h1: 44px;
+  --fs-num: 56px;
+  --fs-num-xl: 104px;
+
+  /* spacing */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+
+  /* shape + touch */
+  --radius: 14px;
+  --radius-lg: 20px;
+  --touch: 64px;
+  --touch-primary: 88px;
+  --topbar-h: 76px;
+  --rail-w: 108px;
+
+  /* motion */
+  --t-fast: 150ms;
+  --t: 220ms;
+
+  color-scheme: dark;
+}
+
+/* High-contrast light theme for bright sun. */
+[data-theme='light'] {
+  --bg: #f1f0ea;
+  --surface-1: #ffffff;
+  --surface-2: #f7f6f1;
+  --surface-3: #e7e5dc;
+  --line: #c9c6ba;
+  --line-strong: #8e8a7c;
+  --avatar-disc: #e6e3d6;
+
+  --text: #0a0a0a;
+  --text-muted: #3b3f44;
+  --text-dim: #5f646a;
+
+  --accent: #ffcd11;
+  --accent-ink: #0a0a0a;
+  --accent-text: #6b5200;
+  --accent-soft: rgba(255, 205, 17, 0.28);
+  --danger: #c1121f;
+  --danger-soft: rgba(193, 18, 31, 0.1);
+  --caution: #a35c00;
+  --caution-soft: rgba(245, 165, 36, 0.2);
+  --success: #137a3a;
+  --success-soft: rgba(19, 122, 58, 0.1);
+  --care: #0b7f76;
+  --care-soft: rgba(11, 127, 118, 0.12);
+  --steel: #56636e;
+
+  --grid-line: rgba(0, 0, 0, 0.035);
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+
+  color-scheme: light;
+}

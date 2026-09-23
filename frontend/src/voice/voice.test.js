@@ -336,6 +336,18 @@ describe('queue + speaker with phrasings', () => {
     expect(sp.events.map((e) => e.variant)).toEqual([2, 2]);
   });
 
+  it('an explicit variant counts as the last phrasing: the next auto-pick for that key differs', () => {
+    for (const n of [0, 1, 2]) {
+      for (const r of [0, 0.34, 0.67, 0.99]) {
+        const sp = recordingSpeaker();
+        const q = createQueue({ speaker: sp, phraser: createPhraser({ random: () => r }) });
+        q.push(ev('info', 'greeting', { variant: n }));
+        q.push(ev('info', 'greeting'));
+        expect(sp.events[1].variant, `explicit ${n}, random ${r}`).not.toBe(n);
+      }
+    }
+  });
+
   it('speaker renders the chosen phrasing, and the English fallback uses the same phrasing', () => {
     const f = fakeSynth(['en-US']);
     const s = createSpeaker(f);

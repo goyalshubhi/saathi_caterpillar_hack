@@ -36,5 +36,11 @@ export function createPhraser({ seed, random } = {}) {
     return v;
   }
 
-  return { pick };
+  // Record a phrasing chosen elsewhere (an event that already carried a variant), so the next
+  // pick() for this key does not repeat it.
+  function note(key, variant) {
+    if (variantCount(key) > 1) last.set(key, variant);
+  }
+
+  return { pick, note };
 }

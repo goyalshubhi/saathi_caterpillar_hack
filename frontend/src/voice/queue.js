@@ -56,6 +56,7 @@ export function createQueue({ speaker, phraser = createPhraser() }) {
       coachedTasks.add(key);
     }
     if (event.variant === undefined) event = { ...event, variant: phraser.pick(event.message_key) };
+    else phraser.note?.(event.message_key, event.variant); // so the next auto-pick doesn't repeat it
     if (event.priority === 'safety' && current && current.event.priority !== 'safety') {
       const interrupted = current.event;
       current = null; // clear first: cancel() may fire the old onEnd synchronously
