@@ -7,8 +7,13 @@
 //       preempted by safety
 // "fast" mode (demo at max pace) plays nothing audible: the line is looked up and started (so the
 // source is real), stopped at once, and reported finished after a short beat.
-import { createQueue, createPhraser, createSpeaker, loadManifest, DEMO_SEED } from '../voice/index.js';
-import { store, addLog, markArch } from '../state/store.js';
+//
+// Audio unlock: nothing is spoken before the "Start Saathi" click (browser autoplay rules). Lines
+// that arrive earlier wait and play after it; screen briefings wait for it. If the browser still
+// blocks a line later, it is retried silently on the next tap / key press (no overlay).
+// Coaching mute: while quiet, only safety lines are spoken; the rest are shown as captions.
+import { createQueue, createPhraser, createSpeaker, loadManifest, render, DEMO_SEED } from '../voice/index.js';
+import { store, addLog, markArch, rememberUnlocked } from '../state/store.js';
 
 const CAPTION_MS = 5000;
 const FAST_LINE_MS = 120;
@@ -23,9 +28,49 @@ let preemptor = null; // safety event currently being pushed
 let captionTimer = null;
 let bannerTimer = null;
 const idleWaiters = new Set();
+let held = []; // lines said before the unlock click, played right after it
+let blocked = []; // retries for lines the browser blocked, run on the next user gesture
+
+// Browser blocked a line after all (e.g. reload in the same session): retry it inside the next
+// tap / key press, which the browser allows. Silent: no overlay, the line simply plays then.
+function retryOnGesture(retry) {
+  blocked.push(retry);
+  if (blocked.length > 1 || typeof window === 'undefined') return;
+  const run = () => {
+    window.removeEventListener('pointerdown', run, true);
+    window.removeEventListener('keydown', run, true);
+    const retries = blocked;
+    blocked = [];
+    retries.forEach((r) => r());
+  };
+  window.addEventListener('pointerdown', run, true);
+  window.addEventListener('keydown', run, true);
+}
+
+// The "Start Saathi" / demo start click. Must run inside a click handler.
+export function unlockAudio() {
+  if (!store.get().unlocked) store.set({ unlocked: true });
+  rememberUnlocked();
+  const waiting = held;
+  held = [];
+  waiting.forEach((e) => say(e));
+}
+
+// Resolves once audio is unlocked (at once if it already is).
+export function whenUnlocked() {
+  if (store.get().unlocked) return Promise.resolve();
+  return new Promise((resolve) => {
+    const off = store.subscribe(() => {
+      if (store.get().unlocked) {
+        off();
+        resolve();
+      }
+    });
+  });
+}
 
 function ensure() {
-  if (!speaker) speaker = createSpeaker();
+  if (!speaker) speaker = createSpeaker({ onBlocked: retryOnGesture });
   if (!queue) queue = createQueue({ speaker: instrumented, phraser: createPhraser() });
 }
 
@@ -40,8 +85,10 @@ export async function initVoice() {
 // Tests inject a fake/silent speaker.
 export function configureVoice({ speaker: s, seed } = {}) {
   clearTimeout(captionTimer);
-  speaker = s ?? createSpeaker();
+  speaker = s ?? createSpeaker({ onBlocked: retryOnGesture });
   active = null;
+  held = [];
+  blocked = [];
   queue = createQueue({ speaker: instrumented, phraser: createPhraser(seed === undefined ? {} : { seed }) });
   store.set({ speaking: null });
 }
@@ -116,10 +163,27 @@ function showSafety(event) {
   bannerTimer = setTimeout(() => store.set({ safety: null }), fast ? 1500 : SAFETY_BANNER_MS);
 }
 
+// Coaching mute: show the line as a caption without speaking it.
+function captionOnly(e) {
+  const id = ++seq;
+  clearTimeout(captionTimer);
+  store.set({ caption: { id, text: render(e.message_key, e.slots, e.lang), priority: e.priority, key: e.message_key } });
+  scheduleCaptionClear();
+}
+
 // Push one SaathiEvent. Returns the queue's { accepted, reason }.
 export function say(event) {
   ensure();
   const e = { lang: store.get().lang, slots: {}, ...event };
+  if (!store.get().unlocked) {
+    held.push(e); // before the Start click: wait, play right after it
+    return { accepted: true, reason: 'waiting-unlock' };
+  }
+  if (store.get().quiet && e.priority !== 'safety') {
+    captionOnly(e);
+    addLog('queue', { decision: 'held-quiet', event: e, variant: null });
+    return { accepted: false, reason: 'quiet' };
+  }
   markArch('queue');
   if (e.priority === 'safety') preemptor = e;
   const result = queue.push(e);
@@ -134,7 +198,7 @@ export function say(event) {
 }
 
 export function isIdle() {
-  return !queue || (!queue.current && queue.pending.length === 0);
+  return held.length === 0 && (!queue || (!queue.current && queue.pending.length === 0));
 }
 
 function notifyIdle() {
@@ -152,6 +216,7 @@ export function whenIdle() {
 // Speak lines one after another (each waits for the previous to finish), so a safety line in a
 // briefing never cuts off the line before it. Stops early if `alive()` turns false.
 export async function sayInOrder(events, { alive = () => true } = {}) {
+  await whenUnlocked(); // a screen opened behind the Start overlay briefs after the click
   for (const event of events) {
     await whenIdle();
     if (!alive()) return;
@@ -177,10 +242,22 @@ export function startTask(taskId) {
   queue.startTask(taskId);
 }
 
+// Coaching mute. Safety lines are exempt; everything else stops now (including a line mid-way)
+// and later lines are shown as captions only.
 export function setQuiet(on) {
   ensure();
   queue.setQuiet(on);
   store.set({ quiet: Boolean(on) });
+  if (!on) return;
+  queue.dropPending((e) => e.priority !== 'safety');
+  if (queue.current && queue.current.priority !== 'safety') {
+    const safety = queue.pending;
+    queue.clear(); // stops the current line (speaker.cancel)
+    active = null;
+    store.set({ speaking: null });
+    safety.forEach((e) => queue.push(e));
+  }
+  notifyIdle();
 }
 
 export function voiceInfo() {

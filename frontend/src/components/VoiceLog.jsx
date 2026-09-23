@@ -37,7 +37,10 @@ export default function VoiceLog() {
   const [pending, setPending] = useState(null); // { text, category }
   const rec = useRef(null);
 
-  useEffect(() => () => rec.current?.abort?.(), []);
+  useEffect(() => () => {
+    rec.current?.abort?.();
+    store.set({ recognizing: false });
+  }, []);
 
   const say1 = (key) => say({ priority: 'info', mode: 'friendly', message_key: key });
 
@@ -72,9 +75,13 @@ export default function VoiceLog() {
     r.maxAlternatives = 1;
     r.onresult = (e) => handle(e.results[0][0].transcript);
     r.onerror = () => setTyping(true);
-    r.onend = () => setListening(false);
+    r.onend = () => {
+      setListening(false);
+      store.set({ recognizing: false });
+    };
     rec.current = r;
     setListening(true);
+    store.set({ recognizing: true }); // top-bar chip shows "Listening…" only now
     r.start();
   }
 

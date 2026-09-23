@@ -45,7 +45,7 @@ describe('briefings', () => {
 describe('voice runtime', () => {
   let said;
   beforeEach(() => {
-    store.reset();
+    store.reset({ unlocked: true }); // after the Start click (the gate itself is tested in unlock.test.js)
     said = [];
     const inner = createSpeaker({ synth: null, Utterance: null, Audio: null });
     configureVoice({ speaker: { ...inner, speak: (e, o) => { said.push(e); return inner.speak(e, o); }, cancel() {}, fallbackToEnglish: false } });

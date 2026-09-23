@@ -35,6 +35,19 @@ export function morningEvents({ tasks, weather, plan, predictions = {}, memory =
   return out;
 }
 
+// What a screen actually SAYS when it opens (one trigger = one point, not a playlist): every
+// safety line (memory notes, condition warnings) plus the screen's headline. The rest of a
+// briefing (task cards, rain/heat summary, order, breaks, findings) is already on screen.
+export const HEADLINE_KEYS = new Set([
+  'greeting', 'pretask_estimate',
+  'debrief_over', 'debrief_near_time', 'debrief_on_time', 'debrief_not_your_fault',
+  'break_time', 'care_break',
+]);
+
+export function spokenLines(events) {
+  return events.filter((e) => e.priority === 'safety' || HEADLINE_KEYS.has(e.message_key));
+}
+
 export function warningsFor(plan, taskId) {
   return (plan?.condition_warnings ?? []).filter((w) => w.task_id === taskId);
 }

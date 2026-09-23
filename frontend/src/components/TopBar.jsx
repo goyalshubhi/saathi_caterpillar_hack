@@ -4,6 +4,7 @@ import { Sun, Moon, Volume2, VolumeX, WifiOff, Languages } from 'lucide-react';
 import { useStore } from '../state/store.js';
 import { useT } from '../i18n.js';
 import { toggleLang, toggleTheme } from '../saathi/actions.js';
+import { DEMO_STEPS } from '../demo/demo.js';
 import { setQuiet } from '../saathi/voiceRuntime.js';
 import Avatar, { useAvatarState } from '../avatar/Avatar.jsx';
 
@@ -17,19 +18,37 @@ function Clock() {
 }
 
 // Small status chip. On the In-task screen it replaces the avatar entirely (no face, just the state).
+// "Listening…" only while speech recognition is actually running; otherwise "ready".
 export function SaathiChip({ withFace = true }) {
   const t = useT();
   const quiet = useStore((s) => s.quiet);
   const speaking = useStore((s) => s.speaking);
+  const recognizing = useStore((s) => s.recognizing);
   const state = useAvatarState();
-  const label = speaking ? t('speaking') : quiet ? t('quietMode') : t('listening');
-  const tone = speaking ? (state === 'alert' ? 'alert' : 'speaking') : quiet ? 'quiet' : 'listening';
+  const label = speaking ? t('speaking') : recognizing ? t('listening') : quiet ? t('coachingMuted') : t('ready');
+  const tone = speaking ? (state === 'alert' ? 'alert' : 'speaking') : recognizing ? 'listening' : quiet ? 'quiet' : 'ready';
   return (
     <div className={`saathi-chip saathi-chip--${tone}`} data-testid="saathi-chip" aria-live="polite">
       {withFace ? <Avatar state={state} size={40} testId="chip-avatar" /> : <span className="saathi-chip__dot" aria-hidden="true" />}
       <span className="saathi-chip__name">Saathi</span>
       <span className="saathi-chip__state">{label}</span>
     </div>
+  );
+}
+
+// Demo mode only: which of the 7 scripted steps is playing (also outside the Stage View).
+export function DemoStepBadge() {
+  const t = useT();
+  const demo = useStore((s) => s.demo);
+  if (!demo.running) return null;
+  const n = DEMO_STEPS.length;
+  const next = DEMO_STEPS[demo.step];
+  const text = demo.paused ? t('demoPaused')
+    : demo.between && next ? `${t('demoNext')}: ${next.short}` : DEMO_STEPS[demo.step - 1]?.short ?? '';
+  return (
+    <span className="badge badge--demo" data-testid="demo-step" aria-live="polite">
+      {t('demoStepOf').replace('{n}', demo.step).replace('{total}', n)} · {text}
+    </span>
   );
 }
 
@@ -47,6 +66,7 @@ export default function TopBar({ inTask = false }) {
       <SaathiChip withFace={!inTask} />
       <div className="topbar__machine"><span className="topbar__label">{t('machine')}</span> {machine}</div>
       <div className="topbar__notices">
+        <DemoStepBadge />
         {apiMode === 'fixture' && (
           <span className="badge badge--offline" data-testid="offline-badge"><WifiOff size={16} aria-hidden="true" /> {t('offlineData')}</span>
         )}
@@ -62,8 +82,10 @@ export default function TopBar({ inTask = false }) {
         <button type="button" className="tb-btn" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Light theme' : 'Dark theme'} aria-pressed={theme === 'light'}>
           {theme === 'dark' ? <Sun size={26} aria-hidden="true" /> : <Moon size={26} aria-hidden="true" />}
         </button>
-        <button type="button" className={`tb-btn ${quiet ? 'tb-btn--on' : ''}`} onClick={() => setQuiet(!quiet)} aria-label={t('quietMode')} aria-pressed={quiet} data-testid="quiet-toggle">
+        <button type="button" className={`tb-btn tb-btn--mute ${quiet ? 'tb-btn--on' : ''}`} onClick={() => setQuiet(!quiet)}
+          aria-label={t('coachingMute')} title={t('coachingMuteHint')} aria-pressed={quiet} data-testid="quiet-toggle">
           {quiet ? <VolumeX size={26} aria-hidden="true" /> : <Volume2 size={26} aria-hidden="true" />}
+          <span className="tb-btn__label">{quiet ? t('coachingMuted') : t('coachingMute')}</span>
         </button>
         <Clock />
       </div>

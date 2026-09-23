@@ -7,7 +7,7 @@ import { render } from '../voice/index.js';
 import { useStore } from '../state/store.js';
 import { useT, taskTypeLabel, weatherLabel, factorLabel } from '../i18n.js';
 import { loadDay, loadMemory } from '../saathi/actions.js';
-import { morningEvents, orderedTasks, warningsFor } from '../saathi/briefings.js';
+import { morningEvents, orderedTasks, warningsFor, spokenLines } from '../saathi/briefings.js';
 import { useBriefing } from '../saathi/useBriefing.js';
 import { LiveAvatar } from '../avatar/Avatar.jsx';
 import { TaskIcon } from '../components/icons.jsx';
@@ -40,7 +40,7 @@ export default function Morning() {
   }, [shift]);
 
   const ready = Boolean(memoryReady && tasks && plan && weather);
-  useBriefing(`morning@${shift}`, () => morningEvents({ tasks, weather, plan, predictions, memory, machine }), ready);
+  useBriefing(`morning@${shift}`, () => spokenLines(morningEvents({ tasks, weather, plan, predictions, memory, machine })), ready);
 
   const ordered = orderedTasks(tasks, plan);
   const next = ordered.find((task) => (taskStatus[task.task_id] ?? task.status) !== 'done') ?? ordered[0];

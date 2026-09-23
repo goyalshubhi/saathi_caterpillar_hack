@@ -8,7 +8,7 @@ import { render } from '../voice/index.js';
 import { store, useStore } from '../state/store.js';
 import { useT, taskTypeLabel, factorLabel, findingTitle } from '../i18n.js';
 import { loadDay, runDebrief } from '../saathi/actions.js';
-import { debriefEvents, debriefSplit } from '../saathi/briefings.js';
+import { debriefEvents, debriefSplit, spokenLines } from '../saathi/briefings.js';
 import { useBriefing } from '../saathi/useBriefing.js';
 import { LiveAvatar } from '../avatar/Avatar.jsx';
 import { FindingIcon } from '../components/icons.jsx';
@@ -69,7 +69,7 @@ export default function Debrief() {
     return () => store.set((s) => ({ debriefSeen: { ...s.debriefSeen, [`${taskId}@${s.shift}`]: true } }));
   }, [taskId, seenBefore]);
 
-  useBriefing(seenBefore ? null : `debrief:${taskId}@${shift}`, () => debriefEvents(debrief, findings ?? []), Boolean(debrief && findings));
+  useBriefing(seenBefore ? null : `debrief:${taskId}@${shift}`, () => spokenLines(debriefEvents(debrief, findings ?? [])), Boolean(debrief && findings));
 
   if (seenBefore) {
     return (

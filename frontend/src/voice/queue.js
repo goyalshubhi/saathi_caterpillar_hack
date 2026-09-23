@@ -84,7 +84,13 @@ export function createQueue({ speaker, phraser = createPhraser() }) {
     }
   }
 
+  // Remove waiting lines that match `pred` (the line playing now is not touched).
+  function dropPending(pred) {
+    for (let i = pending.length - 1; i >= 0; i -= 1) if (pred(pending[i])) pending.splice(i, 1);
+  }
+
   return {
+    dropPending,
     push,
     repeat,
     clear,

@@ -4,12 +4,31 @@ import { useSyncExternalStore } from 'react';
 export const MACHINE_ID = 'EXC001';
 const LOG_LIMIT = 40;
 
+// Audio unlock lasts for the whole browser-tab session (survives reloads / remounts), so the
+// "Start Saathi" overlay is shown once per session, never again.
+export const UNLOCK_KEY = 'saathi.audioUnlocked';
+export function wasUnlocked() {
+  try {
+    return globalThis.sessionStorage?.getItem(UNLOCK_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+export function rememberUnlocked() {
+  try {
+    globalThis.sessionStorage?.setItem(UNLOCK_KEY, '1');
+  } catch {
+    // private mode / blocked storage: the in-memory flag still holds for this page
+  }
+}
+
 export function initialState() {
   return {
     lang: 'en',
     theme: 'dark',
     quiet: false,
-    unlocked: false,
+    unlocked: wasUnlocked(),
+    recognizing: false, // speech recognition actually running (VoiceLog mic)
     apiMode: 'unknown', // live | fixture
     fallbackToEnglish: false,
 
@@ -51,7 +70,7 @@ export function initialState() {
     arch: { stage: null, n: 0 }, // architecture node that was just active
 
     // demo
-    demo: { running: false, paused: false, step: 0, pace: 'normal', done: false, overlay: null },
+    demo: { running: false, paused: false, step: 0, pace: 'normal', done: false, overlay: null, between: false },
     whatIf: null,
   };
 }

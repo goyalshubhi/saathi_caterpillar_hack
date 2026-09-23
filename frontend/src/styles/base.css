@@ -192,6 +192,8 @@ kbd {
   cursor: pointer;
 }
 .tb-btn--on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
+.tb-btn__label { font-size: 15px; font-weight: 600; white-space: nowrap; }
+.tb-btn--mute.tb-btn--on { background: var(--caution-soft, var(--accent-soft)); border-color: var(--caution, var(--accent)); color: var(--text); }
 .tb-btn__seg { display: inline-flex; border-radius: 8px; overflow: hidden; border: 1px solid var(--line-strong); }
 .tb-btn__seg b { padding: 4px 9px; font-size: 18px; font-weight: 600; color: var(--text-muted); }
 .tb-btn__seg b.on { background: var(--accent); color: var(--accent-ink); }
@@ -217,6 +219,10 @@ kbd {
 .saathi-chip--alert { border-color: var(--danger); background: var(--danger-soft); }
 .saathi-chip--alert .saathi-chip__dot { background: var(--danger); }
 .saathi-chip--quiet .saathi-chip__dot { background: var(--text-dim); }
+.saathi-chip--listening { border-color: var(--accent); }
+.saathi-chip--listening .saathi-chip__dot { background: var(--accent); animation: chip-pulse 1s ease-in-out infinite; }
+@keyframes chip-pulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .saathi-chip--listening .saathi-chip__dot { animation: none; } }
 
 /* rail */
 .rail {
@@ -352,3 +358,5 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+.badge--demo { background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent-text); font-weight: 600; }
