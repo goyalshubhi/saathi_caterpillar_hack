@@ -233,3 +233,56 @@ def test_drift_rule_fallback_on_demo(monkeypatch):
 
 def test_drift_needs_enough_history():
     assert not _drift(findings(_drifting()[-4:]))
+
+
+# ---------- fatigue vs harder work (throughput / lapse gate) ----------
+
+def _last_hour(w, rows):
+    """Replace the last len(rows) windows with (idle, cycles, fuel_per_cycle, belt) rows."""
+    w = list(w)
+    for i, (idle, cycles, fpc, belt) in enumerate(rows):
+        k = len(w) - len(rows) + i
+        w[k] = dict(w[k], idling_time_min=idle, load_cycles=cycles, seatbelt_status=belt,
+                    fuel_used_l=round(0.1 + fpc * cycles + 0.03 * idle, 2))
+    return w
+
+
+def _hard_terrain(fpc=1.2, idle=7):
+    """Belted, careful work on harder ground: costlier, slower cycles, but throughput kept."""
+    return _last_hour(scenario("clean"), [(idle, 3, fpc, "Fastened")] * 4)
+
+
+def test_harder_terrain_is_not_fatigue():
+    w = _hard_terrain()
+    _, last = drift._split_last_hour(w)
+    assert drift._model_flags(drift._get_model(), last)          # the forest alone would flag it...
+    assert not _drift(findings(w))                               # ...the gate keeps Care mode quiet
+    for fpc in (0.6, 1.0, 1.5, 2.0):
+        for idle in (3, 5, 9):
+            assert not _drift(findings(_hard_terrain(fpc, idle))), (fpc, idle)
+
+
+def test_belted_fatigue_with_falling_throughput_still_fires():
+    w = _last_hour(scenario("clean"), [(6, 1, 0.3, "Fastened"), (7, 1, 0.3, "Fastened"),
+                                       (8, 1, 0.3, "Fastened"), (9, 1, 0.3, "Fastened")])
+    assert _drift(findings(w))
+
+
+def test_throughput_ratio_and_gate():
+    clean = [x for x in scenario("clean") if x["machine_active"]]
+    earlier, last = clean[:-4], clean[-4:]
+    assert drift.throughput_ratio(earlier, last) == 1.0
+    assert not drift.looks_like_fatigue(earlier, last)
+    slow = [dict(x, load_cycles=2) for x in last]
+    assert drift.throughput_ratio(earlier, slow) <= drift.THROUGHPUT_DROP
+    assert drift.looks_like_fatigue(earlier, slow)
+    lapses = [dict(x, seatbelt_status="Unfastened") for x in last[:drift.GATE_MIN_LAPSES]] + last[drift.GATE_MIN_LAPSES:]
+    assert drift.looks_like_fatigue(earlier, lapses)
+    assert drift.throughput_ratio([], last) is None
+
+
+def test_gate_keeps_demo_and_crafted_drift():
+    demo = scenario("demo")
+    earlier, last = drift._split_last_hour(demo)
+    assert drift.looks_like_fatigue(earlier, last)
+    assert _drift(findings(demo)) and _drift(findings(_drifting()))
