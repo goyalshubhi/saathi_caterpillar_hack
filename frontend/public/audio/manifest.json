@@ -51,29 +51,29 @@
    "message_key": "task_card",
    "lang": "en",
    "mode": "friendly",
-   "text": "Task 2: material loading, about 33 minutes.",
-   "file": "audio/en/cdb2dcc8cb7fbada.mp3"
+   "text": "Task 2: grading, about 41 minutes.",
+   "file": "audio/en/d7384c179b732ca1.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "hi",
    "mode": "friendly",
-   "text": "काम 2: माल की लदाई, लगभग 33 मिनट।",
-   "file": "audio/hi/57c31fdc2d127646.mp3"
+   "text": "काम 2: ज़मीन समतल करना, लगभग 41 मिनट।",
+   "file": "audio/hi/8cfb0809e8f66743.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "en",
    "mode": "friendly",
-   "text": "Task 3: grading, about 39 minutes.",
-   "file": "audio/en/8be669b01b01c6f4.mp3"
+   "text": "Task 3: material loading, about 33 minutes.",
+   "file": "audio/en/e9d09bc37a17697c.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "hi",
    "mode": "friendly",
-   "text": "काम 3: ज़मीन समतल करना, लगभग 39 मिनट।",
-   "file": "audio/hi/c5287bd3faba2b4e.mp3"
+   "text": "काम 3: माल की लदाई, लगभग 33 मिनट।",
+   "file": "audio/hi/d5dfeace16a339f7.mp3"
   },
   {
    "message_key": "rain_today",
@@ -107,15 +107,15 @@
    "message_key": "plan_order",
    "lang": "en",
    "mode": "friendly",
-   "text": "Suggested order: trenching, material loading and grading.",
-   "file": "audio/en/bf85c454257358f9.mp3"
+   "text": "Suggested order: trenching, grading and material loading.",
+   "file": "audio/en/d68f90c7a08f181b.mp3"
   },
   {
    "message_key": "plan_order",
    "lang": "hi",
    "mode": "friendly",
-   "text": "सुझाया गया क्रम: खाई की खुदाई, माल की लदाई और ज़मीन समतल करना।",
-   "file": "audio/hi/e5615e0d26c5f6ee.mp3"
+   "text": "सुझाया गया क्रम: खाई की खुदाई, ज़मीन समतल करना और माल की लदाई।",
+   "file": "audio/hi/ae41f8852d315442.mp3"
   },
   {
    "message_key": "breaks_planned",
@@ -205,15 +205,29 @@
    "message_key": "proximity_alert",
    "lang": "en",
    "mode": "alert",
-   "text": "Stop! Someone is 2.5 metres from the machine.",
-   "file": "audio/en/38bb783449e565ae.mp3"
+   "text": "Stop! Someone is 2 metres from the machine.",
+   "file": "audio/en/94eb46e5ad81e633.mp3"
   },
   {
    "message_key": "proximity_alert",
    "lang": "hi",
    "mode": "alert",
-   "text": "रुकिए! मशीन से 2.5 मीटर पर कोई है।",
-   "file": "audio/hi/c995383dc3e08760.mp3"
+   "text": "रुकिए! मशीन से 2 मीटर पर कोई है।",
+   "file": "audio/hi/41eae6746e55ba35.mp3"
+  },
+  {
+   "message_key": "seatbelt_unfastened",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Your seatbelt is off. Please fasten it.",
+   "file": "audio/en/8fbe4111dba4b8cc.mp3"
+  },
+  {
+   "message_key": "seatbelt_unfastened",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "आपकी सीट बेल्ट खुली है। कृपया बाँध लीजिए।",
+   "file": "audio/hi/f99e30e1625697e3.mp3"
   },
   {
    "message_key": "incident_logged",
@@ -261,29 +275,15 @@
    "message_key": "finding.excessive_idling",
    "lang": "en",
    "mode": "debrief",
-   "text": "The machine idled for 30 minutes.",
-   "file": "audio/en/9ffc30f8f2f28138.mp3"
+   "text": "The machine idled for 24 minutes.",
+   "file": "audio/en/15b2716933ca1867.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
    "lang": "hi",
    "mode": "debrief",
-   "text": "मशीन 30 मिनट तक खाली चलती रही।",
-   "file": "audio/hi/d925c0212ef4bfdd.mp3"
-  },
-  {
-   "message_key": "finding.fuel_without_work",
-   "lang": "en",
-   "mode": "debrief",
-   "text": "1.7 litres of fuel were burned with little or no work done.",
-   "file": "audio/en/92d3557420117326.mp3"
-  },
-  {
-   "message_key": "finding.fuel_without_work",
-   "lang": "hi",
-   "mode": "debrief",
-   "text": "बहुत कम या बिना काम के 1.7 लीटर ईंधन खर्च हुआ।",
-   "file": "audio/hi/25f6b039109f409a.mp3"
+   "text": "मशीन 24 मिनट तक खाली चलती रही।",
+   "file": "audio/hi/9dee953e913b924d.mp3"
   },
   {
    "message_key": "finding.unbelted_active",
@@ -300,6 +300,48 @@
    "file": "audio/hi/2a66c6a8fa4ed367.mp3"
   },
   {
+   "message_key": "finding.fuel_without_work",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "1.6 litres of fuel were burned with little or no work done.",
+   "file": "audio/en/86233c9274cc156d.mp3"
+  },
+  {
+   "message_key": "finding.fuel_without_work",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "बहुत कम या बिना काम के 1.6 लीटर ईंधन खर्च हुआ।",
+   "file": "audio/hi/8d9d7d1b014915b2.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "The seatbelt was off while working for 30 minutes.",
+   "file": "audio/en/cc6fcb67e7abfc32.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "काम करते समय 30 मिनट तक सीट बेल्ट खुली रही।",
+   "file": "audio/hi/1d48629e23a84cb7.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "The pace has slowed compared with earlier in this shift. A short break will help.",
+   "file": "audio/en/58378fdd6666f6a6.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।",
+   "file": "audio/hi/7ec85fc572ed2878.mp3"
+  },
+  {
    "message_key": "memory_incident",
    "lang": "en",
    "mode": "alert",
@@ -312,20 +354,6 @@
    "mode": "alert",
    "text": "पिछली शिफ्ट का संदेश: इस मशीन पर काम के क्षेत्र में व्यक्ति दर्ज हुआ था। सावधान रहें।",
    "file": "audio/hi/9711b06277df6aef.mp3"
-  },
-  {
-   "message_key": "seatbelt_unfastened",
-   "lang": "en",
-   "mode": "alert",
-   "text": "Your seatbelt is off. Please fasten it.",
-   "file": "audio/en/8fbe4111dba4b8cc.mp3"
-  },
-  {
-   "message_key": "seatbelt_unfastened",
-   "lang": "hi",
-   "mode": "alert",
-   "text": "आपकी सीट बेल्ट खुली है। कृपया बाँध लीजिए।",
-   "file": "audio/hi/f99e30e1625697e3.mp3"
   },
   {
    "message_key": "safety_alert",
@@ -648,6 +676,1056 @@
    "mode": "debrief",
    "text": "2 मिनट ज़्यादा लगे। लगभग योजना के अनुसार।",
    "file": "audio/hi/61e8aabd520ce1e1.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 1 metres from the machine.",
+   "file": "audio/en/b667b259eb125854.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 1 मीटर पर कोई है।",
+   "file": "audio/hi/9a7985a1c1078904.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 3 metres from the machine.",
+   "file": "audio/en/e7a2e4f17251f8bb.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 3 मीटर पर कोई है।",
+   "file": "audio/hi/8be251a0e1376c3a.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 6 metres from the machine.",
+   "file": "audio/en/c3393b6c8c6f3ec9.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 6 मीटर पर कोई है।",
+   "file": "audio/hi/7b652fee0122134f.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 7 metres from the machine.",
+   "file": "audio/en/b9aa9505efd20aa5.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 7 मीटर पर कोई है।",
+   "file": "audio/hi/057a9e71d22f89ba.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 9 metres from the machine.",
+   "file": "audio/en/d71c05467a11e8c6.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 9 मीटर पर कोई है।",
+   "file": "audio/hi/c1cacb1c8ea0d22e.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 10 metres from the machine.",
+   "file": "audio/en/bb5b7bca9eb58d27.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 10 मीटर पर कोई है।",
+   "file": "audio/hi/adf542161de092ce.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 11 metres from the machine.",
+   "file": "audio/en/a431a64f9b44d482.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 11 मीटर पर कोई है।",
+   "file": "audio/hi/51c002e21f25c9ba.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 12 metres from the machine.",
+   "file": "audio/en/b32c67939bee00a2.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 12 मीटर पर कोई है।",
+   "file": "audio/hi/9d07db23acdd15ed.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 13 metres from the machine.",
+   "file": "audio/en/bef3828c846a2177.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 13 मीटर पर कोई है।",
+   "file": "audio/hi/7e2371852be13adc.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 14 metres from the machine.",
+   "file": "audio/en/07f6c65f646c30a2.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 14 मीटर पर कोई है।",
+   "file": "audio/hi/4a1c43cad04046d5.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 15 metres from the machine.",
+   "file": "audio/en/ae6388baa0f0acd4.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 15 मीटर पर कोई है।",
+   "file": "audio/hi/6d0b9286ff19b94a.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 17 metres from the machine.",
+   "file": "audio/en/7f83f0df13dfe068.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 17 मीटर पर कोई है।",
+   "file": "audio/hi/6c6ec62ea40a5e6b.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 18 metres from the machine.",
+   "file": "audio/en/b8c7f3ad2b035e28.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 18 मीटर पर कोई है।",
+   "file": "audio/hi/200dcf67209c955d.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 19 metres from the machine.",
+   "file": "audio/en/2a20c442e8aba061.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 19 मीटर पर कोई है।",
+   "file": "audio/hi/935ab8dd11070efc.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 20 metres from the machine.",
+   "file": "audio/en/aaf4281b3f12b4a6.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 20 मीटर पर कोई है।",
+   "file": "audio/hi/8ef23763fdac401d.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 22 metres from the machine.",
+   "file": "audio/en/5b2af3ce4171d4bb.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 22 मीटर पर कोई है।",
+   "file": "audio/hi/c19bb4d4cc637683.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 23 metres from the machine.",
+   "file": "audio/en/cfc4ed5e6fa5ecb5.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 23 मीटर पर कोई है।",
+   "file": "audio/hi/6b155f58f8eda2f1.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 24 metres from the machine.",
+   "file": "audio/en/22c3623f1d6557ec.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 24 मीटर पर कोई है।",
+   "file": "audio/hi/93fb24f976120c0f.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 25 metres from the machine.",
+   "file": "audio/en/bdd71e846cbb9a30.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 25 मीटर पर कोई है।",
+   "file": "audio/hi/69ad273a2d42bc65.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 27 metres from the machine.",
+   "file": "audio/en/67e8be499581467a.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 27 मीटर पर कोई है।",
+   "file": "audio/hi/3e83d53e66fa2f09.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 28 metres from the machine.",
+   "file": "audio/en/866eb87bd6c9e837.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 28 मीटर पर कोई है।",
+   "file": "audio/hi/2c02ac633e45c0a1.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 29 metres from the machine.",
+   "file": "audio/en/cfc727a03757f6d7.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 29 मीटर पर कोई है।",
+   "file": "audio/hi/1ad2d4353f5bcc0a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from rain and machine age, about 3 from idle gaps.",
+   "file": "audio/en/7694af21905b3819.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/89e1a690ac3450d3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 2 from machine age, about 2 from idle gaps.",
+   "file": "audio/en/cb2664b59b7bac70.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 2 मिनट मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/411ff535b1a94838.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 7 from machine age and rain, about 3 from idle gaps.",
+   "file": "audio/en/9d386458694ee4d9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 7 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/d8e509daf823f411.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "12 minutes over. About 8 from machine age and rain, about 4 from idle gaps.",
+   "file": "audio/en/a807f353cdbb6258.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "12 मिनट ज़्यादा लगे। लगभग 8 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/fb71b5184c6e6928.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 0 from , about 4 from idle gaps.",
+   "file": "audio/en/8ef37c8832be5d28.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 0 मिनट  की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/531becdc02ec15b9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from machine age and rain, about 3 from idle gaps.",
+   "file": "audio/en/ebb6bc59130c4cef.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/cc9c2d3e2e371084.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 3 from rain and machine age, about 2 from idle gaps.",
+   "file": "audio/en/1a002a27ac190592.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 3 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/45aae7c9a35c55a3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 5 from rain and machine age, about 2 from idle gaps.",
+   "file": "audio/en/e46dd270ebd7354d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 5 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/1f1af255cdb5ef1c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 3 from heat, about 3 from idle gaps.",
+   "file": "audio/en/b7415887ec58846a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 3 मिनट गर्मी की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/7b988838b7d32c9a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 4 from rain and machine age, about 2 from idle gaps.",
+   "file": "audio/en/64c63f0d10036c71.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 4 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/995139362421976a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 5 from machine age and rain, about 2 from idle gaps.",
+   "file": "audio/en/0241586a75748465.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/bc507db9aa00430d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 7 from rain and machine age, about 3 from idle gaps.",
+   "file": "audio/en/0a71dd963f91f4c9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 7 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/957001760896a128.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 5 from machine age and rain, about 2 from idle gaps.",
+   "file": "audio/en/e63d0b36ea137773.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/c2f9ca9cf9af9c71.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 3 from rain, about 4 from idle gaps.",
+   "file": "audio/en/e4e8473186fd7d37.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 3 मिनट बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/f6d585c96fb22df9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 2 from machine age, about 3 from idle gaps.",
+   "file": "audio/en/5c0f7749f8a8f780.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 2 मिनट मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/c9ead48d5d9e33d5.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "12 minutes over. About 7 from machine age and rain, about 4 from idle gaps.",
+   "file": "audio/en/f0cb7af2902066cb.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "12 मिनट ज़्यादा लगे। लगभग 7 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/609afbfb303e140f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 3 from heat and machine age, about 2 from idle gaps.",
+   "file": "audio/en/484209735c63f478.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 3 मिनट गर्मी और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/91a058b6ec2d05c2.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 6 from rain and machine age, about 2 from idle gaps.",
+   "file": "audio/en/9a6938b0e0ac4c59.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 6 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/af2fdf8c06434874.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "14 minutes over. About 9 from machine age and rain, about 5 from idle gaps.",
+   "file": "audio/en/3ccdb5091399076b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "14 मिनट ज़्यादा लगे। लगभग 9 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 5 मिनट रुकावटों से।",
+   "file": "audio/hi/8f5f7d769360284f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 7 from machine age and heat, about 3 from idle gaps.",
+   "file": "audio/en/6c044537b643913d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 7 मिनट मशीन की उम्र और गर्मी की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/15ccba7443c9a249.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "11 minutes over. About 7 from rain and machine age, about 4 from idle gaps.",
+   "file": "audio/en/0504063994a7aee1.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "11 मिनट ज़्यादा लगे। लगभग 7 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/026be21c2b057486.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "9 minutes over. About 6 from machine age and rain, about 3 from idle gaps.",
+   "file": "audio/en/180d0655848992a8.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "9 मिनट ज़्यादा लगे। लगभग 6 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/b830cb9d317f417b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 5 from machine age and rain, about 3 from idle gaps.",
+   "file": "audio/en/5efda22646a1a7a8.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/9581925c1eaa1054.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "14 minutes over. About 8 from machine age, about 6 from idle gaps.",
+   "file": "audio/en/c31e35d826c63e6a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "14 मिनट ज़्यादा लगे। लगभग 8 मिनट मशीन की उम्र की वजह से, और लगभग 6 मिनट रुकावटों से।",
+   "file": "audio/hi/2f2a06b5a001a2b4.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 6 from machine age and rain, about 4 from idle gaps.",
+   "file": "audio/en/893208aa1d3b680a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 6 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/49fb305ad32c1fd0.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 3 from machine age and rain, about 2 from idle gaps.",
+   "file": "audio/en/149f94d5954d4245.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 3 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/704abe847274f8d4.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 6 from machine age and heat, about 2 from idle gaps.",
+   "file": "audio/en/bf4b5f34c7b12cdd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 6 मिनट मशीन की उम्र और गर्मी की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/070600082bb196b1.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 4 from heat and machine age, about 2 from idle gaps.",
+   "file": "audio/en/8b7a38512bf98a4a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 4 मिनट गर्मी और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/85ba6d60fe381253.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 2 from rain, about 2 from idle gaps.",
+   "file": "audio/en/494fa32751f79c5c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 2 मिनट बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/634b9c91d480eebb.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "12 minutes over. About 7 from machine age and rain, about 5 from idle gaps.",
+   "file": "audio/en/097385b3fbff02de.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "12 मिनट ज़्यादा लगे। लगभग 7 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 5 मिनट रुकावटों से।",
+   "file": "audio/hi/f7fb1401465269bd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "3 minutes over. About 1 from rain, about 2 from idle gaps.",
+   "file": "audio/en/bdb5b395763d89be.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "3 मिनट ज़्यादा लगे। लगभग 1 मिनट बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/3ad51ff3ef9b7c0f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 3 from rain and machine age, about 2 from idle gaps.",
+   "file": "audio/en/06988c37240a3142.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 3 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/a51d765b0312ac02.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 4 from machine age and rain, about 3 from idle gaps.",
+   "file": "audio/en/d665ecf642e235ce.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 4 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/1857ea6b883642c0.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from machine age and rain, about 2 from idle gaps.",
+   "file": "audio/en/c42a166b8a4164dc.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/c6b2d108ce875a17.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from rain and machine age, about 4 from idle gaps.",
+   "file": "audio/en/a1ab2d55a23918fd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/e1e57458a701db91.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "15 minutes over. About 11 from machine age and rain, about 4 from idle gaps.",
+   "file": "audio/en/97e1eb00cb7ddea8.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "15 मिनट ज़्यादा लगे। लगभग 11 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/a400435a0ef9d948.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 6 from rain and machine age, about 4 from idle gaps.",
+   "file": "audio/en/7bf1b45b639f7b96.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 6 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/04c134c7b8e61634.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 6 from rain and machine age, about 3 from idle gaps.",
+   "file": "audio/en/1172b60a31e91dea.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 6 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/adb10ea65565b5e4.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "20 minutes over. About 14 from machine age and rain, about 6 from idle gaps.",
+   "file": "audio/en/b00935311ea12234.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "20 मिनट ज़्यादा लगे। लगभग 14 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 6 मिनट रुकावटों से।",
+   "file": "audio/hi/9e953ebc98348396.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "9 minutes over. About 5 from rain and machine age, about 4 from idle gaps.",
+   "file": "audio/en/937ff33c149d1302.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "9 मिनट ज़्यादा लगे। लगभग 5 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/038fd09e9ecf2b0d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 2 from machine age, about 4 from idle gaps.",
+   "file": "audio/en/7893bd828cecbd18.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 2 मिनट मशीन की उम्र की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/d61d96534d4d2218.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "9 minutes over. About 5 from machine age and heat, about 4 from idle gaps.",
+   "file": "audio/en/f805c38ed0d77ef3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "9 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और गर्मी की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/6991702b41683a2e.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 2 from rain, about 3 from idle gaps.",
+   "file": "audio/en/b4e4b4f55eaa2256.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 2 मिनट बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/dfd538c28fa772e5.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 2 from rain, about 3 from idle gaps.",
+   "file": "audio/en/ab5fa1c3728f388e.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 2 मिनट बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/c6a98577c4bd86a3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 5 from heat and machine age, about 3 from idle gaps.",
+   "file": "audio/en/9f251bcd35d02430.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 5 मिनट गर्मी और मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/e1cb387cc424c289.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 2 from machine age and rain, about 2 from idle gaps.",
+   "file": "audio/en/5192ea2d357d67dc.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 2 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/c1a7ceb07ef0e950.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 3 from machine age and rain, about 3 from idle gaps.",
+   "file": "audio/en/45c388cd7c0a266c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 3 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/4f0059fd6c7e4058.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from machine age, about 3 from idle gaps.",
+   "file": "audio/en/4c83bbe86ca27f7d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/8beac8dcbc7f23c0.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 1 from heat, about 3 from idle gaps.",
+   "file": "audio/en/499e2644263b93e3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 1 मिनट गर्मी की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "file": "audio/hi/4d958ff7e0989f76.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "16 minutes over. About 9 from machine age and rain, about 7 from idle gaps.",
+   "file": "audio/en/695ff2223f29a080.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "16 मिनट ज़्यादा लगे। लगभग 9 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 7 मिनट रुकावटों से।",
+   "file": "audio/hi/208d24299e3e55cd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 5 from machine age and rain, about 4 from idle gaps.",
+   "file": "audio/en/4985b7818aed816a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "file": "audio/hi/1aefa3d4769010dc.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 1 from rain, about 2 from idle gaps.",
+   "file": "audio/en/cd82f9969b83999c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 1 मिनट बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/f922a7650cda0017.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 4 from machine age and rain, about 2 from idle gaps.",
+   "file": "audio/en/8769d8ba60525b2a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 4 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "file": "audio/hi/f1fbf714881f485f.mp3"
   }
  ]
 }

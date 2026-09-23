@@ -6,13 +6,16 @@ import { fileURLToPath } from 'node:url';
 import { connectReplay } from './index.js';
 import { createQueue } from '../voice/queue.js';
 import { createSpeaker } from '../voice/speaker.js';
+import { unlockAudio } from '../voice/unlock.js';
+
+unlockAudio(); // these tests start after the Start button's click (see unlock.test.js for before it)
 
 const demo = JSON.parse(readFileSync(fileURLToPath(new URL('../../../contracts/examples/demo_scenario.json', import.meta.url)), 'utf8'));
 
 const EXPECTED = [
   { priority: 'coaching', mode: 'friendly', message_key: 'lesson_idle_engine_off', slots: {} },
   { priority: 'safety', mode: 'alert', message_key: 'belt_before_move', slots: {} },
-  { priority: 'safety', mode: 'alert', message_key: 'proximity_alert', slots: { distance_m: 2.1 } },
+  { priority: 'safety', mode: 'alert', message_key: 'proximity_alert', slots: { distance_m: 2 } },
   { priority: 'safety', mode: 'alert', message_key: 'seatbelt_unfastened', slots: {} },
   { priority: 'safety', mode: 'alert', message_key: 'seatbelt_unfastened', slots: {} },
 ];
@@ -36,7 +39,7 @@ describe('real demo scenario -> replay -> queue', () => {
     const spoken = queue.spoken;
     expect(spoken.map((s) => s.event)).toEqual(EXPECTED.map((e) => ({ ...e, lang: 'hi' })));
     expect(spoken[1].text).toContain('बेल्ट');
-    expect(spoken[2].text).toContain('2.1');
+    expect(spoken[2].text).toContain('2 मीटर');           // 2.1 m spoken as whole metres
   });
 
   it('quiet mode keeps every safety line but drops the lesson', () => {

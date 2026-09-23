@@ -11,6 +11,7 @@
 // warning. Without any speech API it is silent (onEnd fires at once).
 import { render } from './templates.js';
 import { modeSettings } from './modes.js';
+import { IS_DEV, isAudioUnlocked } from './unlock.js';
 
 export const VOICE_LANGS = { en: ['en-IN', 'en-GB', 'en-US', 'en'], hi: ['hi-IN', 'hi'] };
 export const MANIFEST_URL = 'audio/manifest.json';
@@ -95,6 +96,10 @@ export function createSpeaker({
   }
 
   function speak(event, { onEnd } = {}) {
+    if (!isAudioUnlocked() && IS_DEV) {
+      // Loud in development: this sound will be blocked by autoplay rules on demo day.
+      console.warn(`[saathi] speak('${event.message_key}') before unlockAudio(): call unlockAudio() in the Start button's onClick first`);
+    }
     const lang = event.lang ?? 'en';
     const text = render(event.message_key, event.slots ?? {}, lang);
     const clip = Audio ? findClip(event, lang, text) : null;

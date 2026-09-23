@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { createBriefingGuard } from './briefing.js';
 import { createQueue } from './queue.js';
+import { unlockAudio } from './unlock.js';
+
+unlockAudio(); // these tests start after the Start button's click (see unlock.test.js for before it)
 
 // Speaker that never finishes on its own, so we can see what is playing and what is waiting.
 function heldSpeaker() {

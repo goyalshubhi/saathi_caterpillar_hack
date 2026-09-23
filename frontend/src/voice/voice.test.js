@@ -6,6 +6,9 @@ import { MODES } from './modes.js';
 import { createSpeaker } from './speaker.js';
 import { createQueue } from './queue.js';
 import { COMMANDS, MIN_COMMAND_CONFIDENCE, MIN_PHRASE_WORDS, matchCommand } from './commands.js';
+import { unlockAudio } from './unlock.js';
+
+unlockAudio(); // these tests start after the Start button's click (see unlock.test.js for before it)
 
 // ---------- fakes ----------
 

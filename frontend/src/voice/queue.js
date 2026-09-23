@@ -4,6 +4,11 @@
 // - care, coaching and info wait their turn (in that order)
 // - interruption budget: at most ONE coaching line per task (safety/care/info are exempt)
 // - quiet mode drops coaching lines only; safety is never muted
+// - nothing is spoken before unlockAudio() (the Start button's click): lines wait, then play
+// - onSpeak(result, event) is called with each speak() result ({text, lang, source}), e.g. to
+//   drive the fallback-voice indicator
+import { isAudioUnlocked, onAudioUnlock } from './unlock.js';
+
 export const PRIORITY_ORDER = ['safety', 'care', 'coaching', 'info'];
 
 const rank = (p) => {
@@ -11,7 +16,7 @@ const rank = (p) => {
   return i === -1 ? PRIORITY_ORDER.length : i;
 };
 
-export function createQueue({ speaker }) {
+export function createQueue({ speaker, onSpeak = () => {} }) {
   let current = null; // { event, token }
   let token = 0;
   const pending = [];
@@ -22,7 +27,7 @@ export function createQueue({ speaker }) {
   let lastSpoken = null;
 
   function pump() {
-    if (current || pending.length === 0) return;
+    if (current || pending.length === 0 || !isAudioUnlocked()) return;
     const event = pending.shift();
     const myToken = ++token;
     current = { event, token: myToken };
@@ -34,8 +39,11 @@ export function createQueue({ speaker }) {
     };
     lastSpoken = event;
     const result = speaker.speak(event, { onEnd }) ?? {};
-    spoken.push({ event, text: result.text, lang: result.lang });
+    spoken.push({ event, text: result.text, lang: result.lang, source: result.source });
+    onSpeak(result, event);
   }
+
+  onAudioUnlock(() => pump());
 
   function enqueue(event) {
     const r = rank(event.priority);

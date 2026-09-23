@@ -3,7 +3,7 @@ import { createPlayer } from './player.js';
 import { createRules } from './rules.js';
 
 export { detectEvents, createPlayer, isIdleWindow, WINDOW_SECONDS, DEFAULT_IDLE_THRESHOLD_MIN } from './player.js';
-export { createRules, scenarioToSaathiEvents, IDLE_LESSON_MIN, DEFAULT_LESSON } from './rules.js';
+export { createRules, scenarioToSaathiEvents, spokenDistance, IDLE_LESSON_MIN, DEFAULT_LESSON } from './rules.js';
 
 // Wire a player to the voice queue: replay events -> rules -> queue.push.
 

@@ -5,7 +5,10 @@ Lines rendered (en + hi):
     text is exactly what templates.js renders for the demo), and
   - fixed lines: every template without slots (safety alerts, belt-before-you-move, breaks,
     lessons, quiet-mode and other command confirmations, debrief lines) plus greetings,
-    memory notes and incident confirmations for every machine / incident category.
+    memory notes and incident confirmations for every machine / incident category, and
+  - off-script extras, capped at EXTRA_CLIP_CAP clips: proximity_alert at every whole-metre
+    distance of an alert window in the synthetic telemetry or scripted scenarios, then the most
+    frequent debrief_over lines from debrief() over every synthetic task (demo shift windows).
 
 Output: frontend/public/audio/{lang}/{hash}.mp3 and frontend/public/audio/manifest.json.
 Existing MP3s are reused; files no longer in the manifest are deleted.
@@ -13,9 +16,11 @@ Existing MP3s are reused; files no longer in the manifest are deleted.
 Run: make audio   (needs internet and `pip install -r requirements-dev.txt`)
 """
 import asyncio
+import collections
 import contextlib
 import hashlib
 import json
+import math
 import os
 import subprocess
 import sys
@@ -37,6 +42,7 @@ MODES = {
     "debrief": {"pitch": 1.0, "rate": 1.0, "volume": 0.9},
 }
 PITCH_HZ_PER_UNIT = 50      # Web Speech pitch 1.3 -> +15Hz on the neural voice
+EXTRA_CLIP_CAP = 150        # off-script extras (en + hi clips) so `make audio` stays small and fast
 
 # Mode for fixed lines (demo lines keep the mode the demo uses).
 FIXED_MODES = {
@@ -84,8 +90,42 @@ def demo_lines():
     return lines
 
 
-def collect_entries():
-    """Unique manifest entries {message_key, lang, mode, text, file}."""
+def spoken_distance(m):
+    """Mirror of spokenDistance() in frontend/src/replay/rules.js: whole metres, rounded down, >= 1."""
+    return max(1, math.floor(m))
+
+
+def proximity_lines():
+    """proximity_alert at every whole-metre distance an alert window can produce."""
+    sys.path.insert(0, str(ROOT))
+    import pandas as pd
+    from backend.data_gen import scenario
+    from backend.data_gen.generator import SYNTHETIC_DIR
+    windows = pd.read_csv(SYNTHETIC_DIR / "telemetry.csv").to_dict(orient="records")
+    windows += scenario("demo") + scenario("clean")
+    metres = sorted({spoken_distance(w["proximity_distance_m"]) for w in windows
+                     if w["safety_alert_triggered"] == "Yes" and w["proximity_distance_m"] is not None})
+    return [("proximity_alert", {"distance_m": m}, "alert") for m in metres]
+
+
+def debrief_over_lines():
+    """debrief_over lines from debrief() over every synthetic task, most frequent first."""
+    sys.path.insert(0, str(ROOT))
+    import pandas as pd
+    from backend.data_gen import scenario
+    from backend.data_gen.generator import SYNTHETIC_DIR
+    from backend.ml import debrief, debrief_lines
+    shift = scenario("demo")
+    counts = collections.Counter()
+    for task in pd.read_csv(SYNTHETIC_DIR / "tasks.csv").to_dict(orient="records"):
+        for line in debrief_lines(debrief(task, shift)):
+            if line["message_key"] == "debrief_over":
+                counts[json.dumps(line["slots"], sort_keys=True)] += 1
+    return [("debrief_over", json.loads(slots), "debrief") for slots, _ in counts.most_common()]
+
+
+def collect_entries(extras=True):
+    """Unique manifest entries {message_key, lang, mode, text, file}. Extras come last, capped."""
     subprocess.run(["node", str(ROOT / "scripts" / "export_templates.mjs")], check=True, capture_output=True)
     import demo_cli
     lines = demo_lines()
@@ -96,14 +136,27 @@ def collect_entries():
     lines += [(key, slots, FIXED_MODES.get(key, "friendly")) for key, slots in FIXED_SLOT_LINES]
 
     entries, seen = [], set()
-    for key, slots, mode in lines:
+
+    def add(key, slots, mode):
+        new = []
         for lang in LANGS:
             text = demo_cli.render(key, slots, lang)
-            if (key, lang, mode, text) in seen:
-                continue
-            seen.add((key, lang, mode, text))
-            entries.append({"message_key": key, "lang": lang, "mode": mode, "text": text,
+            if (key, lang, mode, text) not in seen:
+                seen.add((key, lang, mode, text))
+                new.append({"message_key": key, "lang": lang, "mode": mode, "text": text,
                             "file": file_for(lang, mode, text)})
+        return new
+
+    for line in lines:
+        entries += add(*line)
+    if extras:
+        added = 0
+        for line in proximity_lines() + debrief_over_lines():
+            new = add(*line)
+            if added + len(new) > EXTRA_CLIP_CAP:
+                break
+            entries += new
+            added += len(new)
     return entries
 
 
@@ -140,7 +193,12 @@ def main():
         "entries": entries,
     }
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    size_mb = sum((AUDIO_DIR.parent / e["file"]).stat().st_size for e in entries) / 1e6
+    by_key = collections.Counter(e["message_key"] for e in entries)
     print(f"{len(entries)} lines ({made} new MP3s, {len(stale)} stale removed) -> {MANIFEST.relative_to(ROOT)}")
+    print(f"  off-script extras: proximity_alert {by_key['proximity_alert']} clips, "
+          f"debrief_over {by_key['debrief_over']} clips (cap {EXTRA_CLIP_CAP} added)")
+    print(f"  manifest: {len(entries)} clips, {size_mb:.1f} MB of MP3")
 
 
 if __name__ == "__main__":
