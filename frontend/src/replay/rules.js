@@ -1,6 +1,8 @@
 // Replay events -> SaathiEvents {priority, mode, message_key, slots, lang}.
 //
-//   resume_after_idle while unbelted     -> safety / alert   belt_before_move
+//   resume_after_idle while unbelted     -> safety / alert   belt_before_move, if the idle stretch was
+//                                           >= BELT_MIN_IDLE_MIN; after a shorter pause the plain
+//                                           seatbelt_unfastened line instead (still unbelted at work)
 //   seatbelt unfastened while active     -> safety / alert   seatbelt_unfastened (unless belt_before_move just fired)
 //   safety_alert with proximity          -> safety / alert   proximity_alert {distance_m}
 //   safety_alert without proximity       -> safety / alert   safety_alert
@@ -9,9 +11,14 @@
 import { detectEvents } from './player.js';
 
 export const IDLE_LESSON_MIN = 10;
+// "Belt before you move" only after a real stop: a brief pause (repositioning, waiting a beat)
+// must not trigger the pre-move alert, or operators learn to tune it out.
+export const BELT_MIN_IDLE_MIN = 2;
 export const DEFAULT_LESSON = 'lesson_idle_engine_off';
 
-export function createRules({ lang = 'en', lessonKey = DEFAULT_LESSON, idleLessonMin = IDLE_LESSON_MIN } = {}) {
+export function createRules({
+  lang = 'en', lessonKey = DEFAULT_LESSON, idleLessonMin = IDLE_LESSON_MIN, beltMinIdleMin = BELT_MIN_IDLE_MIN,
+} = {}) {
   let lessonPlayed = false;
   let beltWarnedAt = -1;
   const say = (priority, mode, message_key, slots = {}) => ({ priority, mode, message_key, slots, lang });
@@ -30,7 +37,8 @@ export function createRules({ lang = 'en', lessonKey = DEFAULT_LESSON, idleLesso
       case 'resume_after_idle':
         if (event.seatbelt_status === 'Unfastened') {
           beltWarnedAt = event.index;
-          return [say('safety', 'alert', 'belt_before_move')];
+          const longStop = event.idle_minutes >= beltMinIdleMin;
+          return [say('safety', 'alert', longStop ? 'belt_before_move' : 'seatbelt_unfastened')];
         }
         return [];
       case 'seatbelt_change':
