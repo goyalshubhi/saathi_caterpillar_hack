@@ -1,7 +1,9 @@
 // Saathi: an original SVG character — a friendly senior operator in a hard hat.
 // States: idle (slow breathing), speaking (mouth + pulse ring), alert (red glow, upright), rest (eyes
 // closed, holding a water bottle). All loops stop when the user prefers reduced motion.
-import { useId } from 'react';
+// wave: a one-time "hello" (arm raises, waves, lowers over ~2 s, with a "Hi!" bubble) on top of idle or
+// speaking; an alert or rest state cancels it. Skipped under reduced motion.
+import { useEffect, useId, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useStore } from '../state/store.js';
 
@@ -18,8 +20,76 @@ const HAT_SHADE = '#d6a800';
 
 const RING = { idle: null, speaking: 'var(--accent)', alert: 'var(--danger)', rest: 'var(--care)' };
 
-export default function Avatar({ state = 'idle', size = 160, title = 'Saathi', testId = 'avatar' }) {
+export const WAVE_MS = 2000;
+const SHOULDER = '150 172'; // rotation pivot (SVG user units); the arm is drawn pointing straight up
+// [time 0..1, arm angle in degrees clockwise from straight up]: raise, wave twice, lower.
+const WAVE_ANGLES = [[0, 160], [0.2, 20], [0.33, 45], [0.46, 15], [0.59, 45], [0.72, 20], [1, 160]];
+
+function lerpKeys(keys, t) {
+  const i = keys.findIndex(([at]) => at >= t);
+  if (i <= 0) return keys[Math.max(i, 0)][1];
+  const [t0, a0] = keys[i - 1];
+  const [t1, a1] = keys[i];
+  const f = (t - t0) / (t1 - t0);
+  return a0 + (a1 - a0) * (0.5 - Math.cos(Math.PI * f) / 2); // ease in-out
+}
+
+// Arm angle, arm opacity and bubble opacity at t (0..1) of the wave.
+export function wavePose(t) {
+  const c = Math.min(1, Math.max(0, t));
+  return {
+    angle: lerpKeys(WAVE_ANGLES, c),
+    arm: Math.min(1, c / 0.1, (1 - c) / 0.1),
+    bubble: lerpKeys([[0, 0], [0.15, 0], [0.25, 1], [0.8, 1], [0.92, 0], [1, 0]], c),
+  };
+}
+
+// Plays the wave once when `on` becomes true (unless reduced motion or a busy state); calls onDone after.
+function useWave(on, state, reduce, onDone) {
+  const [waving, setWaving] = useState(false);
+  const armRef = useRef(null);
+  const bubbleRef = useRef(null);
+  const doneRef = useRef(onDone);
+  doneRef.current = onDone;
+  const busy = state === 'alert' || state === 'rest';
+
+  useEffect(() => {
+    if (!on || reduce || busy) return undefined;
+    setWaving(true);
+    const raf = globalThis.requestAnimationFrame ?? ((fn) => setTimeout(fn, 16));
+    const caf = globalThis.cancelAnimationFrame ?? clearTimeout;
+    const start = Date.now();
+    let frame;
+    const tick = () => {
+      const t = (Date.now() - start) / WAVE_MS;
+      const pose = wavePose(t);
+      armRef.current?.setAttribute('transform', `rotate(${pose.angle.toFixed(1)} ${SHOULDER})`);
+      armRef.current?.setAttribute('opacity', pose.arm.toFixed(2));
+      bubbleRef.current?.setAttribute('opacity', pose.bubble.toFixed(2));
+      if (t < 1) frame = raf(tick);
+      else {
+        setWaving(false);
+        doneRef.current?.();
+      }
+    };
+    frame = raf(tick);
+    return () => {
+      caf(frame);
+      setWaving(false);
+    };
+  }, [on, reduce, busy]);
+
+  // An alert or rest cuts the wave short; it counts as done so it does not replay.
+  useEffect(() => {
+    if (on && busy) doneRef.current?.();
+  }, [on, busy]);
+
+  return { waving: waving && !busy, armRef, bubbleRef };
+}
+
+export default function Avatar({ state = 'idle', size = 160, title = 'Saathi', testId = 'avatar', wave = false, onWaveDone }) {
   const reduce = useReducedMotion();
+  const { waving, armRef, bubbleRef } = useWave(wave, state, reduce, onWaveDone);
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const id = (name) => `av-${name}-${uid}`;
   const loop = (duration, extra = {}) => (reduce ? { duration: 0 } : { duration, repeat: Infinity, ease: 'easeInOut', ...extra });
@@ -28,7 +98,7 @@ export default function Avatar({ state = 'idle', size = 160, title = 'Saathi', t
   const rest = state === 'rest';
 
   return (
-    <div className={`avatar avatar--${state}`} style={{ width: size, height: size * 1.1 }} data-testid={testId} data-state={state} role="img" aria-label={`${title} (${state})`}>
+    <div className={`avatar avatar--${state}`} style={{ width: size, height: size * 1.1 }} data-testid={testId} data-state={state} data-waving={waving ? 'true' : undefined} role="img" aria-label={`${title} (${state})`}>
       <svg viewBox="0 0 200 220" width="100%" height="100%" aria-hidden="true">
         <defs>
           <radialGradient id={id('glow')} cx="50%" cy="55%" r="50%">
@@ -147,7 +217,33 @@ export default function Avatar({ state = 'idle', size = 160, title = 'Saathi', t
               <path d="M66 64 C 72 56, 80 52, 88 50" stroke="#fff3b0" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.8" />
             </motion.g>
           </motion.g>
+
+          {/* waving arm (one-time hello): sleeve + open hand, rotated around the shoulder */}
+          {waving && (
+            <g ref={armRef} transform={`rotate(160 ${SHOULDER})`} opacity="0" data-testid="avatar-arm">
+              <path d="M140 178 L 143 128 C 144 122, 156 122, 157 128 L 160 178 Z" fill={SHIRT} />
+              <path d="M142 150 L 158 150 L 158 158 L 142 158 Z" fill={REFLECT} opacity="0.9" />
+              <rect x="141" y="120" width="18" height="10" rx="4" fill={SKIN_SHADE} />
+              <g fill={SKIN}>
+                <ellipse cx="150" cy="108" rx="12" ry="13" />
+                <rect x="139" y="88" width="5" height="16" rx="2.5" />
+                <rect x="145" y="84" width="5" height="18" rx="2.5" />
+                <rect x="151" y="84" width="5" height="18" rx="2.5" />
+                <rect x="157" y="89" width="5" height="16" rx="2.5" />
+                <rect x="160" y="104" width="5" height="12" rx="2.5" transform="rotate(35 162 110)" />
+              </g>
+            </g>
+          )}
         </g>
+
+        {/* "Hi!" bubble while waving */}
+        {waving && (
+          <g ref={bubbleRef} opacity="0" data-testid="avatar-hi">
+            <rect x="146" y="6" width="50" height="30" rx="12" fill="var(--accent)" />
+            <path d="M160 34 L 156 46 L 170 35 Z" fill="var(--accent)" />
+            <text x="171" y="27" textAnchor="middle" fontSize="18" fontWeight="700" fill="var(--accent-ink)" fontFamily="var(--font-display, sans-serif)">Hi!</text>
+          </g>
+        )}
       </svg>
     </div>
   );
@@ -161,7 +257,7 @@ export function useAvatarState(fallback = 'idle') {
   return fallback;
 }
 
-export function LiveAvatar({ rest = false, size }) {
+export function LiveAvatar({ rest = false, size, wave = false, onWaveDone }) {
   const state = useAvatarState(rest ? 'rest' : 'idle');
-  return <Avatar state={state} size={size} />;
+  return <Avatar state={state} size={size} wave={wave} onWaveDone={onWaveDone} />;
 }

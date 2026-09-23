@@ -41,6 +41,7 @@ export function initialState() {
     taskStatus: {}, // task_id -> in_progress | done (local)
     debriefSeen: {},
     completedLessons: [],
+    waved: false, // the avatar's one-time hello on the first Morning load
     incidentFlash: null, // category the demo "taps", so the button lights up
 
     // replay

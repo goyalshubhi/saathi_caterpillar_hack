@@ -7,8 +7,9 @@ import { useT } from '../i18n.js';
 import { repeat } from '../saathi/voiceRuntime.js';
 import Avatar from '../avatar/Avatar.jsx';
 
-// Every spoken line is also shown as a large caption for ~5 seconds.
-export function Caption({ still = false }) {
+// Every spoken line is also shown as a large caption for ~5 seconds. `inline` renders it in the
+// page flow (Morning shows it next to the avatar, in place of the heading) instead of floating.
+export function Caption({ still = false, inline = false }) {
   const t = useT();
   const raw = useStore((s) => s.caption);
   // In-task: the red banner already shows safety lines and the lesson card shows lessons.
@@ -16,7 +17,7 @@ export function Caption({ still = false }) {
   const tone = caption?.priority === 'safety' ? 'safety' : caption?.priority === 'care' ? 'care' : 'info';
   const motionProps = still ? {} : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 8 }, transition: { duration: 0.2 } };
   return (
-    <div className="caption-slot" aria-live="polite">
+    <div className={inline ? 'caption-inline' : 'caption-slot'} aria-live="polite">
       <AnimatePresence>
         {caption && (
           <motion.div key={caption.id} className={`caption caption--${tone}`} data-testid="caption" {...motionProps}>

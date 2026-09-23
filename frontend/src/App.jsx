@@ -81,7 +81,8 @@ export function OperatorApp() {
           </motion.div>
         </AnimatePresence>
       </main>
-      <Caption still={inTask} />
+      {/* Morning shows the caption inline, next to the avatar */}
+      {!opPath.startsWith('/morning') && <Caption still={inTask} />}
       <ShiftOverlay />
     </div>
   );

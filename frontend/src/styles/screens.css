@@ -37,7 +37,9 @@
 /* ---------- Morning ---------- */
 .morning { gap: var(--s-4); padding-top: var(--s-4); padding-bottom: var(--s-4); }
 .morning__hero { display: flex; align-items: center; gap: var(--s-5); }
-.morning__greeting { flex: 1; min-width: 0; display: grid; gap: var(--s-2); }
+.morning__greeting { flex: 1; min-width: 0; display: grid; gap: var(--s-2); align-content: center; height: 148px; }
+.morning__greeting .caption { padding-top: var(--s-2); padding-bottom: var(--s-2); }
+.morning__greeting .caption__text { font-size: 22px; line-height: 1.25; }
 .morning__greeting .display { font-size: 60px; }
 .morning__conditions { display: grid; gap: var(--s-2); }
 .morning__tasks { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
@@ -159,8 +161,7 @@
 }
 .machine-state__dot { width: 18px; height: 18px; border-radius: 50%; background: currentColor; }
 .machine-state.is-idle { background: var(--surface-2); color: var(--text-muted); border-color: var(--line-strong); }
-/* Above the safety banner (z-index 40) so the replay stays controllable during an alert. */
-.speed-control { position: relative; z-index: 41; display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.speed-control { display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
 .speed-control__btn {
   display: grid;
   place-items: center;
@@ -185,7 +186,7 @@
 .progress__track { height: 40px; border-radius: 20px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
 .progress__fill { height: 100%; border-radius: 20px; background: var(--accent); }
 .progress__fill.is-idle { background: var(--steel); }
-.intask__lesson-slot { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.intask__lesson-slot { flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .lesson-card {
   display: flex;
   align-items: center;
@@ -330,6 +331,7 @@
   .screen { padding: var(--s-4) var(--s-5); }
   .conditions--compact .conditions__hour:nth-child(n + 6) { display: none; }
   .morning__greeting .display { font-size: 48px; }
+  .morning__greeting .caption__text { font-size: 19px; }
   .task-card { padding: var(--s-3) var(--s-4); }
   .task-card__title { font-size: 28px; }
   .morning__bottom { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--s-3); }

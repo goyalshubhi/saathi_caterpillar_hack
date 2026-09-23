@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Coffee, MessageSquareWarning, TriangleAlert, Clapperboard } from 'lucide-react';
 import { render } from '../voice/index.js';
-import { useStore } from '../state/store.js';
+import { store, useStore } from '../state/store.js';
 import { useT, taskTypeLabel, weatherLabel, factorLabel } from '../i18n.js';
 import { loadDay, loadMemory } from '../saathi/actions.js';
 import { morningEvents, orderedTasks, warningsFor } from '../saathi/briefings.js';
 import { useBriefing } from '../saathi/useBriefing.js';
 import { LiveAvatar } from '../avatar/Avatar.jsx';
+import { Caption } from '../components/Overlays.jsx';
 import { TaskIcon } from '../components/icons.jsx';
 import CountUp from '../components/CountUp.jsx';
 import ConditionsStrip from '../components/ConditionsStrip.jsx';
@@ -31,6 +32,8 @@ export default function Morning() {
   const shift = useStore((s) => s.shift);
   const taskStatus = useStore((s) => s.taskStatus);
   const demoRunning = useStore((s) => s.demo.running);
+  const waved = useStore((s) => s.waved);
+  const speaking = useStore((s) => Boolean(s.caption));
   const [memoryReady, setMemoryReady] = useState(false);
 
   useEffect(() => {
@@ -49,10 +52,10 @@ export default function Morning() {
   return (
     <div className="screen morning" data-testid="screen-morning">
       <section className="morning__hero">
-        <LiveAvatar size={132} />
+        <LiveAvatar size={132} wave={!waved} onWaveDone={() => store.set({ waved: true })} />
         <div className="morning__greeting">
           <p className="eyebrow">{date} · {t('shift')} {shift}</p>
-          <h1 className="display">{t('goodMorning')}</h1>
+          {speaking ? <Caption inline /> : <h1 className="display">{t('goodMorning')}</h1>}
         </div>
         <div className="morning__conditions">
           <p className="eyebrow">{t('conditions')}</p>

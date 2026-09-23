@@ -31,14 +31,16 @@ export function registerNavigator(fn) {
 }
 
 const max = () => store.get().demo.pace === 'max';
+export const MAX_HOLD_MS = 1500;
 
 function makeCtx(myToken) {
   const alive = () => {
     if (myToken !== token) throw new Cancelled();
   };
   const tick = () => new Promise((r) => setTimeout(r, max() ? 20 : 80));
-  async function sleep(ms) {
-    let left = max() ? Math.min(ms, 250) : ms;
+  // At max pace, waits are cut to 250 ms, except `hold` (the screen a step ends on), cut to 1.5 s.
+  async function sleep(ms, maxCap = 250) {
+    let left = max() ? Math.min(ms, maxCap) : ms;
     while (left > 0) {
       alive();
       const started = Date.now();
@@ -70,7 +72,8 @@ function makeCtx(myToken) {
     alive();
     navigator(path);
   };
-  return { alive, sleep, until, idle, briefing, nav };
+  const hold = (ms) => sleep(ms, MAX_HOLD_MS);
+  return { alive, sleep, hold, until, idle, briefing, nav };
 }
 
 function forget(prefix) {
@@ -94,7 +97,7 @@ const STEP_RUN = [
     await Promise.all([loadDay({ force: true }), loadMemory(), loadScenario()]);
     ctx.nav('/morning');
     await ctx.briefing('morning@1');
-    await ctx.sleep(1500);
+    await ctx.hold(1500);
   },
   // 2. Pre-task for the scenario's task.
   async (ctx) => {
@@ -102,7 +105,7 @@ const STEP_RUN = [
     forget(`pretask:${id}`);
     ctx.nav(`/pretask/${id}`);
     await ctx.briefing(`pretask:${id}@${store.get().shift}`);
-    await ctx.sleep(1800);
+    await ctx.hold(1800);
   },
   // 3. In-task replay (fast-forward): idle lesson, belt before you move, proximity alert.
   async (ctx) => {
@@ -112,7 +115,7 @@ const STEP_RUN = [
     startReplay(scenario, { speed: max() ? MAX_SPEED : DEMO_SPEED });
     await ctx.until(() => store.get().replay.done);
     await ctx.idle();
-    await ctx.sleep(1200);
+    await ctx.hold(1200);
   },
   // 4. Operator taps "person in zone" -> incident list.
   async (ctx) => {
@@ -125,7 +128,7 @@ const STEP_RUN = [
     await ctx.idle();
     store.set({ incidentFlash: null });
     ctx.nav('/incidents');
-    await ctx.sleep(3000);
+    await ctx.hold(3000);
   },
   // 5. Debrief.
   async (ctx) => {
@@ -134,7 +137,7 @@ const STEP_RUN = [
     store.set((s) => ({ debriefSeen: {}, taskStatus: { ...s.taskStatus, [id]: 'done' } }));
     ctx.nav(`/debrief/${id}`);
     await ctx.briefing(`debrief:${id}@${store.get().shift}`);
-    await ctx.sleep(2500);
+    await ctx.hold(2500);
   },
   // 6. Shift 2: different operator, same machine — Machine Memory carries the incident.
   async (ctx) => {
@@ -144,13 +147,13 @@ const STEP_RUN = [
     }
     stopReplay();
     patchDemo({ overlay: 'shift2' });
-    await ctx.sleep(2800);
+    await ctx.hold(2800);
     forget('morning@2');
     store.set({ shift: 2, operator: 'OP1002', taskStatus: {}, debrief: null, findings: null, lesson: null });
     patchDemo({ overlay: null });
     ctx.nav('/morning');
     await ctx.briefing('morning@2');
-    await ctx.sleep(1500);
+    await ctx.hold(1500);
   },
   // 7. (P1) Fatigue drift -> care mode break. Without the fatigue model, the planned break is shown.
   async (ctx) => {
@@ -166,7 +169,7 @@ const STEP_RUN = [
       await sayInOrder([{ priority: 'care', mode: 'care', message_key: 'break_time', slots: {} }], { alive: () => { ctx.alive(); return true; } });
     }
     await ctx.idle();
-    await ctx.sleep(3000);
+    await ctx.hold(3000);
   },
 ];
 
