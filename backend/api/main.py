@@ -89,9 +89,12 @@ def create_app(db_path=None, now=datetime.now, train=True):
     @app.get("/telemetry/scenario/{name}")
     def scenario(name: str):
         try:
-            return intel.scenario(name)
+            windows = intel.scenario(name)
         except KeyError:
             raise HTTPException(404, f"unknown scenario {name}")
+        # The replay covers the first task of today's plan.
+        plan = intel.day_plan(intel.todays_tasks(), intel.todays_weather())
+        return {"name": name, "task_id": plan["tasks_ordered"][0], "windows": windows}
 
     @app.post("/behavior/analyze")
     def analyze(body: WindowsIn):

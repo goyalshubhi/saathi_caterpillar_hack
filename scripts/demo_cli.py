@@ -96,8 +96,8 @@ def morning(api, operator):
     for n, task_id in enumerate(plan["tasks_ordered"], 1):
         pred = ok(api.get(f"/predict/{task_id}"))
         say("task_card", {"n": n, "task_type": by_id[task_id]["task_type"], "predicted_min": mins(pred["predicted_min"])})
-    hourly = weather["hourly"]
-    if any(h["rain_mm"] > 0 for h in hourly if h["hour"] <= 10):
+    hourly = weather
+    if any(h["rain"] for h in hourly if h["hour"] <= 10):
         say("rain_today")
     max_temp = max(h["temperature_c"] for h in hourly)
     if max_temp >= 33:

@@ -61,7 +61,7 @@ def test_tasks_today(client):
 
 def test_weather_today(client):
     w = client.get("/weather/today").json()
-    assert w["hourly"] and {"hour", "temperature_c", "rain_mm", "wind_kmh", "condition"} <= set(w["hourly"][0])
+    assert w and all({"hour", "temperature_c", "rain", "wind_kmh"} <= set(h) for h in w)
 
 
 def test_plan_today(client):

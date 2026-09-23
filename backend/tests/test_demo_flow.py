@@ -54,7 +54,7 @@ def test_demo_flow(api, clock):
     pred = api.get(f"/predict/{task['task_id']}").json()
     assert pred["cat_estimate_min"] == task["estimated_time_min"]
     assert pred["predicted_min"] > pred["cat_estimate_min"]
-    assert any(w["task_id"] == task["task_id"] and w["message_key"] == "warn_rain" for w in plan["condition_warnings"])
+    assert any(w["task_id"] == task["task_id"] and w["message_key"].startswith("warn.rain") for w in plan["condition_warnings"])
 
     # 4. replay scenario has the scripted beats (idle stretch, unbelted resume, proximity alert)
     wins = scenario["windows"]

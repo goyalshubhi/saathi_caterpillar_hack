@@ -46,15 +46,20 @@ export const TEMPLATES = {
     en: '{task_type}, {weather}. CAT estimate {cat_min} minutes, I expect about {predicted_min} minutes.',
     hi: '{task_type}, {weather}। CAT का अनुमान {cat_min} मिनट, मेरा अनुमान लगभग {predicted_min} मिनट।',
   },
-  warn_rain: {
-    en: 'The ground is slippery after rain. Keep well back from the edge during {task_type}.',
-    hi: 'बारिश से ज़मीन फिसलन भरी है। {task_type} के समय किनारे से अच्छी दूरी रखें।',
+  // Condition warnings (keys emitted by backend/planner)
+  'warn.rain_slippery': {
+    en: 'The ground is slippery after rain. Move slowly and carefully during {task_type}.',
+    hi: 'बारिश से ज़मीन फिसलन भरी है। {task_type} के समय धीरे और सावधानी से चलें।',
   },
-  warn_wind: {
+  'warn.rain_trench_edge': {
+    en: 'Keep the machine at least {distance_m} metres back from the trench edge.',
+    hi: 'मशीन को खाई के किनारे से कम से कम {distance_m} मीटर पीछे रखें।',
+  },
+  'warn.wind_caution': {
     en: 'Strong wind today. Take extra care with {task_type} and any lifting.',
     hi: 'आज तेज़ हवा है। {task_type} और किसी भी उठाने के काम में ख़ास सावधानी रखें।',
   },
-  warn_heat: {
+  'warn.heat_hydration': {
     en: 'It will be {temperature_c} degrees. Drink water and take your breaks.',
     hi: '{temperature_c} डिग्री तक गर्मी होगी। पानी पीते रहें और आराम ज़रूर करें।',
   },
@@ -130,23 +135,24 @@ export const TEMPLATES = {
     en: 'Most of this was not in your hands.',
     hi: 'इसमें ज़्यादातर आपके हाथ में नहीं था।',
   },
-  finding_excessive_idling: {
+  // Behaviour findings (keys emitted by backend/ml)
+  'finding.excessive_idling': {
     en: 'The machine idled for {minutes} minutes.',
     hi: 'मशीन {minutes} मिनट तक खाली चलती रही।',
   },
-  finding_fuel_without_work: {
-    en: '{fuel_l} litres of fuel were used with no work done.',
-    hi: 'बिना काम के {fuel_l} लीटर ईंधन खर्च हुआ।',
+  'finding.fuel_without_work': {
+    en: '{fuel_l} litres of fuel were used for only {load_cycles} load cycles.',
+    hi: 'सिर्फ़ {load_cycles} लोड चक्र के लिए {fuel_l} लीटर ईंधन खर्च हुआ।',
   },
-  finding_unbelted_active: {
+  'finding.unbelted_active': {
     en: 'The seatbelt was off while working for {minutes} minutes.',
     hi: 'काम करते समय {minutes} मिनट तक सीट बेल्ट खुली रही।',
   },
-  finding_repeated_alerts: {
-    en: '{count} safety alerts within one hour.',
-    hi: 'एक घंटे में {count} सुरक्षा चेतावनियाँ आईं।',
+  'finding.repeated_alerts': {
+    en: '{count} safety alerts within {minutes} minutes.',
+    hi: '{minutes} मिनट में {count} सुरक्षा चेतावनियाँ आईं।',
   },
-  finding_fatigue_drift: {
+  'finding.fatigue_drift': {
     en: 'Your rhythm is slowing down. A short break will help.',
     hi: 'आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।',
   },

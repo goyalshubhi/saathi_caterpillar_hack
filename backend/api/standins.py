@@ -52,7 +52,7 @@ def todays_weather():
 def scenario(name):
     if name != "demo":
         raise KeyError(name)
-    return _example("scenario_demo.json")
+    return _example("scenario_demo.json")["windows"]
 
 
 # backend.ml
