@@ -7,7 +7,7 @@ ifeq ($(APPDATA),)
 export APPDATA := $(shell cygpath -w -F 26 2>/dev/null)
 endif
 
-.PHONY: setup test test-backend test-js dev demo-cli export-scenario
+.PHONY: setup test test-backend test-js dev demo-cli export-scenario audio
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -30,3 +30,8 @@ demo-cli:
 
 export-scenario:
 	$(PY) scripts/export_scenario.py
+
+# Re-render the pre-generated voice lines (needs internet): frontend/public/audio + manifest.json
+audio:
+	$(PY) -m pip install -q -r requirements-dev.txt
+	$(PY) scripts/generate_audio.py
