@@ -1,0 +1,5 @@
+[
+  {"type": "excessive_idling", "severity": "medium", "window_timestamp": "2026-09-23T08:30:00", "message_key": "finding_excessive_idling", "slots": {"minutes": 30}},
+  {"type": "fuel_without_work", "severity": "low", "window_timestamp": "2026-09-23T08:30:00", "message_key": "finding_fuel_without_work", "slots": {"fuel_l": 1.7}},
+  {"type": "unbelted_active", "severity": "high", "window_timestamp": "2026-09-23T09:00:00", "message_key": "finding_unbelted_active", "slots": {"minutes": 15}}
+]

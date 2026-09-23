@@ -1,0 +1,7 @@
+{
+  "priority": "safety",
+  "mode": "alert",
+  "message_key": "belt_before_move",
+  "slots": {},
+  "lang": "hi"
+}

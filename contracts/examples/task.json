@@ -1,0 +1,11 @@
+{
+  "task_id": "T101",
+  "task_type": "Trenching",
+  "weather": "Rainy",
+  "temperature_c": 24,
+  "operator_skill": "Intermediate",
+  "machine_age_yrs": 4,
+  "estimated_time_min": 45,
+  "scheduled_hour": 8,
+  "status": "pending"
+}

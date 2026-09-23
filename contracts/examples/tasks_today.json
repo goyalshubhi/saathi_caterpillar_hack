@@ -1,0 +1,5 @@
+[
+  {"task_id": "T101", "task_type": "Trenching", "weather": "Rainy", "temperature_c": 24, "operator_skill": "Intermediate", "machine_age_yrs": 4, "estimated_time_min": 45, "scheduled_hour": 8, "status": "pending"},
+  {"task_id": "T102", "task_type": "Material Loading", "weather": "Cloudy", "temperature_c": 31, "operator_skill": "Intermediate", "machine_age_yrs": 4, "estimated_time_min": 30, "scheduled_hour": 11, "status": "pending"},
+  {"task_id": "T103", "task_type": "Grading", "weather": "Sunny", "temperature_c": 37, "operator_skill": "Intermediate", "machine_age_yrs": 4, "estimated_time_min": 35, "scheduled_hour": 14, "status": "pending"}
+]

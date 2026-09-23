@@ -1,0 +1,11 @@
+{
+  "tasks_ordered": ["T101", "T102", "T103"],
+  "breaks": [
+    {"hour": 10, "reason": "routine"},
+    {"hour": 13, "reason": "heat"}
+  ],
+  "condition_warnings": [
+    {"task_id": "T101", "message_key": "warn_rain", "slots": {"task_type": "Trenching"}},
+    {"task_id": "T103", "message_key": "warn_heat", "slots": {"temperature_c": 37}}
+  ]
+}
