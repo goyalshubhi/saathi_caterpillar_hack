@@ -7,3 +7,4 @@ data/synthetic/*
 !data/synthetic/.gitkeep
 scripts/out/
 .venv/
+scratch_vite.log
