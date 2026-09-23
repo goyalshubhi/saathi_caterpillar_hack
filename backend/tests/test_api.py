@@ -191,3 +191,11 @@ def test_reset(client):
 def test_cors_allows_vite_dev_server(client):
     r = client.get("/health", headers={"Origin": "http://localhost:5173"})
     assert r.headers["access-control-allow-origin"] == "http://localhost:5173"
+
+
+def test_operator_history_endpoint(client):
+    h = client.get("/operators/OP1001/history").json()
+    assert set(h) == {"operator_id", "shift_count", "history_available"}
+    assert h["operator_id"] == "OP1001" and h["history_available"] is True
+    new = client.get("/operators/OP9999/history").json()
+    assert new == {"operator_id": "OP9999", "shift_count": 0, "history_available": False}

@@ -468,6 +468,20 @@
    "file": "audio/hi/e3c58bdd27f1cdae.mp3"
   },
   {
+   "message_key": "finding.fatigue_drift_first_shift",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "The pace has slowed compared with earlier in this shift. A short break will help.",
+   "file": "audio/en/7f3fabfd814359f7.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift_first_shift",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।",
+   "file": "audio/hi/40d09431caf00c8f.mp3"
+  },
+  {
    "message_key": "cmd_log_incident",
    "lang": "en",
    "mode": "friendly",

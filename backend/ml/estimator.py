@@ -147,8 +147,10 @@ def debrief(task: dict, windows: list[dict]) -> dict:
 MIN_ATTRIBUTION_OVERRUN_MIN = 3
 
 
-def debrief_lines(prediction: dict) -> list[dict]:
-    """Which debrief lines to speak for a debrief() result: [{message_key, slots}] in order."""
+def debrief_lines(prediction: dict, history_available: bool = True) -> list[dict]:
+    """Which debrief lines to speak for a debrief() result: [{message_key, slots}] in order.
+    On an operator's first tracked shift (history_available False) the overrun line is the
+    neutral variant, anchored to the CAT estimate only."""
     unc, ctl = prediction["uncontrollable_min"], prediction["controllable_min"]
     over = unc + ctl
     if round(over) <= 0:
@@ -156,9 +158,21 @@ def debrief_lines(prediction: dict) -> list[dict]:
     if over < MIN_ATTRIBUTION_OVERRUN_MIN:
         return [{"message_key": "debrief_near_time", "slots": {"over_min": int(round(over))}}]
     factors = [f["name"] for f in sorted(prediction["top_factors"], key=lambda f: -f["minutes"]) if f["minutes"] > 0][:2]
-    lines = [{"message_key": "debrief_over", "slots": {
+    key = "debrief_over" if history_available else "debrief_over_first_shift"
+    lines = [{"message_key": key, "slots": {
         "over_min": int(round(over)), "uncontrollable_min": int(round(unc)),
         "controllable_min": int(round(ctl)), "factors": factors}}]
     if unc >= ctl:
         lines.append({"message_key": "debrief_not_your_fault", "slots": {}})
     return lines
+
+
+# Finding lines that imply knowing the operator's own habits -> neutral first-shift variant.
+FIRST_SHIFT_VARIANTS = {"finding.fatigue_drift": "finding.fatigue_drift_first_shift"}
+
+
+def finding_lines(findings: list[dict], history_available: bool = True) -> list[dict]:
+    """[{message_key, slots}] to speak for BehaviorFindings; neutral wording on a first shift."""
+    return [{"message_key": f["message_key"] if history_available
+             else FIRST_SHIFT_VARIANTS.get(f["message_key"], f["message_key"]), "slots": f["slots"]}
+            for f in findings]

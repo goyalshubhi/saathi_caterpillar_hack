@@ -79,6 +79,11 @@ def findings(windows):
     return _example("behavior_findings.json") if windows else []
 
 
+def operator_history(operator_id):
+    shifts = 28 if operator_id in {"OP1001", "OP1002", "OP1003"} else 0
+    return {"operator_id": operator_id, "shift_count": shifts, "history_available": shifts > 0}
+
+
 # backend.planner
 def day_plan(tasks, weather):
     return _example("day_plan.json")

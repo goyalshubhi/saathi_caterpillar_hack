@@ -49,7 +49,7 @@ The `demo` scenario must contain, in order: active and belted work, then an idle
 - **Never contains operator_id.**
 
 ## MemoryNote (`examples/memory_note.json`)
-`{id, machine_id, created_at, expires_at, message_key, slots}`. expires_at is created_at + 48 h. Expired notes are never returned.
+`{id, machine_id, created_at, expires_at, message_key, slots}`. expires_at is created_at + 48 h (12 h for weather-warning keys `warn.*`, see DECISIONS.md). Expired notes are never returned.
 - Logging an incident writes a note automatically: `message_key = memory_incident`, slots `{category}`.
 - **Never contains operator_id.**
 
@@ -59,3 +59,7 @@ The `demo` scenario must contain, in order: active and belted work, then an idle
 
 ## Message keys
 Every `message_key` above must exist in `frontend/src/voice/templates.js`. A test enforces this for the examples.
+
+## OperatorHistory (`examples/operator_history.json`)
+`GET /operators/{operator_id}/history` -> `{operator_id, shift_count, history_available}`. Counts the operator's past shifts in the on-device telemetry; read-only, nothing is stored.
+- `history_available: false` = first tracked shift: use `debrief_lines(..., history_available=False)` / `finding_lines(...)` so no line claims a personal comparison (`debrief_over_first_shift`, `finding.fatigue_drift_first_shift`).

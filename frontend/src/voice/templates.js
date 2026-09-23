@@ -127,6 +127,11 @@ export const TEMPLATES = {
     en: '{over_min} minutes over. About {uncontrollable_min} from {factors}, about {controllable_min} from idle gaps.',
     hi: '{over_min} मिनट ज़्यादा लगे। लगभग {uncontrollable_min} मिनट {factors} की वजह से, और लगभग {controllable_min} मिनट रुकावटों से।',
   },
+  // First tracked shift (no personal history): anchored to the CAT estimate, no personal comparison.
+  debrief_over_first_shift: {
+    en: '{over_min} minutes over the CAT estimate. About {uncontrollable_min} from {factors}, about {controllable_min} from idle gaps.',
+    hi: 'CAT के अनुमान से {over_min} मिनट ज़्यादा लगे। लगभग {uncontrollable_min} मिनट {factors} की वजह से, और लगभग {controllable_min} मिनट रुकावटों से।',
+  },
   debrief_near_time: {
     en: '{over_min} minutes over. Close to plan.',
     hi: '{over_min} मिनट ज़्यादा लगे। लगभग योजना के अनुसार।',
@@ -159,6 +164,10 @@ export const TEMPLATES = {
   'finding.fatigue_drift': {
     en: 'Your rhythm is slowing down. A short break will help.',
     hi: 'आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।',
+  },
+  'finding.fatigue_drift_first_shift': {
+    en: 'The pace has slowed compared with earlier in this shift. A short break will help.',
+    hi: 'इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।',
   },
 
   // Command acknowledgements

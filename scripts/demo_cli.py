@@ -22,7 +22,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 from backend.api import config  # noqa: E402
 from backend.api.main import create_app  # noqa: E402
-from backend.ml.estimator import debrief_lines  # noqa: E402
+from backend.ml.estimator import debrief_lines, finding_lines  # noqa: E402
 
 MACHINE = "EXC001"
 TEMPLATES_JSON = ROOT / "scripts" / "out" / "templates.json"
@@ -154,12 +154,15 @@ def main():
 
         step(5, "Debrief")
         d = ok(api.post("/debrief", json={"task_id": task["task_id"], "windows": scenario["windows"]}))
-        for line in debrief_lines(d):     # attribution only for overruns >= MIN_ATTRIBUTION_OVERRUN_MIN
+        # Cold start: on an operator's first tracked shift, no line claims a personal comparison.
+        history = ok(api.get(f"/operators/{scenario['windows'][0]['operator_id']}/history"))
+        print(f"   operator history: {history['shift_count']} past shifts on this device")
+        for line in debrief_lines(d, history["history_available"]):   # attribution only for overruns >= 3 min
             say(line["message_key"], line["slots"], mode="debrief")
         findings = ok(api.post("/behavior/analyze", json={"windows": scenario["windows"]}))
-        for f in findings:
+        for f, line in zip(findings, finding_lines(findings, history["history_available"])):
             print(f"   finding: {f['type']} ({f['severity']}) at {f['window_timestamp']}")
-            say(f["message_key"], f["slots"], mode="debrief")
+            say(line["message_key"], line["slots"], mode="debrief")
 
         step(6, "Shift 2: different operator, same machine")
         _, _, notes = morning(api, "OP1002")
@@ -174,7 +177,8 @@ def main():
             fatigue = [f for f in ok(api.post("/behavior/analyze", json={"windows": ok(r)["windows"]}))
                        if f["type"] == "fatigue_drift"]
             if fatigue:
-                say(fatigue[0]["message_key"], fatigue[0]["slots"], mode="care", priority="care")
+                line = finding_lines(fatigue[:1], history["history_available"])[0]
+                say(line["message_key"], line["slots"], mode="care", priority="care")
                 say("care_break", mode="care", priority="care")
             else:
                 print("   no fatigue drift detected in the 'fatigue' scenario")

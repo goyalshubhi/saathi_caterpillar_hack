@@ -327,3 +327,41 @@ def test_demo_debrief_lines_unchanged():
     assert _keys(lines) == ["debrief_over", "debrief_not_your_fault"]
     assert lines[0]["slots"] == {"over_min": 9, "uncontrollable_min": 6, "controllable_min": 3,
                                  "factors": ["weather", "machine_age"]}
+
+
+# ---------- cold start: first tracked shift ----------
+
+from backend.ml import finding_lines, operator_history  # noqa: E402
+from backend.ml import history  # noqa: E402
+
+
+def test_operator_history_counts_past_shifts():
+    for op in ("OP1001", "OP1002", "OP1003"):
+        h = operator_history(op)
+        assert h["history_available"] and h["shift_count"] == 28          # 84 shifts / 3 operators
+    assert operator_history("OP9999") == {"operator_id": "OP9999", "shift_count": 0, "history_available": False}
+
+
+def test_first_shift_debrief_uses_neutral_template():
+    d = debrief(todays_tasks()[0], scenario("demo"))
+    assert _keys(debrief_lines(d, history_available=False)) == ["debrief_over_first_shift", "debrief_not_your_fault"]
+    assert _keys(debrief_lines(d, history_available=True)) == ["debrief_over", "debrief_not_your_fault"]
+    assert debrief_lines(d, False)[0]["slots"] == debrief_lines(d, True)[0]["slots"]
+    assert _keys(debrief_lines(_pred(1.0, 0.5), history_available=False)) == ["debrief_near_time"]
+
+
+def test_first_shift_drift_line_is_neutral_other_findings_unchanged():
+    found = findings(scenario("demo"))
+    first = _keys(finding_lines(found, history_available=False))
+    usual = _keys(finding_lines(found, history_available=True))
+    assert "finding.fatigue_drift_first_shift" in first and "finding.fatigue_drift" not in first
+    assert usual == [f["message_key"] for f in found]
+    assert [k for k in first if "fatigue" not in k] == [k for k in usual if "fatigue" not in k]
+
+
+def test_new_operator_gets_no_drift_until_two_hours():
+    # Deliberate: fewer than MIN_HISTORY (8) windows -> no drift judgement at all.
+    late = _drifting()
+    assert not _drift(findings(late[-(drift.MIN_HISTORY - 1):]))
+    assert drift.MIN_HISTORY == 8
+    assert history.SHIFT_GAP.total_seconds() == 900
