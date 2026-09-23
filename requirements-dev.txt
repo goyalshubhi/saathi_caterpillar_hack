@@ -1,2 +1,6 @@
 -r requirements.txt
-edge-tts>=6.1
+
+
+
+edge-tts>=7.0
+

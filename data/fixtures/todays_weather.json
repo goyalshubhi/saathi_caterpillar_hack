@@ -1,0 +1,80 @@
+[
+  {
+    "hour": 6,
+    "temperature_c": 23,
+    "rain": true,
+    "wind_kmh": 8
+  },
+  {
+    "hour": 7,
+    "temperature_c": 24,
+    "rain": true,
+    "wind_kmh": 9
+  },
+  {
+    "hour": 8,
+    "temperature_c": 26,
+    "rain": true,
+    "wind_kmh": 10
+  },
+  {
+    "hour": 9,
+    "temperature_c": 27,
+    "rain": false,
+    "wind_kmh": 10
+  },
+  {
+    "hour": 10,
+    "temperature_c": 30,
+    "rain": false,
+    "wind_kmh": 11
+  },
+  {
+    "hour": 11,
+    "temperature_c": 32,
+    "rain": false,
+    "wind_kmh": 12
+  },
+  {
+    "hour": 12,
+    "temperature_c": 34,
+    "rain": false,
+    "wind_kmh": 12
+  },
+  {
+    "hour": 13,
+    "temperature_c": 36,
+    "rain": false,
+    "wind_kmh": 13
+  },
+  {
+    "hour": 14,
+    "temperature_c": 38,
+    "rain": false,
+    "wind_kmh": 14
+  },
+  {
+    "hour": 15,
+    "temperature_c": 39,
+    "rain": false,
+    "wind_kmh": 14
+  },
+  {
+    "hour": 16,
+    "temperature_c": 37,
+    "rain": false,
+    "wind_kmh": 12
+  },
+  {
+    "hour": 17,
+    "temperature_c": 35,
+    "rain": false,
+    "wind_kmh": 10
+  },
+  {
+    "hour": 18,
+    "temperature_c": 33,
+    "rain": false,
+    "wind_kmh": 9
+  }
+]

@@ -31,7 +31,8 @@ demo-cli:
 export-scenario:
 	$(PY) scripts/export_scenario.py
 
-# Needs network: regenerates frontend/public/audio (edge-tts neural voices).
+# Re-render the pre-generated voice lines (needs internet)
 audio:
 	node scripts/export_templates.mjs
+	$(PY) -m pip install -q -r requirements-dev.txt
 	$(PY) scripts/generate_audio.py

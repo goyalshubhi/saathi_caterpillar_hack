@@ -164,6 +164,114 @@ describe('speaker', () => {
     expect(f.spoken[0].text).toBe('Belt before you move! Fasten your seatbelt.');
   });
 
+  // ----- pre-generated audio (manifest) -----
+
+  const BELT_HI = render('belt_before_move', {}, 'hi');
+  const MANIFEST = {
+    entries: [
+      { message_key: 'belt_before_move', lang: 'hi', mode: 'alert', text: BELT_HI, file: 'audio/hi/belt.mp3' },
+      { message_key: 'greeting', lang: 'en', mode: 'friendly', text: render('greeting', { count: 3 }, 'en'), file: 'audio/en/g3.mp3' },
+    ],
+  };
+
+  // Fake HTMLAudioElement: records instances; the test ends or fails playback by hand.
+  function fakeAudio({ rejectPlay = false } = {}) {
+    const made = [];
+    class FakeAudio {
+      constructor(src) { this.src = src; this.paused = true; made.push(this); }
+      play() { this.paused = false; return rejectPlay ? Promise.reject(new Error('autoplay blocked')) : Promise.resolve(); }
+      pause() { this.paused = true; }
+    }
+    return { made, Audio: FakeAudio };
+  }
+
+  it('plays the MP3 when the manifest has the exact rendered line', () => {
+    const f = fakeSynth(['en-US']);                      // no Hindi voice installed
+    const a = fakeAudio();
+    const s = createSpeaker({ ...f, Audio: a.Audio, manifest: MANIFEST });
+    let ended = false;
+    const r = s.speak(ev('safety', 'belt_before_move', { lang: 'hi' }), { onEnd: () => { ended = true; } });
+    expect(r).toEqual({ text: BELT_HI, lang: 'hi', source: 'audio' });
+    expect(a.made.map((x) => x.src)).toEqual(['/audio/hi/belt.mp3']);
+    expect(f.spoken).toEqual([]);
+    expect(s.fallbackToEnglish).toBe(false);              // Hindi audio exists: no warning
+    expect(ended).toBe(false);
+    a.made[0].onended();
+    expect(ended).toBe(true);
+  });
+
+  it('falls back to speechSynthesis on a manifest miss', () => {
+    const f = fakeSynth(['en-US', 'hi-IN']);
+    const a = fakeAudio();
+    const s = createSpeaker({ ...f, Audio: a.Audio, manifest: MANIFEST });
+    const r = s.speak(ev('info', 'greeting', { slots: { count: 4 } }));   // only count 3 is pre-rendered
+    expect(r.source).toBe('speech');
+    expect(a.made).toEqual([]);
+    expect(f.spoken[0].text).toContain('4 tasks');
+    const hit = s.speak(ev('info', 'greeting', { slots: { count: 3 } }));
+    expect(hit.source).toBe('audio');
+  });
+
+  it('falls back to speechSynthesis when the MP3 fails to load', () => {
+    const f = fakeSynth(['en-US', 'hi-IN']);
+    const a = fakeAudio();
+    const s = createSpeaker({ ...f, Audio: a.Audio, manifest: MANIFEST });
+    let ends = 0;
+    s.speak(ev('safety', 'belt_before_move', { lang: 'hi' }), { onEnd: () => { ends += 1; } });
+    a.made[0].onerror();
+    expect(f.spoken.map((u) => u.text)).toEqual([BELT_HI]);
+    f.spoken[0].onend();
+    a.made[0].onended?.();                               // a late event must not end the line twice
+    expect(ends).toBe(1);
+  });
+
+  it('falls back to speechSynthesis when autoplay is blocked', async () => {
+    const f = fakeSynth(['en-US', 'hi-IN']);
+    const a = fakeAudio({ rejectPlay: true });
+    const s = createSpeaker({ ...f, Audio: a.Audio, manifest: MANIFEST });
+    s.speak(ev('safety', 'belt_before_move', { lang: 'hi' }));
+    await Promise.resolve(); await Promise.resolve();
+    expect(f.spoken.map((u) => u.text)).toEqual([BELT_HI]);
+  });
+
+  it('cancel stops the MP3 and does not fall back', async () => {
+    const f = fakeSynth(['en-US', 'hi-IN']);
+    const a = fakeAudio({ rejectPlay: true });
+    const s = createSpeaker({ ...f, Audio: a.Audio, manifest: MANIFEST });
+    s.speak(ev('safety', 'belt_before_move', { lang: 'hi' }));
+    s.cancel();
+    await Promise.resolve(); await Promise.resolve();
+    expect(a.made[0].paused).toBe(true);
+    expect(f.spoken).toEqual([]);
+  });
+
+  it('prefers the clip recorded in the same mode', () => {
+    const text = render('break_time', {}, 'en');
+    const manifest = { entries: [
+      { message_key: 'break_time', lang: 'en', mode: 'friendly', text, file: 'audio/en/friendly.mp3' },
+      { message_key: 'break_time', lang: 'en', mode: 'care', text, file: 'audio/en/care.mp3' },
+    ] };
+    const a = fakeAudio();
+    const s = createSpeaker({ ...fakeSynth(['en-US']), Audio: a.Audio, manifest });
+    s.speak({ priority: 'care', mode: 'care', message_key: 'break_time', slots: {}, lang: 'en' });
+    expect(a.made[0].src).toBe('/audio/en/care.mp3');
+  });
+
+  it('the committed manifest points at real MP3 files for every entry', () => {
+    const root = fileURLToPath(new URL('../../public/', import.meta.url));
+    const manifest = JSON.parse(readFileSync(`${root}audio/manifest.json`, 'utf8'));
+    expect(manifest.entries.length).toBeGreaterThan(50);
+    for (const e of manifest.entries) {
+      expect(render(e.message_key, {}, e.lang).length).toBeGreaterThan(0);   // key exists
+      expect(readFileSync(root + e.file).length).toBeGreaterThan(1000);
+    }
+    for (const key of ['belt_before_move', 'seatbelt_unfastened', 'safety_alert', 'greeting', 'break_time', 'cmd_quiet_on', 'cmd_quiet_off']) {
+      for (const lang of ['en', 'hi']) {
+        expect(manifest.entries.some((e) => e.message_key === key && e.lang === lang), `${key}/${lang}`).toBe(true);
+      }
+    }
+  });
+
   it('is silent but still completes without a speech API', () => {
     const s = createSpeaker({ synth: null, Utterance: null });
     let ended = false;

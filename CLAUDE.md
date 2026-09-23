@@ -36,4 +36,4 @@ Until the real modules land, `backend/api/standins.py` provides fixture-backed s
 
 ## Commands
 
-`make setup` · `make test` (pytest + vitest) · `make test-backend` · `make test-js` · `make dev` (API on :8000) · `make demo-cli` (headless demo)
+`make setup` · `make test` (pytest + vitest) · `make test-backend` · `make test-js` · `make dev` (API on :8000) · `make demo-cli` (headless demo) · `make audio` (re-render voice MP3s; needs internet)
