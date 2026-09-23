@@ -45,7 +45,7 @@ describe('briefings', () => {
 describe('voice runtime', () => {
   let said;
   beforeEach(() => {
-    store.reset();
+    store.reset({ unlocked: true }); // after the Start click (the gate itself is tested in screens.test.jsx)
     said = [];
     const inner = createSpeaker({ synth: null, Utterance: null, Audio: null });
     configureVoice({ speaker: { ...inner, speak: (e, o) => { said.push(e); return inner.speak(e, o); }, cancel() {}, fallbackToEnglish: false } });
@@ -95,7 +95,7 @@ describe('coaching mute', () => {
   let said;
   let cancels;
   beforeEach(() => {
-    store.reset();
+    store.reset({ unlocked: true }); // after the Start click
     said = [];
     cancels = 0;
     // Lines keep "playing" until cancelled.

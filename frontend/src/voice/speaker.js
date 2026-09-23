@@ -45,6 +45,10 @@ export function createSpeaker({
   Audio = globalThis.Audio,
   manifest = null,
   audioBase = '/',
+  // Called with retry() when the browser blocks playback (autoplay policy). The line is NOT ended:
+  // the caller retries it on the next user gesture instead of skipping it or falling back to TTS
+  // (which the browser blocks too). Without onBlocked, a blocked line falls back / ends as before.
+  onBlocked = null,
 } = {}) {
   const ttsAvailable = Boolean(synth && Utterance);
   let fallbackToEnglish = false;
@@ -73,6 +77,8 @@ export function createSpeaker({
     return hits.find((e) => e.mode === mode) ?? hits[0];
   }
 
+  const isBlocked = (err) => err?.name === 'NotAllowedError' || err?.error === 'not-allowed';
+
   function playClip(clip, onEnd, onFail) {
     const audio = new Audio(audioBase + clip.file);
     let settled = false;
@@ -90,7 +96,15 @@ export function createSpeaker({
     audio.onended = () => settle(onEnd);
     audio.onerror = () => settle(onFail);
     const played = audio.play();
-    if (played && typeof played.catch === 'function') played.catch(() => settle(onFail));
+    if (played && typeof played.catch === 'function') {
+      played.catch((err) => {
+        if (onBlocked && isBlocked(err) && !settled) {
+          settled = true;
+          if (stopAudio === stop) stopAudio = null;
+          onBlocked(() => playClip(clip, onEnd, onFail));
+        } else settle(onFail);
+      });
+    }
   }
 
   function speakTts(event, lang, text, onEnd) {
@@ -104,7 +118,10 @@ export function createSpeaker({
     const voice = findVoice(lang);
     if (voice) u.voice = voice;
     u.onend = () => onEnd?.();
-    u.onerror = () => onEnd?.();
+    u.onerror = (e) => {
+      if (onBlocked && isBlocked(e)) onBlocked(() => speakTts(event, lang, text, onEnd));
+      else onEnd?.();
+    };
     synth.speak(u);
   }
 

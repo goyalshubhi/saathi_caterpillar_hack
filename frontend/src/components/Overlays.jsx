@@ -2,9 +2,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { RotateCcw, ShieldAlert, Power } from 'lucide-react';
 import { render } from '../voice/index.js';
-import { store, useStore } from '../state/store.js';
+import { useStore } from '../state/store.js';
 import { useT } from '../i18n.js';
-import { repeat } from '../saathi/voiceRuntime.js';
+import { repeat, unlockAudio } from '../saathi/voiceRuntime.js';
 import Avatar from '../avatar/Avatar.jsx';
 
 // Every spoken line is also shown as a large caption for ~5 seconds. `inline` renders it in the
@@ -33,13 +33,14 @@ export function Caption({ still = false, inline = false }) {
   );
 }
 
-// Browsers block audio until the user taps once.
+// Browsers block audio until the user taps once. Shown once per browser-tab session: the unlock
+// is remembered (sessionStorage), and a later blocked line is retried silently, not re-prompted.
 export function StartOverlay({ onStart }) {
   const t = useT();
   const unlocked = useStore((s) => s.unlocked);
   if (unlocked) return null;
   const start = () => {
-    store.set({ unlocked: true });
+    unlockAudio(); // inside the click: the first sound of the session happens here
     onStart?.();
   };
   return (

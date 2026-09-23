@@ -19,6 +19,7 @@ function Clock() {
 }
 
 // Small status chip. On the In-task screen it replaces the avatar entirely (no face, just the state).
+// "Listening…" only while speech recognition is actually running; otherwise "ready".
 export function SaathiChip({ withFace = true }) {
   const t = useT();
   const quiet = useStore((s) => s.quiet);
@@ -36,6 +37,22 @@ export function SaathiChip({ withFace = true }) {
   );
 }
 
+// Demo mode only: which of the 7 scripted steps is playing (also outside the Stage View).
+export function DemoStepBadge() {
+  const t = useT();
+  const demo = useStore((s) => s.demo);
+  if (!demo.running) return null;
+  const n = DEMO_STEPS.length;
+  const next = DEMO_STEPS[demo.step];
+  const text = demo.paused ? t('demoPaused')
+    : demo.between && next ? `${t('demoNext')}: ${next.short}` : DEMO_STEPS[demo.step - 1]?.short ?? '';
+  return (
+    <span className="badge badge--demo" data-testid="demo-step" aria-live="polite">
+      <Clapperboard size={16} aria-hidden="true" /> {t('demoStepOf').replace('{n}', demo.step).replace('{total}', n)} · {text}
+    </span>
+  );
+}
+
 export default function TopBar({ inTask = false }) {
   const t = useT();
   const lang = useStore((s) => s.lang);
@@ -44,19 +61,13 @@ export default function TopBar({ inTask = false }) {
   const apiMode = useStore((s) => s.apiMode);
   const fallback = useStore((s) => s.fallbackToEnglish && s.lang === 'hi');
   const machine = useStore((s) => s.machine);
-  const demo = useStore((s) => s.demo);
-  const step = demo.running ? DEMO_STEPS[demo.step - 1] : null;
 
   return (
     <header className="topbar">
       <SaathiChip withFace={!inTask} />
       <div className="topbar__machine"><span className="topbar__label">{t('machine')}</span> {machine}</div>
       <div className="topbar__notices">
-        {step && (
-          <span className="badge badge--demo" data-testid="demo-step">
-            <Clapperboard size={16} aria-hidden="true" /> {demo.paused ? 'Paused · ' : ''}Demo {step.n}/{DEMO_STEPS.length} · {step.short}
-          </span>
-        )}
+        <DemoStepBadge />
         {apiMode === 'fixture' && (
           <span className="badge badge--offline" data-testid="offline-badge"><WifiOff size={16} aria-hidden="true" /> {t('offlineData')}</span>
         )}

@@ -1,10 +1,13 @@
 // @vitest-environment jsdom
 // Every operator screen renders with fixture data (API in FIXTURE mode) and speaks what it should.
 import { describe, it, expect, beforeEach } from 'vitest';
-import { screen, within, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, within, fireEvent, waitFor, act } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { resetApp, renderAt } from '../test/helpers.jsx';
-import { store } from '../state/store.js';
-import { say } from '../saathi/voiceRuntime.js';
+import { store, initialState, patchDemo, UNLOCK_KEY } from '../state/store.js';
+import { say, setQuiet, configureVoice } from '../saathi/voiceRuntime.js';
+import { StartOverlay } from '../components/Overlays.jsx';
+import Morning from './Morning.jsx';
 
 let speaker;
 beforeEach(() => {
@@ -197,19 +200,63 @@ describe('Top bar controls', () => {
     await screen.findByTestId('saathi-chip');
     expect(screen.queryByTestId('demo-step')).toBeNull();
     act(() => { store.set((s) => ({ demo: { ...s.demo, running: true, step: 2 } })); });
-    expect(screen.getByTestId('demo-step').textContent).toMatch(/Demo 2\/7 · Pre-task/);
+    expect(screen.getByTestId('demo-step').textContent).toMatch(/Step 2 of 7 · Pre-task/);
+    act(() => { store.set((s) => ({ demo: { ...s.demo, between: true } })); });   // pause after the step
+    expect(screen.getByTestId('demo-step').textContent).toMatch(/Step 2 of 7 · Next: In-task/);
   });
 });
 
 describe('Labels', () => {
   it('pre-task buttons say which task starts and where back goes', async () => {
     renderAt('/pretask/T101');
-    expect((await screen.findByTestId('go-intask')).textContent).toMatch(/Start: Trenching/);
+    expect((await screen.findByTestId('go-intask')).textContent).toMatch(/Begin work: Trenching/);   // not a second "Start task"
     expect(screen.getByTestId('pretask-back').getAttribute('aria-label')).toBe('Back to today’s tasks');
+    expect(screen.getByTestId('pretask-back').title).toBe('Back to today’s tasks');
+    act(() => { store.set({ lang: 'hi' }); });
+    expect(screen.getByTestId('go-intask').textContent).toMatch(/काम चालू करें/);
   });
 
   it('the break screen back button says it returns to today’s tasks', async () => {
     renderAt('/break');
     expect((await screen.findByTestId('break-back')).textContent).toMatch(/I’m back.*Back to today’s tasks/);
+  });
+});
+
+describe('Audio unlock and coaching mute', () => {
+  it('the Start overlay unlocks once for the session and lines wait for it', async () => {
+    const speaker = resetApp({ unlocked: false });
+    sessionStorage.clear();
+    render(<MemoryRouter initialEntries={['/morning']}><StartOverlay /><Morning /></MemoryRouter>);
+    await screen.findByTestId('task-card-T101');
+    await new Promise((r) => setTimeout(r, 200));
+    expect(speaker.said).toEqual([]);                                    // nothing behind the overlay
+    fireEvent.click(screen.getByTestId('start-saathi'));
+    expect(screen.queryByTestId('start-saathi')).toBe(null);
+    await waitFor(() => expect(speaker.said.some((e) => e.message_key === 'greeting')).toBe(true));
+    // safety lines (Machine Memory notes) + the greeting; nothing else
+    expect(speaker.said.filter((e) => e.priority !== 'safety').map((e) => e.message_key)).toEqual(['greeting']);
+    expect(sessionStorage.getItem(UNLOCK_KEY)).toBe('1');
+    expect(initialState().unlocked).toBe(true);                          // a reload / remount stays unlocked
+  });
+
+  it('coaching mute stops the current line and silences everything but safety', () => {
+    resetApp();
+    // a speaker whose lines keep playing until cancelled (so muting happens mid-line)
+    const speaker = { said: [], cancelled: 0, available: true, fallbackToEnglish: false,
+      speak(e) { this.said.push(e); return { text: e.message_key, lang: 'en', source: 'audio' }; },
+      cancel() { this.cancelled += 1; } };
+    configureVoice({ speaker });
+    say({ priority: 'info', mode: 'friendly', message_key: 'rain_today' });
+    say({ priority: 'coaching', mode: 'friendly', message_key: 'lesson_walkaround' });
+    expect(store.get().speaking?.event.message_key).toBe('rain_today');
+    setQuiet(true);
+    expect(store.get().speaking).toBe(null);                             // stopped mid-line
+    expect(speaker.cancelled).toBeGreaterThan(0);
+    say({ priority: 'care', mode: 'care', message_key: 'break_time' });
+    expect(speaker.said.map((e) => e.message_key)).toEqual(['rain_today']);
+    expect(store.get().caption.key).toBe('break_time');                  // shown, not spoken
+    say({ priority: 'safety', mode: 'alert', message_key: 'belt_before_move' });
+    expect(speaker.said.at(-1).message_key).toBe('belt_before_move');   // safety still speaks
+    setQuiet(false);
   });
 });

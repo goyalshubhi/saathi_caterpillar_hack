@@ -7,7 +7,7 @@
 import { store, patchDemo, addLog } from '../state/store.js';
 import * as api from '../api.js';
 import { loadDay, loadScenario, loadMemory, logIncident, checkFatigue } from '../saathi/actions.js';
-import { resetVoice, clearVoice, setFast, isIdle, sayInOrder } from '../saathi/voiceRuntime.js';
+import { resetVoice, clearVoice, setFast, isIdle, sayInOrder, unlockAudio } from '../saathi/voiceRuntime.js';
 import { startReplay, stopReplay, pauseReplay, resumeReplay, DEMO_SPEED, MAX_SPEED } from '../saathi/replayRuntime.js';
 
 export const DEMO_STEPS = [
@@ -19,6 +19,9 @@ export const DEMO_STEPS = [
   { n: 6, title: 'Shift 2 — new operator, same machine', short: 'Shift 2' },
   { n: 7, title: 'Fatigue drift → care break', short: 'Break' },
 ];
+
+// Silence between steps so one step's lines never run into the next (the step badge shows "next").
+export const STEP_PAUSE_MS = 2500;
 
 class Cancelled extends Error {}
 
@@ -178,10 +181,15 @@ async function runFrom(index, myToken) {
   try {
     for (let i = index; i < STEP_RUN.length; i += 1) {
       ctx.alive();
-      patchDemo({ step: i + 1 });
+      patchDemo({ step: i + 1, between: false });
       await STEP_RUN[i](ctx);
+      if (i < STEP_RUN.length - 1) {
+        await ctx.idle(); // the step's last line has finished...
+        patchDemo({ between: true });
+        await ctx.sleep(STEP_PAUSE_MS); // ...then a clear pause before the next step
+      }
     }
-    patchDemo({ running: false, paused: false, done: true });
+    patchDemo({ running: false, paused: false, done: true, between: false });
     setFast(false);
   } catch (err) {
     if (!(err instanceof Cancelled)) {
@@ -213,7 +221,7 @@ export async function goToStep(n) {
 }
 
 export function startDemo() {
-  store.set({ unlocked: true });
+  unlockAudio(); // started by a click / key press, so audio may play from here
   return goToStep(1);
 }
 
