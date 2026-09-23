@@ -109,3 +109,39 @@ def test_empty_inputs():
     assert day_plan([], []) == {"tasks_ordered": [], "breaks": [], "condition_warnings": []}
     plan = day_plan(todays_tasks(), [])
     assert len(plan["tasks_ordered"]) == 3 and plan["breaks"]
+
+
+# ---------- P1: heat-aware ordering ----------
+
+def test_hot_day_moves_precision_tasks_earlier():
+    plan = day_plan(todays_tasks(), todays_weather())
+    order = plan["tasks_ordered"]
+    assert order == ["T101", "T103", "T102"]                  # Grading pulled out of the 38 C slot
+    assert order.index("T103") < order.index("T102")
+
+
+def test_precision_tasks_get_the_coolest_slots():
+    weather = [{"hour": h, "temperature_c": 24 + 2 * (h - 6), "rain": False, "wind_kmh": 10} for h in range(6, 20)]
+    tasks = [_task("L1", "Material Loading", 7), _task("D1", "Demolition", 10),
+             _task("G1", "Grading", 13), _task("T1", "Trenching", 16)]
+    order = day_plan(tasks, weather)["tasks_ordered"]
+    assert set(order[:2]) == {"G1", "T1"} and order[:2] == ["G1", "T1"]   # keep their relative order
+    assert order[2:] == ["L1", "D1"]
+
+
+def test_order_kept_without_forecast_or_heat():
+    tasks = todays_tasks()
+    assert day_plan(tasks, [])["tasks_ordered"] == ["T101", "T102", "T103"]
+    assert day_plan(tasks, _flat_weather(30))["tasks_ordered"] == ["T101", "T102", "T103"]
+
+
+def test_heat_warning_follows_the_new_slot():
+    plan = day_plan(todays_tasks(), todays_weather())
+    heat = {w["task_id"] for w in plan["condition_warnings"] if w["message_key"] == "warn.heat_hydration"}
+    assert heat == {"T102"}                                   # Loading now runs at 14:00 (38 C)
+
+
+def test_reordered_plan_breaks_do_not_overlap():
+    tasks, weather = todays_tasks(), todays_weather()
+    plan = day_plan(tasks, weather)
+    assert not _busy_hours(plan, tasks) & {b["hour"] for b in plan["breaks"]}

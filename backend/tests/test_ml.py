@@ -2,7 +2,7 @@ import pytest
 
 from backend.data_gen import generate_all, load_given_tasks, scenario, todays_tasks
 from backend.ml import debrief, findings, predict, train_all
-from backend.ml import estimator
+from backend.ml import drift, estimator
 
 PREDICTION_FIELDS = {"task_id", "cat_estimate_min", "predicted_min", "uncontrollable_min",
                      "controllable_min", "top_factors"}
@@ -176,3 +176,60 @@ def test_rules_are_per_operator():
 def test_demo_scenario_findings():
     types = _types(findings(scenario("demo")))
     assert {"excessive_idling", "unbelted_active", "fuel_without_work"} <= types
+
+
+# ---------- P1: fatigue drift ----------
+
+def _drifting():
+    """Clean shift whose last hour shows rising idle and seatbelt lapses."""
+    w = scenario("clean")
+    for i, (idle, belt) in enumerate([(5, "Unfastened"), (6, "Fastened"), (7, "Unfastened"), (8, "Unfastened")]):
+        k = len(w) - 4 + i
+        w[k] = dict(w[k], idling_time_min=idle, seatbelt_status=belt, load_cycles=2,
+                    fuel_used_l=round(0.7 + 0.03 * idle, 2))
+    return w
+
+
+def _drift(found):
+    return [f for f in found if f["type"] == "fatigue_drift"]
+
+
+def test_drift_model_trained():
+    assert drift.MODEL_PATH.exists()
+    assert drift._get_model() is not None
+
+
+def test_drift_fires_on_demo_late_shift():
+    demo = scenario("demo")
+    found = _drift(findings(demo))
+    assert len(found) == 1
+    assert found[0]["window_timestamp"] >= demo[-4]["timestamp"]            # inside the last hour
+    assert set(found[0]) == FINDING_FIELDS and found[0]["message_key"] == "finding.fatigue_drift"
+
+
+def test_drift_not_before_late_shift_in_demo():
+    demo = scenario("demo")
+    for n in range(1, len(demo) - 1):                                       # replayed window by window
+        assert not _drift(findings(demo[:n])), demo[n - 1]["timestamp"]
+
+
+def test_drift_silent_on_clean_fixture():
+    assert not _drift(findings(scenario("clean")))
+    assert not drift.fatigue_drift(scenario("clean"), use_model=False)
+
+
+def test_drift_fires_on_crafted_fixture():
+    assert _drift(findings(_drifting()))
+    assert drift.fatigue_drift(_drifting(), use_model=False)
+
+
+def test_drift_rule_fallback_on_demo(monkeypatch):
+    monkeypatch.setattr(drift, "_model", None)
+    monkeypatch.setattr(drift, "MODEL_PATH", drift.MODEL_PATH.with_name("missing.joblib"))
+    found = _drift(findings(scenario("demo")))
+    assert len(found) == 1 and found[0]["window_timestamp"] >= scenario("demo")[-4]["timestamp"]
+    assert not _drift(findings(scenario("clean")))
+
+
+def test_drift_needs_enough_history():
+    assert not _drift(findings(_drifting()[-4:]))

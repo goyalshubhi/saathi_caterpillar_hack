@@ -7,6 +7,7 @@ BREAK_EVERY_H = 2
 HOT_BREAK_EVERY_H = 1
 TRENCH_EDGE_M = 2           # keep tracks this far from a trench edge in the wet
 WIND_CAUTION_TASKS = {"Demolition", "Material Loading"}   # demolition + lifting/loading
+PRECISION_TASKS = {"Trenching", "Grading"}                 # need a steady hand: cooler hours
 
 
 def _weather_by_hour(weather):
@@ -23,8 +24,21 @@ def _conditions(task, hour, by_hour):
 
 
 def order_tasks(tasks, weather):
-    """P0: keep the scheduled order."""
-    return sorted(tasks, key=lambda t: t["scheduled_hour"])
+    """Heat-aware order: precision tasks take the coolest of the day's scheduled slots,
+    heavier-tolerance tasks the rest. Without a forecast, or when no slot is hot, keep the
+    scheduled order (P0 fallback)."""
+    scheduled = sorted(tasks, key=lambda t: t["scheduled_hour"])
+    by_hour = _weather_by_hour(weather)
+    slots = [t["scheduled_hour"] for t in scheduled]
+    if not all(h in by_hour for h in slots) or all(by_hour[h]["temperature_c"] <= HOT_C for h in slots):
+        return scheduled
+    coolest = sorted(range(len(slots)), key=lambda i: (by_hour[slots[i]]["temperature_c"], i))
+    precision = [t for t in scheduled if t["task_type"] in PRECISION_TASKS]
+    others = [t for t in scheduled if t["task_type"] not in PRECISION_TASKS]
+    assigned = {}
+    for task, idx in zip(precision + others, coolest):
+        assigned[idx] = task
+    return [assigned[i] for i in range(len(slots))]
 
 
 def timeline(ordered, slots):
