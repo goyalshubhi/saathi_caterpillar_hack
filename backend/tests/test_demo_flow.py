@@ -2,7 +2,7 @@
 
 given data -> plan -> predict -> replay scenario -> findings -> log incident
 -> memory note for the next shift -> debrief split sums correctly.
-Runs against whatever intel source USE_STANDINS selects.
+Runs against the real intel modules (data_gen / ml / planner).
 """
 import json
 from datetime import datetime, timedelta

@@ -205,7 +205,7 @@ describe('speaker', () => {
     const a = fakeAudio();
     const s = createSpeaker({ ...f, Audio: a.Audio, manifest: MANIFEST });
     const r = s.speak(ev('info', 'greeting', { slots: { count: 4 } }));   // only count 3 is pre-rendered
-    expect(r.source).toBe('speech');
+    expect(r.source).toBe('tts');
     expect(a.made).toEqual([]);
     expect(f.spoken[0].text).toContain('4 tasks');
     const hit = s.speak(ev('info', 'greeting', { slots: { count: 3 } }));

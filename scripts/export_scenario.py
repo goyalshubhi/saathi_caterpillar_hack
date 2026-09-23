@@ -4,7 +4,6 @@ contracts/examples/demo_scenario.json. The JS replay integration test reads this
 Run: make export-scenario   (uses the real intel modules)
 """
 import json
-import os
 import sys
 import tempfile
 import warnings
@@ -12,7 +11,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-os.environ["SAATHI_USE_STANDINS"] = "0"
 warnings.filterwarnings("ignore", message="Using `httpx`")
 
 from fastapi.testclient import TestClient  # noqa: E402

@@ -60,7 +60,8 @@ def create_app(db_path=None, now=datetime.now, train=True):
 
     @app.get("/health")
     def health():
-        return {"ok": True, "standins": config.USE_STANDINS}
+        # standins is always False now; kept because the frontend reads it.
+        return {"ok": True, "standins": False}
 
     @app.get("/data/given")
     def data_given():

@@ -32,7 +32,7 @@ The frontend UI (M6 Avatar, M7 Screens) is **deferred**. Do not set up React, Vi
 - `backend.planner`: `day_plan(tasks, weather)`
 
 All return plain dicts/lists using the contract field names in `PLAN.md` / `contracts/`.
-Until the real modules land, `backend/api/standins.py` provides fixture-backed stand-ins; the single switch is `USE_STANDINS` in `backend/api/config.py` (env `SAATHI_USE_STANDINS`). Problems found in the other side's code are reported as a list, not fixed in place.
+The real modules are wired in directly (stand-ins and `USE_STANDINS` were removed after the intel merge). Problems found in the other side's code are reported as a list, not fixed in place.
 
 ## Commands
 

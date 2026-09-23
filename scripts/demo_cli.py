@@ -21,7 +21,6 @@ sys.path.insert(0, str(ROOT))
 warnings.filterwarnings("ignore", message="Using `httpx`")
 from fastapi.testclient import TestClient  # noqa: E402
 
-from backend.api import config  # noqa: E402
 from backend.api.main import create_app  # noqa: E402
 
 MACHINE = "EXC001"
@@ -165,7 +164,7 @@ def main(echo=True):
     sys.stdout.reconfigure(encoding="utf-8")
     T = load_templates()
     PHRASER = Phraser(DEMO_SEED)
-    out(f"Saathi headless demo  (intel source: {'STAND-INS' if config.USE_STANDINS else 'real modules'})")
+    out("Saathi headless demo  (intel source: real modules)")
 
     with tempfile.TemporaryDirectory() as tmp, TestClient(create_app(db_path=str(Path(tmp) / "demo.db"))) as api:
         given = ok(api.get("/data/given"))

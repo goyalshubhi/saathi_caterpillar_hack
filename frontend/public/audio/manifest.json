@@ -644,67 +644,67 @@
    "message_key": "finding.excessive_idling",
    "lang": "en",
    "mode": "debrief",
-   "text": "The engine ran idle for 30 minutes.",
+   "text": "The engine ran idle for 24 minutes.",
    "slots": {
-    "minutes": 30
+    "minutes": 24
    },
    "variant": 1,
-   "file": "audio/en/85d480cc416e0484.mp3"
+   "file": "audio/en/36461902c75b6ac8.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
    "lang": "en",
    "mode": "debrief",
-   "text": "The machine idled for 30 minutes.",
+   "text": "The machine idled for 24 minutes.",
    "slots": {
-    "minutes": 30
+    "minutes": 24
    },
    "variant": 0,
-   "file": "audio/en/6503e8a07e6fe5ff.mp3"
+   "file": "audio/en/d518fb0e6e3164a4.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
    "lang": "en",
    "mode": "debrief",
-   "text": "There were 30 minutes of idling.",
+   "text": "There were 24 minutes of idling.",
    "slots": {
-    "minutes": 30
+    "minutes": 24
    },
    "variant": 2,
-   "file": "audio/en/4723cf0990864d57.mp3"
+   "file": "audio/en/f4312dffb6bb50a1.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
    "lang": "hi",
    "mode": "debrief",
-   "text": "30 मिनट तक मशीन बेकार चलती रही।",
+   "text": "24 मिनट तक मशीन बेकार चलती रही।",
    "slots": {
-    "minutes": 30
+    "minutes": 24
    },
    "variant": 2,
-   "file": "audio/hi/72946e946be7fca3.mp3"
+   "file": "audio/hi/63204d0c99ecf643.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
    "lang": "hi",
    "mode": "debrief",
-   "text": "इंजन 30 मिनट खाली चलता रहा।",
+   "text": "इंजन 24 मिनट खाली चलता रहा।",
    "slots": {
-    "minutes": 30
+    "minutes": 24
    },
    "variant": 1,
-   "file": "audio/hi/3a3a9ee75e9899b2.mp3"
+   "file": "audio/hi/4bd55d9fe9bcd53d.mp3"
   },
   {
    "message_key": "finding.excessive_idling",
    "lang": "hi",
    "mode": "debrief",
-   "text": "मशीन 30 मिनट तक खाली चलती रही।",
+   "text": "मशीन 24 मिनट तक खाली चलती रही।",
    "slots": {
-    "minutes": 30
+    "minutes": 24
    },
    "variant": 0,
-   "file": "audio/hi/851f96b6b6818358.mp3"
+   "file": "audio/hi/856bc7199e82b96e.mp3"
   },
   {
    "message_key": "finding.fatigue_drift",
@@ -764,73 +764,73 @@
    "message_key": "finding.fuel_without_work",
    "lang": "en",
    "mode": "debrief",
-   "text": "1.7 litres of fuel were burned with little or no work done.",
+   "text": "1.6 litres of fuel were burned with little or no work done.",
    "slots": {
-    "fuel_l": 1.7,
+    "fuel_l": 1.6,
     "load_cycles": 0
    },
    "variant": 0,
-   "file": "audio/en/f4181cf31873b4ff.mp3"
+   "file": "audio/en/9d9e3b6d082d0f96.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
    "lang": "en",
    "mode": "debrief",
-   "text": "About 1.7 litres of fuel went into idling rather than work.",
+   "text": "About 1.6 litres of fuel went into idling rather than work.",
    "slots": {
-    "fuel_l": 1.7,
+    "fuel_l": 1.6,
     "load_cycles": 0
    },
    "variant": 1,
-   "file": "audio/en/449441d9aa092136.mp3"
+   "file": "audio/en/c34525b38842ca15.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
    "lang": "en",
    "mode": "debrief",
-   "text": "Around 1.7 litres of fuel were used with almost nothing to show for it.",
+   "text": "Around 1.6 litres of fuel were used with almost nothing to show for it.",
    "slots": {
-    "fuel_l": 1.7,
+    "fuel_l": 1.6,
     "load_cycles": 0
    },
    "variant": 2,
-   "file": "audio/en/86bfde3561754e20.mp3"
+   "file": "audio/en/58038115dbcf98f5.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
    "lang": "hi",
    "mode": "debrief",
-   "text": "बहुत कम या बिना काम के 1.7 लीटर ईंधन खर्च हुआ।",
+   "text": "बहुत कम या बिना काम के 1.6 लीटर ईंधन खर्च हुआ।",
    "slots": {
-    "fuel_l": 1.7,
+    "fuel_l": 1.6,
     "load_cycles": 0
    },
    "variant": 0,
-   "file": "audio/hi/4174ffbc1d43b86f.mp3"
+   "file": "audio/hi/cc17419cb046f9a4.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
    "lang": "hi",
    "mode": "debrief",
-   "text": "लगभग 1.7 लीटर ईंधन काम की जगह खाली चलने में गया।",
+   "text": "लगभग 1.6 लीटर ईंधन काम की जगह खाली चलने में गया।",
    "slots": {
-    "fuel_l": 1.7,
+    "fuel_l": 1.6,
     "load_cycles": 0
    },
    "variant": 1,
-   "file": "audio/hi/db11872cc8182937.mp3"
+   "file": "audio/hi/e9e1250fed63ddd1.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
    "lang": "hi",
    "mode": "debrief",
-   "text": "लगभग बिना काम के करीब 1.7 लीटर ईंधन लग गया।",
+   "text": "लगभग बिना काम के करीब 1.6 लीटर ईंधन लग गया।",
    "slots": {
-    "fuel_l": 1.7,
+    "fuel_l": 1.6,
     "load_cycles": 0
    },
    "variant": 2,
-   "file": "audio/hi/fba435fd69a0694c.mp3"
+   "file": "audio/hi/df92553b9dd14839.mp3"
   },
   {
    "message_key": "finding.unbelted_active",
@@ -847,6 +847,17 @@
    "message_key": "finding.unbelted_active",
    "lang": "en",
    "mode": "debrief",
+   "text": "For 30 minutes the belt was off during work. Please keep it on.",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 2,
+   "file": "audio/en/ef70c4d98c246e92.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "en",
+   "mode": "debrief",
    "text": "The machine was working for 15 minutes without the seatbelt on.",
    "slots": {
     "minutes": 15
@@ -858,12 +869,34 @@
    "message_key": "finding.unbelted_active",
    "lang": "en",
    "mode": "debrief",
+   "text": "The machine was working for 30 minutes without the seatbelt on.",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 1,
+   "file": "audio/en/d4398250b3cfc89a.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "en",
+   "mode": "debrief",
    "text": "The seatbelt was off while working for 15 minutes.",
    "slots": {
     "minutes": 15
    },
    "variant": 0,
    "file": "audio/en/05da67aa73f10a73.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "The seatbelt was off while working for 30 minutes.",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 0,
+   "file": "audio/en/16386cb292539530.mp3"
   },
   {
    "message_key": "finding.unbelted_active",
@@ -880,6 +913,17 @@
    "message_key": "finding.unbelted_active",
    "lang": "hi",
    "mode": "debrief",
+   "text": "30 मिनट काम के दौरान बेल्ट खुली थी। कृपया इसे बाँधे रखें।",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 2,
+   "file": "audio/hi/7944395041ad4e7c.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "hi",
+   "mode": "debrief",
    "text": "काम करते समय 15 मिनट तक सीट बेल्ट खुली रही।",
    "slots": {
     "minutes": 15
@@ -891,12 +935,34 @@
    "message_key": "finding.unbelted_active",
    "lang": "hi",
    "mode": "debrief",
+   "text": "काम करते समय 30 मिनट तक सीट बेल्ट खुली रही।",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 0,
+   "file": "audio/hi/f0460a00581b8677.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "hi",
+   "mode": "debrief",
    "text": "मशीन 15 मिनट बिना सीट बेल्ट के चली।",
    "slots": {
     "minutes": 15
    },
    "variant": 1,
    "file": "audio/hi/9d633e39c2e73c13.mp3"
+  },
+  {
+   "message_key": "finding.unbelted_active",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "मशीन 30 मिनट बिना सीट बेल्ट के चली।",
+   "slots": {
+    "minutes": 30
+   },
+   "variant": 1,
+   "file": "audio/hi/71e7dd02db6a28e0.mp3"
   },
   {
    "message_key": "greeting",
@@ -1446,91 +1512,91 @@
    "message_key": "plan_order",
    "lang": "en",
    "mode": "friendly",
-   "text": "Best order for today: trenching, material loading and grading.",
+   "text": "Best order for today: trenching, grading and material loading.",
    "slots": {
     "order": [
      "Trenching",
-     "Material Loading",
-     "Grading"
+     "Grading",
+     "Material Loading"
     ]
    },
    "variant": 2,
-   "file": "audio/en/f3eb777c95ca7b70.mp3"
+   "file": "audio/en/d9558aa404ac5533.mp3"
   },
   {
    "message_key": "plan_order",
    "lang": "en",
    "mode": "friendly",
-   "text": "I suggest this order: trenching, material loading and grading.",
+   "text": "I suggest this order: trenching, grading and material loading.",
    "slots": {
     "order": [
      "Trenching",
-     "Material Loading",
-     "Grading"
+     "Grading",
+     "Material Loading"
     ]
    },
    "variant": 1,
-   "file": "audio/en/4f47e9ccd1b872d2.mp3"
+   "file": "audio/en/02b0b071e36e308b.mp3"
   },
   {
    "message_key": "plan_order",
    "lang": "en",
    "mode": "friendly",
-   "text": "Suggested order: trenching, material loading and grading.",
+   "text": "Suggested order: trenching, grading and material loading.",
    "slots": {
     "order": [
      "Trenching",
-     "Material Loading",
-     "Grading"
+     "Grading",
+     "Material Loading"
     ]
    },
    "variant": 0,
-   "file": "audio/en/44d35a52e68f28c7.mp3"
+   "file": "audio/en/9efa4ceda96c5f8d.mp3"
   },
   {
    "message_key": "plan_order",
    "lang": "hi",
    "mode": "friendly",
-   "text": "आज के लिए सबसे अच्छा क्रम: खाई की खुदाई, माल की लदाई और ज़मीन समतल करना।",
+   "text": "आज के लिए सबसे अच्छा क्रम: खाई की खुदाई, ज़मीन समतल करना और माल की लदाई।",
    "slots": {
     "order": [
      "Trenching",
-     "Material Loading",
-     "Grading"
+     "Grading",
+     "Material Loading"
     ]
    },
    "variant": 2,
-   "file": "audio/hi/c9f31ccc18abea8f.mp3"
+   "file": "audio/hi/41067144d95156b0.mp3"
   },
   {
    "message_key": "plan_order",
    "lang": "hi",
    "mode": "friendly",
-   "text": "मेरा सुझाव है यह क्रम: खाई की खुदाई, माल की लदाई और ज़मीन समतल करना।",
+   "text": "मेरा सुझाव है यह क्रम: खाई की खुदाई, ज़मीन समतल करना और माल की लदाई।",
    "slots": {
     "order": [
      "Trenching",
-     "Material Loading",
-     "Grading"
+     "Grading",
+     "Material Loading"
     ]
    },
    "variant": 1,
-   "file": "audio/hi/8f37322d895e2dd3.mp3"
+   "file": "audio/hi/f39b8d7ea14f2230.mp3"
   },
   {
    "message_key": "plan_order",
    "lang": "hi",
    "mode": "friendly",
-   "text": "सुझाया गया क्रम: खाई की खुदाई, माल की लदाई और ज़मीन समतल करना।",
+   "text": "सुझाया गया क्रम: खाई की खुदाई, ज़मीन समतल करना और माल की लदाई।",
    "slots": {
     "order": [
      "Trenching",
-     "Material Loading",
-     "Grading"
+     "Grading",
+     "Material Loading"
     ]
    },
    "variant": 0,
-   "file": "audio/hi/31aa1576e6310716.mp3"
+   "file": "audio/hi/9f29cbb8d7d2c3aa.mp3"
   },
   {
    "message_key": "pretask_estimate",
@@ -1629,17 +1695,6 @@
   },
   {
    "message_key": "proximity_alert",
-   "lang": "en",
-   "mode": "alert",
-   "text": "Stop! Someone is 2.5 metres from the machine.",
-   "slots": {
-    "distance_m": 2.5
-   },
-   "variant": 0,
-   "file": "audio/en/30e66ca18b776058.mp3"
-  },
-  {
-   "message_key": "proximity_alert",
    "lang": "hi",
    "mode": "alert",
    "text": "रुकिए! मशीन से 2.1 मीटर पर कोई है।",
@@ -1648,17 +1703,6 @@
    },
    "variant": 0,
    "file": "audio/hi/f3fc0223ab4da5c5.mp3"
-  },
-  {
-   "message_key": "proximity_alert",
-   "lang": "hi",
-   "mode": "alert",
-   "text": "रुकिए! मशीन से 2.5 मीटर पर कोई है।",
-   "slots": {
-    "distance_m": 2.5
-   },
-   "variant": 0,
-   "file": "audio/hi/0d257752bdcc09c4.mp3"
   },
   {
    "message_key": "rain_today",
@@ -1833,27 +1877,27 @@
    "message_key": "task_card",
    "lang": "en",
    "mode": "friendly",
-   "text": "Number 2 is material loading. It should take about 33 minutes.",
+   "text": "Number 2 is grading. It should take about 41 minutes.",
    "slots": {
     "n": 2,
-    "task_type": "Material Loading",
-    "predicted_min": 33
+    "task_type": "Grading",
+    "predicted_min": 41
    },
    "variant": 1,
-   "file": "audio/en/8446d0902646676c.mp3"
+   "file": "audio/en/3e5452f798894b71.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "en",
    "mode": "friendly",
-   "text": "Number 3 is grading. It should take about 39 minutes.",
+   "text": "Number 3 is material loading. It should take about 33 minutes.",
    "slots": {
     "n": 3,
-    "task_type": "Grading",
-    "predicted_min": 39
+    "task_type": "Material Loading",
+    "predicted_min": 33
    },
    "variant": 1,
-   "file": "audio/en/8f098e6210a97cac.mp3"
+   "file": "audio/en/25b3779732ff191b.mp3"
   },
   {
    "message_key": "task_card",
@@ -1885,53 +1929,53 @@
    "message_key": "task_card",
    "lang": "en",
    "mode": "friendly",
-   "text": "Task 2 is material loading; plan for about 33 minutes.",
+   "text": "Task 2 is grading; plan for about 41 minutes.",
    "slots": {
     "n": 2,
+    "task_type": "Grading",
+    "predicted_min": 41
+   },
+   "variant": 2,
+   "file": "audio/en/165cf5a086ef7524.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Task 2: grading, about 41 minutes.",
+   "slots": {
+    "n": 2,
+    "task_type": "Grading",
+    "predicted_min": 41
+   },
+   "variant": 0,
+   "file": "audio/en/7589b5c7e844c154.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Task 3 is material loading; plan for about 33 minutes.",
+   "slots": {
+    "n": 3,
     "task_type": "Material Loading",
     "predicted_min": 33
    },
    "variant": 2,
-   "file": "audio/en/0b95d1dd3ddcb389.mp3"
+   "file": "audio/en/63646f9d90a4e2ef.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "en",
    "mode": "friendly",
-   "text": "Task 2: material loading, about 33 minutes.",
+   "text": "Task 3: material loading, about 33 minutes.",
    "slots": {
-    "n": 2,
+    "n": 3,
     "task_type": "Material Loading",
     "predicted_min": 33
    },
    "variant": 0,
-   "file": "audio/en/43260ee55445ddee.mp3"
-  },
-  {
-   "message_key": "task_card",
-   "lang": "en",
-   "mode": "friendly",
-   "text": "Task 3 is grading; plan for about 39 minutes.",
-   "slots": {
-    "n": 3,
-    "task_type": "Grading",
-    "predicted_min": 39
-   },
-   "variant": 2,
-   "file": "audio/en/1b13a3c735514aee.mp3"
-  },
-  {
-   "message_key": "task_card",
-   "lang": "en",
-   "mode": "friendly",
-   "text": "Task 3: grading, about 39 minutes.",
-   "slots": {
-    "n": 3,
-    "task_type": "Grading",
-    "predicted_min": 39
-   },
-   "variant": 0,
-   "file": "audio/en/65132f1cb84210c1.mp3"
+   "file": "audio/en/8951ac73b7f4715d.mp3"
   },
   {
    "message_key": "task_card",
@@ -1963,53 +2007,53 @@
    "message_key": "task_card",
    "lang": "hi",
    "mode": "friendly",
-   "text": "काम 2 है माल की लदाई; लगभग 33 मिनट मानकर चलिए।",
+   "text": "काम 2 है ज़मीन समतल करना; लगभग 41 मिनट मानकर चलिए।",
    "slots": {
     "n": 2,
+    "task_type": "Grading",
+    "predicted_min": 41
+   },
+   "variant": 2,
+   "file": "audio/hi/1495847c49053b84.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "काम 2: ज़मीन समतल करना, लगभग 41 मिनट।",
+   "slots": {
+    "n": 2,
+    "task_type": "Grading",
+    "predicted_min": 41
+   },
+   "variant": 0,
+   "file": "audio/hi/74c28f1147014acb.mp3"
+  },
+  {
+   "message_key": "task_card",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "काम 3 है माल की लदाई; लगभग 33 मिनट मानकर चलिए।",
+   "slots": {
+    "n": 3,
     "task_type": "Material Loading",
     "predicted_min": 33
    },
    "variant": 2,
-   "file": "audio/hi/7d185f2eecc0150e.mp3"
+   "file": "audio/hi/76316b0f07628182.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "hi",
    "mode": "friendly",
-   "text": "काम 2: माल की लदाई, लगभग 33 मिनट।",
+   "text": "काम 3: माल की लदाई, लगभग 33 मिनट।",
    "slots": {
-    "n": 2,
+    "n": 3,
     "task_type": "Material Loading",
     "predicted_min": 33
    },
    "variant": 0,
-   "file": "audio/hi/ef128253a77be3f3.mp3"
-  },
-  {
-   "message_key": "task_card",
-   "lang": "hi",
-   "mode": "friendly",
-   "text": "काम 3 है ज़मीन समतल करना; लगभग 39 मिनट मानकर चलिए।",
-   "slots": {
-    "n": 3,
-    "task_type": "Grading",
-    "predicted_min": 39
-   },
-   "variant": 2,
-   "file": "audio/hi/cf1d0cf350223256.mp3"
-  },
-  {
-   "message_key": "task_card",
-   "lang": "hi",
-   "mode": "friendly",
-   "text": "काम 3: ज़मीन समतल करना, लगभग 39 मिनट।",
-   "slots": {
-    "n": 3,
-    "task_type": "Grading",
-    "predicted_min": 39
-   },
-   "variant": 0,
-   "file": "audio/hi/65a10c4f94a54d7c.mp3"
+   "file": "audio/hi/2df484cb0aeeaf5e.mp3"
   },
   {
    "message_key": "task_card",
@@ -2028,27 +2072,27 @@
    "message_key": "task_card",
    "lang": "hi",
    "mode": "friendly",
-   "text": "नंबर 2: माल की लदाई। इसमें लगभग 33 मिनट लगेंगे।",
+   "text": "नंबर 2: ज़मीन समतल करना। इसमें लगभग 41 मिनट लगेंगे।",
    "slots": {
     "n": 2,
-    "task_type": "Material Loading",
-    "predicted_min": 33
+    "task_type": "Grading",
+    "predicted_min": 41
    },
    "variant": 1,
-   "file": "audio/hi/65e3c5eb7503aff4.mp3"
+   "file": "audio/hi/e99a309529b34528.mp3"
   },
   {
    "message_key": "task_card",
    "lang": "hi",
    "mode": "friendly",
-   "text": "नंबर 3: ज़मीन समतल करना। इसमें लगभग 39 मिनट लगेंगे।",
+   "text": "नंबर 3: माल की लदाई। इसमें लगभग 33 मिनट लगेंगे।",
    "slots": {
     "n": 3,
-    "task_type": "Grading",
-    "predicted_min": 39
+    "task_type": "Material Loading",
+    "predicted_min": 33
    },
    "variant": 1,
-   "file": "audio/hi/3762cd942337a170.mp3"
+   "file": "audio/hi/0a88f9d1020ca76d.mp3"
   },
   {
    "message_key": "warn.rain_slippery",
