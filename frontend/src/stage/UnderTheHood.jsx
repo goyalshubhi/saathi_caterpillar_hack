@@ -20,7 +20,8 @@ const EVENT_TYPES = [
 const DECISION = {
   spoken: ['spoken', 'ok'],
   'held-budget': ['held — coaching budget used', 'held'],
-  'held-quiet': ['held — quiet mode', 'held'],
+  'held-quiet': ['held — muted', 'held'],
+  muted: ['cut — muted', 'cut'],
   preempted: ['preempted by safety', 'cut'],
 };
 

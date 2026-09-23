@@ -88,8 +88,8 @@ const STEP_RUN = [
     stopReplay();
     await api.reset();
     ctx.alive();
-    const { theme, unlocked, apiMode, demo } = store.get();
-    store.reset({ theme, unlocked, apiMode, lang: 'hi', demo: { ...demo, step: 1 } });
+    const { theme, unlocked, apiMode, quiet, demo } = store.get();
+    store.reset({ theme, unlocked, apiMode, quiet, lang: 'hi', demo: { ...demo, step: 1 } });
     resetVoice({ demo: true });
     await Promise.all([loadDay({ force: true }), loadMemory(), loadScenario()]);
     ctx.nav('/morning');
@@ -158,10 +158,8 @@ const STEP_RUN = [
     ctx.alive();
     if (finding) {
       ctx.nav('/break?reason=care');
-      await sayInOrder([
-        { priority: 'care', mode: 'care', message_key: finding.message_key, slots: finding.slots },
-        { priority: 'care', mode: 'care', message_key: 'care_break', slots: {} },
-      ], { alive: () => { ctx.alive(); return true; } });
+      // One line per step: the finding already says "a short break will help".
+      await sayInOrder([{ priority: 'care', mode: 'care', message_key: finding.message_key, slots: finding.slots }], { alive: () => { ctx.alive(); return true; } });
     } else {
       addLog('events', { type: 'fatigue_unavailable', time: '', detail: 'fatigue model not available — planned break' });
       ctx.nav('/break?reason=planned');

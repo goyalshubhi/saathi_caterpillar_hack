@@ -31,13 +31,17 @@ export default function VoiceLog() {
   const t = useT();
   const go = useGo();
   const lang = useStore((s) => s.lang);
-  const [listening, setListening] = useState(false);
+  const listening = useStore((s) => s.listening);
+  const setListening = (on) => store.set({ listening: on });
   const [typing, setTyping] = useState(false);
   const [draft, setDraft] = useState('');
   const [pending, setPending] = useState(null); // { text, category }
   const rec = useRef(null);
 
-  useEffect(() => () => rec.current?.abort?.(), []);
+  useEffect(() => () => {
+    rec.current?.abort?.();
+    store.set({ listening: false });
+  }, []);
 
   const say1 = (key) => say({ priority: 'info', mode: 'friendly', message_key: key });
 
@@ -50,7 +54,7 @@ export default function VoiceLog() {
       if (r.command === 'quiet_mode') {
         const on = !store.get().quiet;
         if (on) say1('cmd_quiet_on');
-        setQuiet(on);
+        setQuiet(on, { cut: false }); // let the confirmation finish
         if (!on) say1('cmd_quiet_off');
       }
       if (r.command === 'taking_break') {
@@ -71,7 +75,10 @@ export default function VoiceLog() {
     r.interimResults = false;
     r.maxAlternatives = 1;
     r.onresult = (e) => handle(e.results[0][0].transcript);
-    r.onerror = () => setTyping(true);
+    r.onerror = () => {
+      setListening(false);
+      setTyping(true);
+    };
     r.onend = () => setListening(false);
     rec.current = r;
     setListening(true);
@@ -89,10 +96,11 @@ export default function VoiceLog() {
   return (
     <div className="voice-log">
       <div className="voice-log__controls">
-        <button type="button" className={`btn btn--secondary voice-log__mic ${listening ? 'is-listening' : ''}`} onClick={listen} data-testid="voice-log-mic">
-          <Mic size={30} aria-hidden="true" /> {listening ? t('listening') : t('speak')}
+        <button type="button" className={`btn btn--secondary voice-log__mic ${listening ? 'is-listening' : ''}`} onClick={listen} data-testid="voice-log-mic"
+          title={t('micTip')} aria-pressed={listening}>
+          <Mic size={30} aria-hidden="true" /> {listening ? t('listeningNow') : t('speak')}
         </button>
-        <button type="button" className="btn btn--icon" onClick={() => setTyping((v) => !v)} aria-label={t('typeInstead')} aria-pressed={typing}>
+        <button type="button" className="btn btn--icon" onClick={() => setTyping((v) => !v)} aria-label={t('typeInstead')} title={t('typeInstead')} aria-pressed={typing}>
           <Keyboard size={26} aria-hidden="true" />
         </button>
       </div>
@@ -100,7 +108,7 @@ export default function VoiceLog() {
       {typing && !pending && (
         <form className="voice-log__type" onSubmit={(e) => { e.preventDefault(); handle(draft); }}>
           <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={t('typeInstead')} aria-label={t('typeInstead')} data-testid="voice-log-input" />
-          <button type="submit" className="btn btn--primary" data-testid="voice-log-submit"><Check size={26} aria-hidden="true" /></button>
+          <button type="submit" className="btn btn--primary" data-testid="voice-log-submit" aria-label={t('send')} title={t('send')}><Check size={26} aria-hidden="true" /></button>
         </form>
       )}
 

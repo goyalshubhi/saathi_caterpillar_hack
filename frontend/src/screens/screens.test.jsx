@@ -27,12 +27,18 @@ describe('Morning', () => {
     expect(screen.getByTestId('avatar')).toBeTruthy();
   });
 
-  it('speaks the morning briefing once, in order', async () => {
+  it('on entry speaks one headline line (no playlist of the whole screen)', async () => {
     renderAt('/morning');
-    await waitFor(() => expect(speaker.said.some((e) => e.message_key === 'breaks_planned')).toBe(true));
-    expect(speaker.said.map((e) => e.message_key)).toEqual([
-      'shift_hello', 'greeting', 'task_card', 'task_card', 'task_card', 'rain_today', 'heat_today', 'plan_order', 'breaks_planned',
-    ]);
+    await waitFor(() => expect(store.get().spokeOn.screen).toBe('morning@1'));
+    expect(speaker.said.map((e) => e.message_key)).toEqual(['greeting']);
+  });
+
+  it('the start button names the next task and says it opens the briefing', async () => {
+    renderAt('/morning');
+    const btn = await screen.findByTestId('start-task');
+    expect(btn.textContent).toMatch(/Start task: Trenching/);
+    expect(btn.textContent).toMatch(/pre-task briefing/);
+    expect(btn.title).toMatch(/pre-task briefing/);
   });
 
   it('switches labels to Hindi', async () => {
@@ -62,7 +68,7 @@ describe('In-task', () => {
     renderAt('/intask/T101');
     expect(await screen.findByTestId('screen-intask')).toBeTruthy();
     expect(screen.queryByTestId('avatar')).toBeNull();
-    expect(screen.getByTestId('saathi-chip').textContent).toMatch(/Listening/);
+    expect(screen.getByTestId('saathi-chip').textContent).toMatch(/Ready/);
     expect(screen.getByTestId('machine-state')).toBeTruthy();
     expect(screen.getByRole('progressbar')).toBeTruthy();
     for (const c of ['near_miss', 'person_in_zone', 'machine_issue']) expect(screen.getByTestId(`incident-${c}`)).toBeTruthy();
@@ -143,5 +149,67 @@ describe('Audio unlock', () => {
     renderAt('/morning');
     fireEvent.click(await screen.findByTestId('start-saathi'));
     expect(screen.queryByTestId('start-saathi')).toBeNull();
+  });
+});
+
+describe('Top bar controls', () => {
+  it('language toggle switches EN/हि and shows the active one', async () => {
+    renderAt('/morning');
+    await screen.findByTestId('task-card-T101');
+    const btn = screen.getByTestId('lang-toggle');
+    expect(btn.querySelector('b.on').textContent).toBe('EN');
+    fireEvent.click(btn);
+    expect(store.get().lang).toBe('hi');
+    expect(btn.querySelector('b.on').textContent).toBe('हिं');
+  });
+
+  it('theme toggle switches dark/light and shows the active one', async () => {
+    renderAt('/morning');
+    const btn = await screen.findByTestId('theme-toggle');
+    expect(screen.getByTestId('operator-app').dataset.theme).toBe('dark');
+    expect(btn.querySelector('b.on').textContent).toMatch(/Dark/);
+    fireEvent.click(btn);
+    expect(screen.getByTestId('operator-app').dataset.theme).toBe('light');
+    expect(btn.querySelector('b.on').textContent).toMatch(/Light/);
+  });
+
+  it('coaching mute shows its state and says safety still speaks', async () => {
+    renderAt('/morning');
+    const btn = await screen.findByTestId('quiet-toggle');
+    expect(btn.textContent).toMatch(/Coaching mute/);
+    expect(btn.title).toMatch(/Safety alerts still speak/);
+    fireEvent.click(btn);
+    expect(btn.getAttribute('aria-pressed')).toBe('true');
+    expect(btn.textContent).toMatch(/Coaching muted/);
+    expect(screen.getByTestId('saathi-chip').textContent).toMatch(/Muted/);
+  });
+
+  it('chip says Ready when idle and Listening… only while recognition is on', async () => {
+    renderAt('/hub');
+    const chip = await screen.findByTestId('saathi-chip');
+    expect(chip.textContent).toMatch(/Ready/);
+    act(() => { store.set({ listening: true }); });
+    expect(chip.textContent).toMatch(/Listening…/);
+  });
+
+  it('shows the demo step in the operator top bar while the demo runs', async () => {
+    renderAt('/hub');
+    await screen.findByTestId('saathi-chip');
+    expect(screen.queryByTestId('demo-step')).toBeNull();
+    act(() => { store.set((s) => ({ demo: { ...s.demo, running: true, step: 2 } })); });
+    expect(screen.getByTestId('demo-step').textContent).toMatch(/Demo 2\/7 · Pre-task/);
+  });
+});
+
+describe('Labels', () => {
+  it('pre-task buttons say which task starts and where back goes', async () => {
+    renderAt('/pretask/T101');
+    expect((await screen.findByTestId('go-intask')).textContent).toMatch(/Start: Trenching/);
+    expect(screen.getByTestId('pretask-back').getAttribute('aria-label')).toBe('Back to today’s tasks');
+  });
+
+  it('the break screen back button says it returns to today’s tasks', async () => {
+    renderAt('/break');
+    expect((await screen.findByTestId('break-back')).textContent).toMatch(/I’m back.*Back to today’s tasks/);
   });
 });

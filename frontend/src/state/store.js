@@ -8,7 +8,8 @@ export function initialState() {
   return {
     lang: 'en',
     theme: 'dark',
-    quiet: false,
+    quiet: false, // coaching mute: only safety lines speak
+    listening: false, // speech recognition is active (voice-command button pressed)
     unlocked: false,
     apiMode: 'unknown', // live | fixture
     fallbackToEnglish: false,

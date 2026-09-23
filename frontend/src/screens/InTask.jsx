@@ -57,11 +57,11 @@ export default function InTask() {
           {working ? t('working') : t('idle')}
         </span>
         <div className="speed-control" role="group" aria-label="Replay speed">
-          <button type="button" className="speed-control__btn" onClick={() => (replay.playing ? pauseReplay() : resumeReplay())} aria-label={replay.playing ? 'Pause replay' : 'Play replay'} disabled={replay.done}>
+          <button type="button" className="speed-control__btn" onClick={() => (replay.playing ? pauseReplay() : resumeReplay())} aria-label={replay.playing ? 'Pause replay' : 'Play replay'} title={replay.playing ? 'Pause replay' : 'Play replay'} disabled={replay.done}>
             {replay.playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
           </button>
           {SPEEDS.map((s) => (
-            <button key={s} type="button" className={`speed-control__btn ${replay.speed === s ? 'is-on' : ''}`} onClick={() => setReplaySpeed(s)} aria-pressed={replay.speed === s}>
+            <button key={s} type="button" className={`speed-control__btn ${replay.speed === s ? 'is-on' : ''}`} onClick={() => setReplaySpeed(s)} aria-pressed={replay.speed === s} title={`Replay speed ${s}×`}>
               {s}×
             </button>
           ))}

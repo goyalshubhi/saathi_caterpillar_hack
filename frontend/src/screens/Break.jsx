@@ -65,8 +65,12 @@ export default function Break() {
         {next && (
           <p className="break__next"><span>{t('next')}</span> <TaskIcon type={next.task_type} size={30} /> {taskTypeLabel(next.task_type, lang)} · {String(next.scheduled_hour).padStart(2, '0')}:00</p>
         )}
-        <button type="button" className="btn btn--care btn--xl" onClick={() => go('/morning')}>
-          <ArrowLeft size={30} aria-hidden="true" /> {t('imBack')}
+        <button type="button" className="btn btn--care btn--xl btn--stacked" onClick={() => go('/morning')} title={t('imBackTip')} data-testid="break-back">
+          <ArrowLeft size={30} aria-hidden="true" />
+          <span>
+            {t('imBack')}
+            <small className="btn__sub">{t('backToToday')}</small>
+          </span>
         </button>
       </div>
     </div>

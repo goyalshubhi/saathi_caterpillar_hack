@@ -21,7 +21,7 @@ export function Caption({ still = false }) {
         {caption && (
           <motion.div key={caption.id} className={`caption caption--${tone}`} data-testid="caption" {...motionProps}>
             <p className="caption__text">{caption.text}</p>
-            <button type="button" className="caption__repeat" onClick={() => repeat()} aria-label={t('repeat')}>
+            <button type="button" className="caption__repeat" onClick={() => repeat()} aria-label={t('repeat')} title={t('repeat')}>
               <RotateCcw size={24} aria-hidden="true" />
               <span>{t('repeat')}</span>
             </button>

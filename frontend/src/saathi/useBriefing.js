@@ -1,16 +1,17 @@
-// Speak a screen's lines once when it opens (and its data is ready), in order.
+// Speak a screen's opening lines once when it opens (and its data is ready): its headline line plus
+// any safety lines (triggerLines), never the whole screen read out as a playlist.
 // `id` names the briefing (e.g. "morning@2"): each id is spoken once, so revisiting a screen stays quiet.
 // It is marked as spoken only when its first line is queued, so an effect that is cleaned up
 // straight away (React StrictMode) does not swallow it.
 import { useEffect } from 'react';
 import { store } from '../state/store.js';
-import { sayInOrder } from './voiceRuntime.js';
+import { sayInOrder, triggerLines } from './voiceRuntime.js';
 
 export function useBriefing(id, buildEvents, ready) {
   useEffect(() => {
     if (!ready || !id || store.get().briefed[id]) return undefined;
     let alive = true;
-    const events = buildEvents();
+    const events = triggerLines(buildEvents());
     const isAlive = () => {
       if (!alive) return false;
       if (!store.get().briefed[id]) store.set((s) => ({ briefed: { ...s.briefed, [id]: true } }));

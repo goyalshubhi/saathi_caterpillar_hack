@@ -31,12 +31,12 @@ export default function StageHeader() {
           </button>
         ) : (
           <>
-            <button type="button" className="demo-btn" onClick={prevStep} aria-label="Previous step"><SkipBack size={18} aria-hidden="true" /></button>
-            <button type="button" className="demo-btn" onClick={togglePause} data-testid="demo-pause" aria-label={demo.paused ? 'Resume' : 'Pause'}>
+            <button type="button" className="demo-btn" onClick={prevStep} aria-label="Previous step" title="Previous step"><SkipBack size={18} aria-hidden="true" /></button>
+            <button type="button" className="demo-btn" onClick={togglePause} data-testid="demo-pause" aria-label={demo.paused ? 'Resume' : 'Pause'} title={demo.paused ? 'Resume' : 'Pause'}>
               {demo.paused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />} <kbd>Space</kbd>
             </button>
-            <button type="button" className="demo-btn" onClick={nextStep} aria-label="Next step"><SkipForward size={18} aria-hidden="true" /></button>
-            <button type="button" className="demo-btn" onClick={stopDemo} aria-label="Stop demo"><Square size={16} aria-hidden="true" /></button>
+            <button type="button" className="demo-btn" onClick={nextStep} aria-label="Next step" title="Next step"><SkipForward size={18} aria-hidden="true" /></button>
+            <button type="button" className="demo-btn" onClick={stopDemo} aria-label="Stop demo" title="Stop demo"><Square size={16} aria-hidden="true" /></button>
           </>
         )}
         <ol className="step-pills">
@@ -51,7 +51,7 @@ export default function StageHeader() {
         </ol>
         <div className="pace" role="group" aria-label="Pace">
           {['normal', 'max'].map((p) => (
-            <button key={p} type="button" className={demo.pace === p ? 'is-on' : ''} onClick={() => setPace(p)} data-testid={`pace-${p}`} aria-pressed={demo.pace === p}>
+            <button key={p} type="button" className={demo.pace === p ? 'is-on' : ''} onClick={() => setPace(p)} data-testid={`pace-${p}`} aria-pressed={demo.pace === p} title={p === 'normal' ? 'Demo at normal pace' : 'Demo at max pace (silent)'}>
               {p === 'normal' ? 'Normal' : 'Max'}
             </button>
           ))}

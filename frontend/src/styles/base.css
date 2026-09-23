@@ -195,6 +195,13 @@ kbd {
 .tb-btn__seg { display: inline-flex; border-radius: 8px; overflow: hidden; border: 1px solid var(--line-strong); }
 .tb-btn__seg b { padding: 4px 9px; font-size: 18px; font-weight: 600; color: var(--text-muted); }
 .tb-btn__seg b.on { background: var(--accent); color: var(--accent-ink); }
+.tb-btn__seg b { display: inline-flex; align-items: center; gap: 4px; }
+.tb-btn__text { font-size: 16px; font-weight: 600; white-space: nowrap; }
+.tb-btn--muted { background: var(--danger-soft); border-color: var(--danger); color: var(--text); }
+.btn--stacked { text-align: left; line-height: 1.1; }
+.btn--stacked > span { display: inline-flex; flex-direction: column; }
+.btn__sub { font-size: 16px; font-weight: 500; opacity: 0.8; margin-top: 4px; font-family: var(--font-body, inherit); letter-spacing: 0; text-transform: none; }
+.badge--demo { background: var(--accent-soft); color: var(--accent-text); border: 1px solid var(--accent); }
 
 /* Saathi chip */
 .saathi-chip {
@@ -217,6 +224,8 @@ kbd {
 .saathi-chip--alert { border-color: var(--danger); background: var(--danger-soft); }
 .saathi-chip--alert .saathi-chip__dot { background: var(--danger); }
 .saathi-chip--quiet .saathi-chip__dot { background: var(--text-dim); }
+.saathi-chip--listening { border-color: var(--success); }
+.saathi-chip--listening .saathi-chip__state { color: var(--success); }
 
 /* rail */
 .rail {

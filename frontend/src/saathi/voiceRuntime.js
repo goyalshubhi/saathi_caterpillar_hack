@@ -5,6 +5,8 @@
 //   - store.log.queue records each decision for the Stage View:
 //       spoken (with phrasing variant and MP3 / browser voice), held (coaching budget or quiet mode),
 //       preempted by safety
+// Mute ("Coaching mute" in the top bar, store.quiet): every line except safety is held, and a
+// non-safety line that is playing when mute turns on is cut at once. Safety always speaks.
 // "fast" mode (demo at max pace) plays nothing audible: the line is looked up and started (so the
 // source is real), stopped at once, and reported finished after a short beat.
 import { createQueue, createPhraser, createSpeaker, loadManifest, DEMO_SEED } from '../voice/index.js';
@@ -13,12 +15,14 @@ import { store, addLog, markArch } from '../state/store.js';
 const CAPTION_MS = 5000;
 const FAST_LINE_MS = 120;
 const SAFETY_BANNER_MS = 6500;
+const LINE_GAP_MS = 900; // pause between lines spoken in sequence (sayInOrder)
 
 let speaker = null;
 let queue = null;
 let fast = false;
+let lineGap = LINE_GAP_MS;
 let seq = 0;
-let active = null; // { id, event, finished }
+let active = null; // { id, event, finished, onEnd }
 let preemptor = null; // safety event currently being pushed
 let captionTimer = null;
 let bannerTimer = null;
@@ -38,8 +42,9 @@ export async function initVoice() {
 }
 
 // Tests inject a fake/silent speaker.
-export function configureVoice({ speaker: s, seed } = {}) {
+export function configureVoice({ speaker: s, seed, gapMs = 0 } = {}) {
   clearTimeout(captionTimer);
+  lineGap = gapMs;
   speaker = s ?? createSpeaker();
   active = null;
   queue = createQueue({ speaker: instrumented, phraser: createPhraser(seed === undefined ? {} : { seed }) });
@@ -76,10 +81,18 @@ function finish(id, onEnd) {
   notifyIdle();
 }
 
+const muted = (event) => store.get().quiet && event.priority !== 'safety';
+
 const instrumented = {
   speak(event, { onEnd } = {}) {
+    if (muted(event)) {
+      // Queued before mute was switched on: skip it silently.
+      addLog('queue', { decision: 'held-quiet', event, variant: event.variant ?? null });
+      onEnd?.();
+      return { text: '', lang: event.lang, source: 'silent' };
+    }
     const id = ++seq;
-    active = { id, event, finished: false };
+    active = { id, event, finished: false, onEnd };
     const result = speaker.speak(event, { onEnd: () => finish(id, onEnd) }) ?? {};
     const source = result.source ?? 'silent';
     if (store.get().fallbackToEnglish !== speaker.fallbackToEnglish) store.set({ fallbackToEnglish: speaker.fallbackToEnglish });
@@ -122,6 +135,10 @@ export function say(event) {
   const e = { lang: store.get().lang, slots: {}, ...event };
   markArch('queue');
   if (e.priority === 'safety') preemptor = e;
+  if (muted(e)) {
+    addLog('queue', { decision: 'held-quiet', event: e, variant: null });
+    return { accepted: false, reason: 'quiet' };
+  }
   const result = queue.push(e);
   preemptor = null;
   if (!result.accepted) {
@@ -149,14 +166,27 @@ export function whenIdle() {
   return new Promise((resolve) => idleWaiters.add(resolve));
 }
 
-// Speak lines one after another (each waits for the previous to finish), so a safety line in a
-// briefing never cuts off the line before it. Stops early if `alive()` turns false.
+// Speak lines one after another (each waits for the previous to finish, then a short pause), so a
+// safety line in a briefing never cuts off the line before it. Stops early if `alive()` turns false.
 export async function sayInOrder(events, { alive = () => true } = {}) {
-  for (const event of events) {
+  for (let i = 0; i < events.length; i += 1) {
     await whenIdle();
+    if (i > 0 && lineGap > 0 && !fast) {
+      await new Promise((r) => setTimeout(r, lineGap));
+      await whenIdle();
+    }
     if (!alive()) return;
-    say(event);
+    say(events[i]);
   }
+}
+
+// Lines that open a screen: its one headline line
+// plus any safety lines, in their original order. Saathi speaks on triggers, it does not read out
+// the whole screen; the rest is on screen.
+const HEADLINE_KEYS = ['greeting', 'pretask_estimate', 'debrief_over', 'debrief_on_time'];
+export function triggerLines(events) {
+  const lead = events.find((e) => HEADLINE_KEYS.includes(e.message_key)) ?? events.find((e) => e.priority !== 'safety');
+  return events.filter((e) => e === lead || e.priority === 'safety');
 }
 
 export function repeat() {
@@ -177,10 +207,18 @@ export function startTask(taskId) {
   queue.startTask(taskId);
 }
 
-export function setQuiet(on) {
+// Mute on/off. With `cut` (default) a non-safety line that is playing stops at once.
+export function setQuiet(on, { cut = true } = {}) {
   ensure();
   queue.setQuiet(on);
   store.set({ quiet: Boolean(on) });
+  if (on && cut && active && !active.finished && active.event.priority !== 'safety') {
+    const { id, event, onEnd } = active;
+    addLog('queue', { decision: 'muted', event, variant: event.variant ?? 0 });
+    speaker.cancel();
+    store.set({ caption: null });
+    finish(id, onEnd); // lets the queue move on; queued non-safety lines are skipped
+  }
 }
 
 export function voiceInfo() {

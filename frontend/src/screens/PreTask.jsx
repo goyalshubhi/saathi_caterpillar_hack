@@ -61,7 +61,7 @@ export default function PreTask() {
   return (
     <div className="screen pretask" data-testid="screen-pretask">
       <header className="screen-head">
-        <button type="button" className="btn btn--icon" onClick={() => go('/morning')} aria-label={t('back')}>
+        <button type="button" className="btn btn--icon" onClick={() => go('/morning')} aria-label={t('backToToday')} title={t('backToToday')} data-testid="pretask-back">
           <ArrowLeft size={30} aria-hidden="true" />
         </button>
         <span className="screen-head__icon"><TaskIcon type={task.task_type} size={56} /></span>
@@ -110,8 +110,9 @@ export default function PreTask() {
       </section>
 
       <footer className="screen-foot">
-        <button type="button" className="btn btn--primary btn--xl" onClick={() => go(`/intask/${taskId}`)} data-testid="go-intask">
-          <Play size={34} fill="currentColor" aria-hidden="true" /> {t('startTask')}
+        <button type="button" className="btn btn--primary btn--xl" onClick={() => go(`/intask/${taskId}`)} data-testid="go-intask"
+          title={t('startThisTaskTip')}>
+          <Play size={34} fill="currentColor" aria-hidden="true" /> {t('startThisTask')}: {taskTypeLabel(task.task_type, lang)}
         </button>
       </footer>
     </div>

@@ -126,8 +126,13 @@ export default function Morning() {
 
         <div className="morning__actions">
           {next && (
-            <button type="button" className="btn btn--primary btn--xl" onClick={() => go(`/pretask/${next.task_id}`)} data-testid="start-task">
-              <Play size={34} fill="currentColor" aria-hidden="true" /> {t('startTask')}
+            <button type="button" className="btn btn--primary btn--xl btn--stacked" onClick={() => go(`/pretask/${next.task_id}`)} data-testid="start-task"
+              title={t('briefNextTip')}>
+              <Play size={34} fill="currentColor" aria-hidden="true" />
+              <span>
+                {t('startTask')}: {taskTypeLabel(next.task_type, lang)}
+                <small className="btn__sub">{t('opensBriefing')}</small>
+              </span>
             </button>
           )}
           {!demoRunning && (
