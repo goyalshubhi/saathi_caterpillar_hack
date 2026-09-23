@@ -1,6 +1,7 @@
 # Saathi — operator companion for CAT machinery
 Setup: Python 3.11+ and Node 18+, then `make setup` (installs requirements.txt and frontend/ Vitest).
 Test: `make test` (pytest + Vitest) · API: `make dev` → http://localhost:8000/docs
+Offline voice: `make audio` (needs network, edge-tts from requirements-dev.txt) regenerates the MP3s in frontend/public/audio.
 Demo without UI: `make demo-cli` walks demo steps 1–7 through the real API and prints every line Saathi says (Hindi + English).
 Modules: M1 data / M2 ML / M3 planner (`backend/data_gen`, `ml`, `planner`) — intel owner · M4 API (`backend/api`), M5 voice (`frontend/src/voice`), M8 replay (`frontend/src/replay`), `contracts/`, `scripts/` — services owner.
 UI (M6 avatar, M7 screens) is deferred to a later phase; voice + replay are UI-free ES modules.

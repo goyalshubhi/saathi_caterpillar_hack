@@ -59,15 +59,26 @@ def render(key, slots, lang):
                   if slots.get(m.group(1)) is not None else m.group(0), text)
 
 
+SPOKEN = []  # every line said during the run: {message_key, slots, mode, priority, text: {hi, en}}
+ECHO = True
+
+
+def out(*args):
+    if ECHO:
+        print(*args)
+
+
 def say(key, slots=None, mode="friendly", priority="info"):
     slots = slots or {}
-    print(f"   [{priority}/{mode}] {key}")
-    print(f"      hi: {render(key, slots, 'hi')}")
-    print(f"      en: {render(key, slots, 'en')}")
+    text = {"hi": render(key, slots, "hi"), "en": render(key, slots, "en")}
+    SPOKEN.append({"message_key": key, "slots": slots, "mode": mode, "priority": priority, "text": text})
+    out(f"   [{priority}/{mode}] {key}")
+    out(f"      hi: {text['hi']}")
+    out(f"      en: {text['en']}")
 
 
 def step(n, title):
-    print(f"\n=== Step {n}: {title} ===")
+    out(f"\n=== Step {n}: {title} ===")
 
 
 def ok(resp):
@@ -88,7 +99,7 @@ def morning(api, operator):
     plan = ok(api.get("/plan/today"))
     notes = ok(api.get(f"/memory/{MACHINE}"))
     by_id = {t["task_id"]: t for t in tasks}
-    print(f"   operator {operator} on {MACHINE} (operator id stays on the device; never sent to the stores)")
+    out(f"   operator {operator} on {MACHINE} (operator id stays on the device; never sent to the stores)")
     say("shift_hello", {"machine_id": MACHINE})
     for note in notes:
         say(note["message_key"], note["slots"], mode="alert", priority="safety")
@@ -114,15 +125,18 @@ def run_replay(scenario):
     return json.loads(proc.stdout)
 
 
-def main():
-    global T
+def main(echo=True):
+    """Run the demo; returns the list of spoken lines (see SPOKEN)."""
+    global T, ECHO
+    ECHO = echo
+    SPOKEN.clear()
     sys.stdout.reconfigure(encoding="utf-8")
     T = load_templates()
-    print(f"Saathi headless demo  (intel source: {'STAND-INS' if config.USE_STANDINS else 'real modules'})")
+    out(f"Saathi headless demo  (intel source: {'STAND-INS' if config.USE_STANDINS else 'real modules'})")
 
     with tempfile.TemporaryDirectory() as tmp, TestClient(create_app(db_path=str(Path(tmp) / "demo.db"))) as api:
         given = ok(api.get("/data/given"))
-        print(f"Given data loaded: {len(given['tasks'])} task rows, {len(given['usage'])} usage rows")
+        out(f"Given data loaded: {len(given['tasks'])} task rows, {len(given['usage'])} usage rows")
 
         step(1, "Morning briefing (Hindi first)")
         tasks, plan, _ = morning(api, "OP1001")
@@ -141,7 +155,7 @@ def main():
 
         step(3, f"In-task replay, fast-forward ({len(scenario['windows'])} windows of 15 min)")
         for e in run_replay(scenario):
-            print(f"   {e['timestamp']}  {e['type']}")
+            out(f"   {e['timestamp']}  {e['type']}")
             for s in e["saathi"]:
                 say(s["message_key"], s["slots"], mode=s["mode"], priority=s["priority"])
 
@@ -149,7 +163,7 @@ def main():
         inc = ok(api.post("/incidents", json={"machine_id": MACHINE, "category": "person_in_zone", "source": "tap"}))
         say("incident_logged", {"category": inc["category"]}, priority="info")
         for i in ok(api.get("/incidents", params={"machine_id": MACHINE})):
-            print(f"   incident list: #{i['id']} {i['timestamp']} {i['category']} ({i['source']})")
+            out(f"   incident list: #{i['id']} {i['timestamp']} {i['category']} ({i['source']})")
 
         step(5, "Debrief")
         d = ok(api.post("/debrief", json={"task_id": task["task_id"], "windows": scenario["windows"]}))
@@ -164,7 +178,7 @@ def main():
             say("debrief_on_time", mode="debrief")
         findings = ok(api.post("/behavior/analyze", json={"windows": scenario["windows"]}))
         for f in findings:
-            print(f"   finding: {f['type']} ({f['severity']}) at {f['window_timestamp']}")
+            out(f"   finding: {f['type']} ({f['severity']}) at {f['window_timestamp']}")
             say(f["message_key"], f["slots"], mode="debrief")
 
         step(6, "Shift 2: different operator, same machine")
@@ -175,7 +189,7 @@ def main():
         step(7, "(P1) Fatigue drift -> care mode break")
         r = api.get("/telemetry/scenario/fatigue")
         if r.status_code == 404:
-            print("   skipped: no 'fatigue' scenario available yet (P1)")
+            out("   skipped: no 'fatigue' scenario available yet (P1)")
         else:
             fatigue = [f for f in ok(api.post("/behavior/analyze", json={"windows": ok(r)["windows"]}))
                        if f["type"] == "fatigue_drift"]
@@ -183,9 +197,10 @@ def main():
                 say(fatigue[0]["message_key"], fatigue[0]["slots"], mode="care", priority="care")
                 say("care_break", mode="care", priority="care")
             else:
-                print("   no fatigue drift detected in the 'fatigue' scenario")
+                out("   no fatigue drift detected in the 'fatigue' scenario")
 
-    print("\nDemo complete.")
+    out("\nDemo complete.")
+    return list(SPOKEN)
 
 
 if __name__ == "__main__":
