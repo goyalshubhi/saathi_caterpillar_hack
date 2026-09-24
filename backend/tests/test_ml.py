@@ -233,3 +233,136 @@ def test_drift_rule_fallback_on_demo(monkeypatch):
 
 def test_drift_needs_enough_history():
     assert not _drift(findings(_drifting()[-4:]))
+
+
+# ---------- fatigue vs harder work (throughput / lapse gate) ----------
+
+def _last_hour(w, rows):
+    """Replace the last len(rows) windows with (idle, cycles, fuel_per_cycle, belt) rows."""
+    w = list(w)
+    for i, (idle, cycles, fpc, belt) in enumerate(rows):
+        k = len(w) - len(rows) + i
+        w[k] = dict(w[k], idling_time_min=idle, load_cycles=cycles, seatbelt_status=belt,
+                    fuel_used_l=round(0.1 + fpc * cycles + 0.03 * idle, 2))
+    return w
+
+
+def _hard_terrain(fpc=1.2, idle=7):
+    """Belted, careful work on harder ground: costlier, slower cycles, but throughput kept."""
+    return _last_hour(scenario("clean"), [(idle, 3, fpc, "Fastened")] * 4)
+
+
+def test_harder_terrain_is_not_fatigue():
+    w = _hard_terrain()
+    _, last = drift._split_last_hour(w)
+    assert drift._model_flags(drift._get_model(), last)          # the forest alone would flag it...
+    assert not _drift(findings(w))                               # ...the gate keeps Care mode quiet
+    for fpc in (0.6, 1.0, 1.5, 2.0):
+        for idle in (3, 5, 9):
+            assert not _drift(findings(_hard_terrain(fpc, idle))), (fpc, idle)
+
+
+def test_belted_fatigue_with_falling_throughput_still_fires():
+    w = _last_hour(scenario("clean"), [(6, 1, 0.3, "Fastened"), (7, 1, 0.3, "Fastened"),
+                                       (8, 1, 0.3, "Fastened"), (9, 1, 0.3, "Fastened")])
+    assert _drift(findings(w))
+
+
+def test_throughput_ratio_and_gate():
+    clean = [x for x in scenario("clean") if x["machine_active"]]
+    earlier, last = clean[:-4], clean[-4:]
+    assert drift.throughput_ratio(earlier, last) == 1.0
+    assert not drift.looks_like_fatigue(earlier, last)
+    slow = [dict(x, load_cycles=2) for x in last]
+    assert drift.throughput_ratio(earlier, slow) <= drift.THROUGHPUT_DROP
+    assert drift.looks_like_fatigue(earlier, slow)
+    lapses = [dict(x, seatbelt_status="Unfastened") for x in last[:drift.GATE_MIN_LAPSES]] + last[drift.GATE_MIN_LAPSES:]
+    assert drift.looks_like_fatigue(earlier, lapses)
+    assert drift.throughput_ratio([], last) is None
+
+
+def test_gate_keeps_demo_and_crafted_drift():
+    demo = scenario("demo")
+    earlier, last = drift._split_last_hour(demo)
+    assert drift.looks_like_fatigue(earlier, last)
+    assert _drift(findings(demo)) and _drift(findings(_drifting()))
+
+
+# ---------- debrief wording: no attribution for trivial overruns ----------
+
+from backend.ml import MIN_ATTRIBUTION_OVERRUN_MIN, debrief_lines  # noqa: E402
+
+
+def _pred(unc, ctl, factors=(("weather", None),)):
+    return {"task_id": "T1", "cat_estimate_min": 45, "predicted_min": 45 + unc, "uncontrollable_min": unc,
+            "controllable_min": ctl, "top_factors": [{"name": n, "minutes": m if m is not None else unc} for n, m in factors]}
+
+
+def _keys(lines):
+    return [line["message_key"] for line in lines]
+
+
+def test_slightly_over_gets_numbers_only_no_attribution():
+    assert MIN_ATTRIBUTION_OVERRUN_MIN == 3
+    for unc, ctl in [(1.0, 0.0), (1.5, 0.4), (0.8, 1.2), (2.9, 0.0)]:
+        lines = debrief_lines(_pred(unc, ctl))
+        assert _keys(lines) == ["debrief_near_time"], (unc, ctl)
+        assert "debrief_not_your_fault" not in _keys(lines) and "debrief_over" not in _keys(lines)
+        assert lines[0]["slots"] == {"over_min": round(unc + ctl)}
+
+
+def test_on_time_is_neutral():
+    assert _keys(debrief_lines(_pred(0.0, 0.0, factors=()))) == ["debrief_on_time"]
+    assert _keys(debrief_lines(_pred(0.3, 0.1))) == ["debrief_on_time"]      # rounds to 0 minutes
+
+
+def test_attribution_from_threshold_up():
+    assert _keys(debrief_lines(_pred(3.0, 0.0))) == ["debrief_over", "debrief_not_your_fault"]
+    assert _keys(debrief_lines(_pred(1.0, 4.0))) == ["debrief_over"]         # mostly controllable: no excuse
+
+
+def test_demo_debrief_lines_unchanged():
+    d = debrief(todays_tasks()[0], scenario("demo"))
+    lines = debrief_lines(d)
+    assert _keys(lines) == ["debrief_over", "debrief_not_your_fault"]
+    assert lines[0]["slots"] == {"over_min": 9, "uncontrollable_min": 6, "controllable_min": 3,
+                                 "factors": ["weather", "machine_age"]}
+
+
+# ---------- cold start: first tracked shift ----------
+
+from backend.ml import finding_lines, operator_history  # noqa: E402
+from backend.ml import history  # noqa: E402
+
+
+def test_operator_history_counts_past_shifts():
+    for op in ("OP1001", "OP1002", "OP1003"):
+        h = operator_history(op)
+        assert h["history_available"] and h["shift_count"] == 28          # 84 shifts / 3 operators
+    assert operator_history("OP9999") == {"operator_id": "OP9999", "shift_count": 0, "history_available": False}
+
+
+def test_first_shift_debrief_uses_neutral_template():
+    d = debrief(todays_tasks()[0], scenario("demo"))
+    assert _keys(debrief_lines(d, history_available=False)) == ["debrief_over_first_shift", "debrief_not_your_fault"]
+    assert _keys(debrief_lines(d, history_available=True)) == ["debrief_over", "debrief_not_your_fault"]
+    assert debrief_lines(d, False)[0]["slots"] == debrief_lines(d, True)[0]["slots"]
+    assert _keys(debrief_lines(_pred(1.0, 0.5), history_available=False)) == ["debrief_near_time"]
+
+
+def test_drift_line_identical_for_new_and_experienced_operators():
+    # The detector only compares within the shift, so the drift wording never depends on history.
+    new_op = [dict(w, operator_id="OP9999") for w in scenario("demo")]
+    assert not operator_history("OP9999")["history_available"] and operator_history("OP1001")["history_available"]
+    lines_new, lines_known = finding_lines(findings(new_op)), finding_lines(findings(scenario("demo")))
+    assert lines_new == lines_known
+    assert {"message_key": "finding.fatigue_drift", "slots": {"windows": 2}} in lines_known
+    assert _keys(lines_known) == [f["message_key"] for f in findings(scenario("demo"))]
+
+
+def test_new_operator_gets_no_drift_until_two_hours():
+    # Deliberate: fewer than MIN_HISTORY (8) windows -> no drift judgement at all.
+    late = _drifting()
+    assert not _drift(findings(late[-(drift.MIN_HISTORY - 1):]))
+    assert drift.MIN_HISTORY == 8
+    assert history.SHIFT_GAP.total_seconds() == 900

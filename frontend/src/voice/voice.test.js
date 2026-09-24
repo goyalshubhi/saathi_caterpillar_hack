@@ -6,7 +6,10 @@ import { createPhraser, seededRandom } from './phrasing.js';
 import { MODES } from './modes.js';
 import { createSpeaker } from './speaker.js';
 import { createQueue } from './queue.js';
-import { matchCommand } from './commands.js';
+import { COMMANDS, MIN_COMMAND_CONFIDENCE, MIN_PHRASE_WORDS, matchCommand } from './commands.js';
+import { unlockAudio } from './unlock.js';
+
+unlockAudio(); // these tests start after the Start button's click (see unlock.test.js for before it)
 
 // ---------- fakes ----------
 
@@ -360,16 +363,16 @@ describe('queue', () => {
 
 describe('commands', () => {
   it.each([
-    ['repeat', 'repeat'],
+    ['repeat that', 'repeat'],
     ['Say that again please', 'repeat'],
     ['फिर से बोलो', 'repeat'],
     ['log incident', 'log_incident'],
     ['घटना दर्ज करो', 'log_incident'],
     ["I'm taking a break", 'taking_break'],
-    ['आराम', 'taking_break'],
+    ['मुझे आराम करना है', 'taking_break'],
     ['quiet mode', 'quiet_mode'],
     ['चुप रहो', 'quiet_mode'],
-    ['shant', 'quiet_mode'],
+    ['shant mode', 'quiet_mode'],
   ])('%s -> %s', (text, id) => {
     expect(matchCommand(text)).toBe(id);
   });
@@ -378,6 +381,34 @@ describe('commands', () => {
     expect(matchCommand('what is the weather like')).toBe(null);
     expect(matchCommand('')).toBe(null);
     expect(matchCommand('breakfast')).toBe(null);
+  });
+
+  it('single common words alone never trigger (cab conversation)', () => {
+    for (const word of ['quiet', 'break', 'silence', 'repeat', 'again', 'incident',
+      'आराम', 'ब्रेक', 'शांत', 'चुप', 'घटना', 'दोबारा', 'shant', 'chup', 'aaram']) {
+      expect(matchCommand(word), word).toBe(null);
+    }
+    expect(matchCommand('it is so quiet today')).toBe(null);
+    expect(matchCommand('did you have your lunch break')).toBe(null);
+    expect(matchCommand('do it again')).toBe(null);
+  });
+
+  it('every command phrase has at least MIN_PHRASE_WORDS words', () => {
+    expect(MIN_PHRASE_WORDS).toBe(2);
+    for (const [id, langs] of Object.entries(COMMANDS)) {
+      for (const phrase of [...langs.en, ...langs.hi]) {
+        expect(phrase.trim().split(/\s+/).length, `${id}: ${phrase}`).toBeGreaterThanOrEqual(MIN_PHRASE_WORDS);
+      }
+    }
+  });
+
+  it('low recogniser confidence blocks a match; unknown (missing or 0) does not', () => {
+    expect(MIN_COMMAND_CONFIDENCE).toBe(0.6);
+    expect(matchCommand('quiet mode', { confidence: 0.4 })).toBe(null);
+    expect(matchCommand('quiet mode', { confidence: 0.6 })).toBe('quiet_mode');
+    expect(matchCommand('quiet mode', { confidence: 0.92 })).toBe('quiet_mode');
+    expect(matchCommand('quiet mode', { confidence: 0 })).toBe('quiet_mode');
+    expect(matchCommand('quiet mode', {})).toBe('quiet_mode');
   });
 });
 

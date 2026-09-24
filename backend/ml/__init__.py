@@ -1,6 +1,7 @@
 """M2 ML: task time estimator, counterfactual debrief and behaviour findings."""
 from .drift import fatigue_drift, train_drift
-from .estimator import debrief, predict, train_estimator
+from .estimator import MIN_ATTRIBUTION_OVERRUN_MIN, debrief, debrief_lines, finding_lines, predict, train_estimator
+from .history import operator_history
 from .findings import rule_findings
 
 
@@ -16,4 +17,5 @@ def findings(windows: list[dict]) -> list[dict]:
     return sorted(rule_findings(windows) + fatigue_drift(windows), key=lambda f: f["window_timestamp"])
 
 
-__all__ = ["train_all", "predict", "debrief", "findings"]
+__all__ = ["train_all", "predict", "debrief", "debrief_lines", "finding_lines", "findings", "operator_history",
+           "MIN_ATTRIBUTION_OVERRUN_MIN"]

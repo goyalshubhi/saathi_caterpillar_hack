@@ -1,7 +1,7 @@
 // Voice incident logging (P1): speech (en-IN / hi-IN) -> POST /incidents/classify -> operator
 // confirms (or changes the category) -> logged with source "voice". The fixed voice commands from
-// src/voice/commands.js work here too (repeat, quiet mode, taking a break). Without speech
-// recognition the operator can type instead.
+// src/voice/commands.js work here too ("repeat that", "quiet mode", "taking a break"; single words
+// never trigger). Without speech recognition the operator can type instead.
 import { useEffect, useRef, useState } from 'react';
 import { Mic, Check, X, Keyboard } from 'lucide-react';
 import { matchCommand } from '../voice/index.js';

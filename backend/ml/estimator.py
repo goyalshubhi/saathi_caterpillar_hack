@@ -139,3 +139,36 @@ def debrief(task: dict, windows: list[dict]) -> dict:
         result["uncontrollable_min"], result["top_factors"] = 0.0, []
     result["controllable_min"] = idle_gap_minutes(windows, result["predicted_min"])
     return result
+
+
+# Below this total overrun, the debrief states the number only: no attribution, no "not your
+# fault". Explaining a 1-2 minute overrun claims more confidence than the model has (its own
+# error on a task is a few minutes) and sounds hollow to an operator who knows it was trivial.
+MIN_ATTRIBUTION_OVERRUN_MIN = 3
+
+
+def debrief_lines(prediction: dict, history_available: bool = True) -> list[dict]:
+    """Which debrief lines to speak for a debrief() result: [{message_key, slots}] in order.
+    On an operator's first tracked shift (history_available False) the overrun line is the
+    neutral variant, anchored to the CAT estimate only."""
+    unc, ctl = prediction["uncontrollable_min"], prediction["controllable_min"]
+    over = unc + ctl
+    if round(over) <= 0:
+        return [{"message_key": "debrief_on_time", "slots": {}}]
+    if over < MIN_ATTRIBUTION_OVERRUN_MIN:
+        return [{"message_key": "debrief_near_time", "slots": {"over_min": int(round(over))}}]
+    factors = [f["name"] for f in sorted(prediction["top_factors"], key=lambda f: -f["minutes"]) if f["minutes"] > 0][:2]
+    key = "debrief_over" if history_available else "debrief_over_first_shift"
+    lines = [{"message_key": key, "slots": {
+        "over_min": int(round(over)), "uncontrollable_min": int(round(unc)),
+        "controllable_min": int(round(ctl)), "factors": factors}}]
+    if unc >= ctl:
+        lines.append({"message_key": "debrief_not_your_fault", "slots": {}})
+    return lines
+
+
+def finding_lines(findings: list[dict]) -> list[dict]:
+    """[{message_key, slots}] to speak for BehaviorFindings. Same for every operator: no finding
+    compares against a personal history (drift compares the last hour with earlier in the same
+    shift), so no line may claim one."""
+    return [{"message_key": f["message_key"], "slots": f["slots"]} for f in findings]

@@ -13,8 +13,11 @@
 // Audio unlock: nothing is spoken before the "Start Saathi" click (browser autoplay rules). Lines
 // that arrive earlier wait and play after it; screen briefings wait for it. If the browser still
 // blocks a line later, it is retried silently on the next tap / key press (no overlay).
+// The voice engine has its own gate (src/voice/unlock.js: its queue speaks nothing before it opens).
+// store.unlocked stays the single source of truth, also across reloads in the same tab, and the
+// engine gate is opened whenever the store says unlocked (syncEngineGate).
 // Coaching mute: while quiet, only safety lines are spoken; the rest are shown as captions.
-import { createQueue, createPhraser, createSpeaker, loadManifest, render, DEMO_SEED } from '../voice/index.js';
+import { createQueue, createPhraser, createSpeaker, loadManifest, render, DEMO_SEED, unlockAudio as unlockEngine, isAudioUnlocked } from '../voice/index.js';
 import { store, addLog, markArch, rememberUnlocked } from '../state/store.js';
 
 const CAPTION_MS = 5000;
@@ -51,10 +54,15 @@ function retryOnGesture(retry) {
   window.addEventListener('keydown', run, true);
 }
 
+function syncEngineGate() {
+  if (store.get().unlocked && !isAudioUnlocked()) unlockEngine();
+}
+
 // The "Start Saathi" / demo start click. Must run inside a click handler.
 export function unlockAudio() {
   if (!store.get().unlocked) store.set({ unlocked: true });
   rememberUnlocked();
+  syncEngineGate();
   const waiting = held;
   held = [];
   waiting.forEach((e) => say(e));
@@ -76,6 +84,7 @@ export function whenUnlocked() {
 function ensure() {
   if (!speaker) speaker = createSpeaker({ onBlocked: retryOnGesture });
   if (!queue) queue = createQueue({ speaker: instrumented, phraser: createPhraser() });
+  syncEngineGate(); // e.g. a reload in a tab that was already unlocked
 }
 
 // Load pre-generated MP3 manifest (public/audio/manifest.json).

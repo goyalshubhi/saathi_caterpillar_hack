@@ -431,6 +431,138 @@
    "file": "audio/hi/e0b2a0b642da998d.mp3"
   },
   {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "1 minutes over. Close to plan.",
+   "slots": {
+    "over_min": 1
+   },
+   "variant": 0,
+   "file": "audio/en/87ea823a42877978.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "1 minutes past the estimate, nearly on plan.",
+   "slots": {
+    "over_min": 1
+   },
+   "variant": 2,
+   "file": "audio/en/f09a1afe484ce03b.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "2 minutes over. Close to plan.",
+   "slots": {
+    "over_min": 2
+   },
+   "variant": 0,
+   "file": "audio/en/3024bf6e1378150f.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "2 minutes past the estimate, nearly on plan.",
+   "slots": {
+    "over_min": 2
+   },
+   "variant": 2,
+   "file": "audio/en/784e4b6f203c0721.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Just 1 minutes over the estimate. Close enough.",
+   "slots": {
+    "over_min": 1
+   },
+   "variant": 1,
+   "file": "audio/en/dc12d063dd862e94.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Just 2 minutes over the estimate. Close enough.",
+   "slots": {
+    "over_min": 2
+   },
+   "variant": 1,
+   "file": "audio/en/94dbfc45e1fda1ed.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "1 मिनट ज़्यादा लगे। लगभग योजना के अनुसार।",
+   "slots": {
+    "over_min": 1
+   },
+   "variant": 0,
+   "file": "audio/hi/32165effd86ca845.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "2 मिनट ज़्यादा लगे। लगभग योजना के अनुसार।",
+   "slots": {
+    "over_min": 2
+   },
+   "variant": 0,
+   "file": "audio/hi/41e3353180e57477.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "अनुमान से 1 मिनट ऊपर, लगभग योजना के मुताबिक।",
+   "slots": {
+    "over_min": 1
+   },
+   "variant": 2,
+   "file": "audio/hi/07dd31888bcd4d6a.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "अनुमान से 2 मिनट ऊपर, लगभग योजना के मुताबिक।",
+   "slots": {
+    "over_min": 2
+   },
+   "variant": 2,
+   "file": "audio/hi/87544f6df0042bc2.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "अनुमान से बस 1 मिनट ज़्यादा। लगभग ठीक।",
+   "slots": {
+    "over_min": 1
+   },
+   "variant": 1,
+   "file": "audio/hi/97464194b5285c0d.mp3"
+  },
+  {
+   "message_key": "debrief_near_time",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "अनुमान से बस 2 मिनट ज़्यादा। लगभग ठीक।",
+   "slots": {
+    "over_min": 2
+   },
+   "variant": 1,
+   "file": "audio/hi/d9c5c4918e7d2747.mp3"
+  },
+  {
    "message_key": "debrief_not_your_fault",
    "lang": "en",
    "mode": "debrief",
@@ -542,6 +674,288 @@
    "message_key": "debrief_over",
    "lang": "en",
    "mode": "debrief",
+   "text": "10 minutes over. About 7 from machine age and rain, about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 0,
+   "file": "audio/en/7b96e90f08783473.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "10 minutes over. About 7 from rain and machine age, about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 0,
+   "file": "audio/en/8331c4cbf101a7f7.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "12 minutes over. About 7 from machine age and rain, about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 7
+   },
+   "variant": 0,
+   "file": "audio/en/3c696f3f394a3b55.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "12 minutes over. About 8 from machine age and rain, about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 8
+   },
+   "variant": 0,
+   "file": "audio/en/e71ec7be1d2285fc.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 0 from , about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [],
+    "over_min": 4,
+    "uncontrollable_min": 0
+   },
+   "variant": 0,
+   "file": "audio/en/ae5c84ef9d771fb6.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "4 minutes over. About 2 from machine age, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 4,
+    "uncontrollable_min": 2
+   },
+   "variant": 0,
+   "file": "audio/en/f55b1c8247fb872f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 2 from machine age, about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 2
+   },
+   "variant": 0,
+   "file": "audio/en/d1aed4765a82ce86.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 3 from heat and machine age, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "temperature",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/en/35806931c9f3080b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "5 minutes over. About 3 from rain and machine age, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/en/400c853ea1428ca0.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 3 from heat, about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "temperature"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/en/77d0ac95ec2c8ebe.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "6 minutes over. About 4 from rain and machine age, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 4
+   },
+   "variant": 0,
+   "file": "audio/en/8916493914be9535.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 3 from rain, about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/en/0cf6bb851079e005.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from machine age and rain, about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 0,
+   "file": "audio/en/506c0f37a84d9a40.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 4 from rain and machine age, about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 0,
+   "file": "audio/en/97014a9ce484bb76.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 5 from machine age and rain, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 0,
+   "file": "audio/en/60b39fdaaa74ac8e.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "7 minutes over. About 5 from rain and machine age, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 0,
+   "file": "audio/en/cec5341293cd91e2.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "8 minutes over. About 5 from machine age and rain, about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 8,
+    "uncontrollable_min": 5
+   },
+   "variant": 0,
+   "file": "audio/en/79b5eb7488528f16.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
    "text": "9 minutes over. About 6 from rain and machine age, about 3 from idle gaps.",
    "slots": {
     "over_min": 9,
@@ -554,6 +968,288 @@
    },
    "variant": 0,
    "file": "audio/en/983a0d9d7827b879.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 10 minutes long: about 7 because of machine age and rain, and about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 1,
+   "file": "audio/en/35a0615774f85dcd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 10 minutes long: about 7 because of rain and machine age, and about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 1,
+   "file": "audio/en/a3ee3ef500a86148.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 12 minutes long: about 7 because of machine age and rain, and about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 7
+   },
+   "variant": 1,
+   "file": "audio/en/9f414535a898e1ab.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 12 minutes long: about 8 because of machine age and rain, and about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 8
+   },
+   "variant": 1,
+   "file": "audio/en/247fe41309e93fe9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 4 minutes long: about 0 because of , and about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [],
+    "over_min": 4,
+    "uncontrollable_min": 0
+   },
+   "variant": 1,
+   "file": "audio/en/9a4ed97f83aa76ab.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 4 minutes long: about 2 because of machine age, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 4,
+    "uncontrollable_min": 2
+   },
+   "variant": 1,
+   "file": "audio/en/aaa356166c26e0af.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 5 minutes long: about 2 because of machine age, and about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 2
+   },
+   "variant": 1,
+   "file": "audio/en/b43133fac322d0a3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 5 minutes long: about 3 because of heat and machine age, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "temperature",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/en/e45c386384fbf595.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 5 minutes long: about 3 because of rain and machine age, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/en/e15988d7def23686.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 6 minutes long: about 3 because of heat, and about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "temperature"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/en/c6f149b60eebd5dc.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 6 minutes long: about 4 because of rain and machine age, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 4
+   },
+   "variant": 1,
+   "file": "audio/en/c7f7b6e4849235e4.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 7 minutes long: about 3 because of rain, and about 4 from idle gaps.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/en/06baea076695a9b0.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 7 minutes long: about 4 because of machine age and rain, and about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 1,
+   "file": "audio/en/344a5839d707504c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 7 minutes long: about 4 because of rain and machine age, and about 3 from idle gaps.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 1,
+   "file": "audio/en/0fc578d9ceb51723.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 7 minutes long: about 5 because of machine age and rain, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 1,
+   "file": "audio/en/1c185f58637d4358.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 7 minutes long: about 5 because of rain and machine age, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 1,
+   "file": "audio/en/59ccf9883e6660fe.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "This task ran 8 minutes long: about 5 because of machine age and rain, and about 2 from idle gaps.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 8,
+    "uncontrollable_min": 5
+   },
+   "variant": 1,
+   "file": "audio/en/b79817c93f28acab.mp3"
   },
   {
    "message_key": "debrief_over",
@@ -576,6 +1272,288 @@
    "message_key": "debrief_over",
    "lang": "en",
    "mode": "debrief",
+   "text": "We went 10 minutes over the CAT estimate. Around 7 of that was machine age and rain, around 3 was idle time.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 2,
+   "file": "audio/en/5cc2678ebf638e4b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 10 minutes over the CAT estimate. Around 7 of that was rain and machine age, around 3 was idle time.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 2,
+   "file": "audio/en/1e1705069f78a863.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 12 minutes over the CAT estimate. Around 7 of that was machine age and rain, around 4 was idle time.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 7
+   },
+   "variant": 2,
+   "file": "audio/en/8ed879973e64f2c8.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 12 minutes over the CAT estimate. Around 8 of that was machine age and rain, around 4 was idle time.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 8
+   },
+   "variant": 2,
+   "file": "audio/en/3459a932b789d6ce.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 4 minutes over the CAT estimate. Around 0 of that was , around 4 was idle time.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [],
+    "over_min": 4,
+    "uncontrollable_min": 0
+   },
+   "variant": 2,
+   "file": "audio/en/a32bab443a19f788.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 4 minutes over the CAT estimate. Around 2 of that was machine age, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 4,
+    "uncontrollable_min": 2
+   },
+   "variant": 2,
+   "file": "audio/en/95e83f75328bb3b4.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 5 minutes over the CAT estimate. Around 2 of that was machine age, around 3 was idle time.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 2
+   },
+   "variant": 2,
+   "file": "audio/en/5f7a0d016bd7dc95.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 5 minutes over the CAT estimate. Around 3 of that was heat and machine age, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "temperature",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/en/3be9333731828956.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 5 minutes over the CAT estimate. Around 3 of that was rain and machine age, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/en/a92fb27dda3cdbb8.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 6 minutes over the CAT estimate. Around 3 of that was heat, around 3 was idle time.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "temperature"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/en/2d70e4cd2133dbb3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 6 minutes over the CAT estimate. Around 4 of that was rain and machine age, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 4
+   },
+   "variant": 2,
+   "file": "audio/en/586084654be7c326.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 7 minutes over the CAT estimate. Around 3 of that was rain, around 4 was idle time.",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/en/6ea74a2be9ffe85b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 7 minutes over the CAT estimate. Around 4 of that was machine age and rain, around 3 was idle time.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 2,
+   "file": "audio/en/2e15b3f46a1b456c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 7 minutes over the CAT estimate. Around 4 of that was rain and machine age, around 3 was idle time.",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 2,
+   "file": "audio/en/c8a3436372fe45bb.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 7 minutes over the CAT estimate. Around 5 of that was machine age and rain, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 2,
+   "file": "audio/en/bf4c11c4d5b49b86.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 7 minutes over the CAT estimate. Around 5 of that was rain and machine age, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 2,
+   "file": "audio/en/608d118568ae38db.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "We went 8 minutes over the CAT estimate. Around 5 of that was machine age and rain, around 2 was idle time.",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 8,
+    "uncontrollable_min": 5
+   },
+   "variant": 2,
+   "file": "audio/en/1f76ca83ab6c0d1d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "en",
+   "mode": "debrief",
    "text": "We went 9 minutes over the CAT estimate. Around 6 of that was rain and machine age, around 3 was idle time.",
    "slots": {
     "over_min": 9,
@@ -588,6 +1566,288 @@
    },
    "variant": 2,
    "file": "audio/en/444a4c8ce9182a5b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 7 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 0,
+   "file": "audio/hi/24de4ee8eb55fffa.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "10 मिनट ज़्यादा लगे। लगभग 7 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 0,
+   "file": "audio/hi/341debfd78a536c2.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "12 मिनट ज़्यादा लगे। लगभग 7 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 7
+   },
+   "variant": 0,
+   "file": "audio/hi/f21035e64e7184ff.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "12 मिनट ज़्यादा लगे। लगभग 8 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 8
+   },
+   "variant": 0,
+   "file": "audio/hi/42610312e0b31bf5.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 0 मिनट  की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [],
+    "over_min": 4,
+    "uncontrollable_min": 0
+   },
+   "variant": 0,
+   "file": "audio/hi/1fe2372c572d39e9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "4 मिनट ज़्यादा लगे। लगभग 2 मिनट मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 4,
+    "uncontrollable_min": 2
+   },
+   "variant": 0,
+   "file": "audio/hi/ae2a403587470f2b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 2 मिनट मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 2
+   },
+   "variant": 0,
+   "file": "audio/hi/efdf76913c956c60.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 3 मिनट गर्मी और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "temperature",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/hi/54a959291cdd0caa.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "5 मिनट ज़्यादा लगे। लगभग 3 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/hi/c5136df8a0e618d9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 3 मिनट गर्मी की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "temperature"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/hi/112cdee9a84e6ed8.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "6 मिनट ज़्यादा लगे। लगभग 4 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 4
+   },
+   "variant": 0,
+   "file": "audio/hi/cd56926e954564ec.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 3 मिनट बारिश की वजह से, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 3
+   },
+   "variant": 0,
+   "file": "audio/hi/9fdf84e7c3d37507.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 0,
+   "file": "audio/hi/1b05d0fa8193d89f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 4 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 0,
+   "file": "audio/hi/6321437ef6d02e69.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 5 मिनट बारिश और मशीन की उम्र की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 0,
+   "file": "audio/hi/c9598c2d2ccef0a6.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "7 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 0,
+   "file": "audio/hi/5a4a1f19c861a4fd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "8 मिनट ज़्यादा लगे। लगभग 5 मिनट मशीन की उम्र और बारिश की वजह से, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 8,
+    "uncontrollable_min": 5
+   },
+   "variant": 0,
+   "file": "audio/hi/a3068f2b2d45484a.mp3"
   },
   {
    "message_key": "debrief_over",
@@ -610,6 +1870,288 @@
    "message_key": "debrief_over",
    "lang": "hi",
    "mode": "debrief",
+   "text": "यह काम 10 मिनट ज़्यादा चला: लगभग 7 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 1,
+   "file": "audio/hi/e04cd585b5425776.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 10 मिनट ज़्यादा चला: लगभग 7 मिनट मशीन की उम्र और बारिश के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 1,
+   "file": "audio/hi/61c280c808aec486.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 12 मिनट ज़्यादा चला: लगभग 7 मिनट मशीन की उम्र और बारिश के कारण, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 7
+   },
+   "variant": 1,
+   "file": "audio/hi/931efee8250ede7a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 12 मिनट ज़्यादा चला: लगभग 8 मिनट मशीन की उम्र और बारिश के कारण, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 8
+   },
+   "variant": 1,
+   "file": "audio/hi/b23848444842a705.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 4 मिनट ज़्यादा चला: लगभग 0 मिनट  के कारण, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [],
+    "over_min": 4,
+    "uncontrollable_min": 0
+   },
+   "variant": 1,
+   "file": "audio/hi/785f45e6b985fdd9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 4 मिनट ज़्यादा चला: लगभग 2 मिनट मशीन की उम्र के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 4,
+    "uncontrollable_min": 2
+   },
+   "variant": 1,
+   "file": "audio/hi/3f75bbbf48791fd6.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 5 मिनट ज़्यादा चला: लगभग 2 मिनट मशीन की उम्र के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 2
+   },
+   "variant": 1,
+   "file": "audio/hi/ef58edd6cf7e9ddd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 5 मिनट ज़्यादा चला: लगभग 3 मिनट गर्मी और मशीन की उम्र के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "temperature",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/hi/7a77930f1e7b08a9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 5 मिनट ज़्यादा चला: लगभग 3 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/hi/d088e265e3b942ce.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 6 मिनट ज़्यादा चला: लगभग 3 मिनट गर्मी के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "temperature"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/hi/5a5db8a035dca770.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 6 मिनट ज़्यादा चला: लगभग 4 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 4
+   },
+   "variant": 1,
+   "file": "audio/hi/962e395977dfa434.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 7 मिनट ज़्यादा चला: लगभग 3 मिनट बारिश के कारण, और लगभग 4 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 3
+   },
+   "variant": 1,
+   "file": "audio/hi/03662f65863bf228.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 7 मिनट ज़्यादा चला: लगभग 4 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 1,
+   "file": "audio/hi/3e546baa65abe2f6.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 7 मिनट ज़्यादा चला: लगभग 4 मिनट मशीन की उम्र और बारिश के कारण, और लगभग 3 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 1,
+   "file": "audio/hi/d5cf2585e7871b26.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 7 मिनट ज़्यादा चला: लगभग 5 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 1,
+   "file": "audio/hi/fd89ea3b91de0bf2.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 7 मिनट ज़्यादा चला: लगभग 5 मिनट मशीन की उम्र और बारिश के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 1,
+   "file": "audio/hi/ad72b2c7b13a22bd.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "यह काम 8 मिनट ज़्यादा चला: लगभग 5 मिनट मशीन की उम्र और बारिश के कारण, और लगभग 2 मिनट रुकावटों से।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 8,
+    "uncontrollable_min": 5
+   },
+   "variant": 1,
+   "file": "audio/hi/0d0dd5460e03335d.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
    "text": "यह काम 9 मिनट ज़्यादा चला: लगभग 6 मिनट बारिश और मशीन की उम्र के कारण, और लगभग 3 मिनट रुकावटों से।",
    "slots": {
     "over_min": 9,
@@ -622,6 +2164,288 @@
    },
    "variant": 1,
    "file": "audio/hi/73a2dba1f838579f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 10 मिनट ऊपर गए। इसमें करीब 7 मिनट बारिश और मशीन की उम्र की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 2,
+   "file": "audio/hi/be75f9adaca1c622.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 10 मिनट ऊपर गए। इसमें करीब 7 मिनट मशीन की उम्र और बारिश की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 10,
+    "uncontrollable_min": 7
+   },
+   "variant": 2,
+   "file": "audio/hi/394e381fc8daa4ab.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 12 मिनट ऊपर गए। इसमें करीब 7 मिनट मशीन की उम्र और बारिश की वजह से थे, और करीब 4 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 7
+   },
+   "variant": 2,
+   "file": "audio/hi/9fd06bb252474c57.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 12 मिनट ऊपर गए। इसमें करीब 8 मिनट मशीन की उम्र और बारिश की वजह से थे, और करीब 4 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 12,
+    "uncontrollable_min": 8
+   },
+   "variant": 2,
+   "file": "audio/hi/f23a30e13c3d37a9.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 4 मिनट ऊपर गए। इसमें करीब 0 मिनट  की वजह से थे, और करीब 4 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [],
+    "over_min": 4,
+    "uncontrollable_min": 0
+   },
+   "variant": 2,
+   "file": "audio/hi/04d8320e4bfd831b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 4 मिनट ऊपर गए। इसमें करीब 2 मिनट मशीन की उम्र की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 4,
+    "uncontrollable_min": 2
+   },
+   "variant": 2,
+   "file": "audio/hi/66e881f0c655bd4c.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 5 मिनट ऊपर गए। इसमें करीब 2 मिनट मशीन की उम्र की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 2
+   },
+   "variant": 2,
+   "file": "audio/hi/b18099fbb690551b.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 5 मिनट ऊपर गए। इसमें करीब 3 मिनट गर्मी और मशीन की उम्र की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "temperature",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/hi/cef9c307a64221e0.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 5 मिनट ऊपर गए। इसमें करीब 3 मिनट बारिश और मशीन की उम्र की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 5,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/hi/9cdb7ec7cb4cf121.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 6 मिनट ऊपर गए। इसमें करीब 3 मिनट गर्मी की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "temperature"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/hi/f6e9a289c32224b3.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 6 मिनट ऊपर गए। इसमें करीब 4 मिनट बारिश और मशीन की उम्र की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 6,
+    "uncontrollable_min": 4
+   },
+   "variant": 2,
+   "file": "audio/hi/35c5ded205617cfe.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 7 मिनट ऊपर गए। इसमें करीब 3 मिनट बारिश की वजह से थे, और करीब 4 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 4,
+    "factors": [
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 3
+   },
+   "variant": 2,
+   "file": "audio/hi/a4fff6edf1c63ff7.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 7 मिनट ऊपर गए। इसमें करीब 4 मिनट बारिश और मशीन की उम्र की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 2,
+   "file": "audio/hi/f31613e36cb1707f.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 7 मिनट ऊपर गए। इसमें करीब 4 मिनट मशीन की उम्र और बारिश की वजह से थे, और करीब 3 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 3,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 4
+   },
+   "variant": 2,
+   "file": "audio/hi/affa85d734c35d9a.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 7 मिनट ऊपर गए। इसमें करीब 5 मिनट बारिश और मशीन की उम्र की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "weather",
+     "machine_age"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 2,
+   "file": "audio/hi/70cdc2d6788bace5.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 7 मिनट ऊपर गए। इसमें करीब 5 मिनट मशीन की उम्र और बारिश की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 7,
+    "uncontrollable_min": 5
+   },
+   "variant": 2,
+   "file": "audio/hi/f1cfe5da39f928d6.mp3"
+  },
+  {
+   "message_key": "debrief_over",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "हम CAT के अनुमान से 8 मिनट ऊपर गए। इसमें करीब 5 मिनट मशीन की उम्र और बारिश की वजह से थे, और करीब 2 मिनट खाली समय के।",
+   "slots": {
+    "controllable_min": 2,
+    "factors": [
+     "machine_age",
+     "weather"
+    ],
+    "over_min": 8,
+    "uncontrollable_min": 5
+   },
+   "variant": 2,
+   "file": "audio/hi/6bd7e714b6ca49ed.mp3"
   },
   {
    "message_key": "debrief_over",
@@ -709,56 +2533,122 @@
   {
    "message_key": "finding.fatigue_drift",
    "lang": "en",
-   "mode": "debrief",
-   "text": "You seem to be slowing down. A short rest would help.",
+   "mode": "care",
+   "text": "The pace has slowed compared with earlier in this shift. A short break will help.",
+   "slots": {},
+   "variant": 0,
+   "file": "audio/en/e748412ee9ecd03a.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "en",
+   "mode": "care",
+   "text": "This last hour has been slower than earlier in the shift. A quick rest will help.",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/en/3e2effc799269104.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "en",
+   "mode": "care",
+   "text": "Work has slowed over the last hour compared with the start of this shift. Time for a short break.",
    "slots": {},
    "variant": 1,
-   "file": "audio/en/f778592cf71c7a33.mp3"
+   "file": "audio/en/9d70ebf74c14ad0a.mp3"
   },
   {
    "message_key": "finding.fatigue_drift",
    "lang": "en",
    "mode": "debrief",
-   "text": "Your pace has dropped over the last hour. Time for a quick break.",
-   "slots": {},
-   "variant": 2,
-   "file": "audio/en/72ea3fc802256e80.mp3"
+   "text": "The pace has slowed compared with earlier in this shift. A short break will help.",
+   "slots": {
+    "windows": 2
+   },
+   "variant": 0,
+   "file": "audio/en/c06b80f895507975.mp3"
   },
   {
    "message_key": "finding.fatigue_drift",
    "lang": "en",
    "mode": "debrief",
-   "text": "Your rhythm is slowing down. A short break will help.",
-   "slots": {},
-   "variant": 0,
-   "file": "audio/en/912249c493ceb95d.mp3"
-  },
-  {
-   "message_key": "finding.fatigue_drift",
-   "lang": "hi",
-   "mode": "debrief",
-   "text": "आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।",
-   "slots": {},
-   "variant": 0,
-   "file": "audio/hi/df994a599254584f.mp3"
-  },
-  {
-   "message_key": "finding.fatigue_drift",
-   "lang": "hi",
-   "mode": "debrief",
-   "text": "पिछले घंटे में आपकी रफ़्तार कम हुई है। थोड़े आराम का समय है।",
-   "slots": {},
+   "text": "This last hour has been slower than earlier in the shift. A quick rest will help.",
+   "slots": {
+    "windows": 2
+   },
    "variant": 2,
-   "file": "audio/hi/f030c117ae3187c5.mp3"
+   "file": "audio/en/e6b9fde0e1e908bd.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "en",
+   "mode": "debrief",
+   "text": "Work has slowed over the last hour compared with the start of this shift. Time for a short break.",
+   "slots": {
+    "windows": 2
+   },
+   "variant": 1,
+   "file": "audio/en/721af0f4024070d4.mp3"
   },
   {
    "message_key": "finding.fatigue_drift",
    "lang": "hi",
-   "mode": "debrief",
-   "text": "लगता है आप थक रहे हैं। थोड़ा आराम अच्छा रहेगा।",
+   "mode": "care",
+   "text": "इस शिफ्ट की शुरुआत के मुकाबले पिछले घंटे में काम धीमा हुआ है। थोड़े आराम का समय है।",
    "slots": {},
    "variant": 1,
-   "file": "audio/hi/8dd2c9c4c0f3a148.mp3"
+   "file": "audio/hi/efad2140c7d38be0.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "care",
+   "text": "इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।",
+   "slots": {},
+   "variant": 0,
+   "file": "audio/hi/82adda2bf11696b8.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "care",
+   "text": "पिछला घंटा इस शिफ्ट में पहले से धीमा रहा है। थोड़ा आराम मदद करेगा।",
+   "slots": {},
+   "variant": 2,
+   "file": "audio/hi/94d270458f2625e1.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "इस शिफ्ट की शुरुआत के मुकाबले पिछले घंटे में काम धीमा हुआ है। थोड़े आराम का समय है।",
+   "slots": {
+    "windows": 2
+   },
+   "variant": 1,
+   "file": "audio/hi/0a2257ded5fe4a1d.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।",
+   "slots": {
+    "windows": 2
+   },
+   "variant": 0,
+   "file": "audio/hi/60eeb5ee271f3a2f.mp3"
+  },
+  {
+   "message_key": "finding.fatigue_drift",
+   "lang": "hi",
+   "mode": "debrief",
+   "text": "पिछला घंटा इस शिफ्ट में पहले से धीमा रहा है। थोड़ा आराम मदद करेगा।",
+   "slots": {
+    "windows": 2
+   },
+   "variant": 2,
+   "file": "audio/hi/a8a1c866c687f7bf.mp3"
   },
   {
    "message_key": "finding.fuel_without_work",
@@ -1100,12 +2990,67 @@
    "message_key": "incident_logged",
    "lang": "en",
    "mode": "friendly",
+   "text": "Logged: a machine problem. Thank you, the next shift will know.",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 0,
+   "file": "audio/en/c83dc9f730ba754b.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Logged: a near miss. Thank you, the next shift will know.",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 0,
+   "file": "audio/en/117352a014e119c6.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
    "text": "Logged: a person in the work zone. Thank you, the next shift will know.",
    "slots": {
     "category": "person_in_zone"
    },
    "variant": 0,
    "file": "audio/en/26adec01957befcf.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Logged: an issue. Thank you, the next shift will know.",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 0,
+   "file": "audio/en/4935857315d244b7.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Noted: a machine problem. I will tell the next shift.",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 1,
+   "file": "audio/en/127d8af23207fc34.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Noted: a near miss. I will tell the next shift.",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 1,
+   "file": "audio/en/3d5dc96c47d9eb26.mp3"
   },
   {
    "message_key": "incident_logged",
@@ -1122,12 +3067,67 @@
    "message_key": "incident_logged",
    "lang": "en",
    "mode": "friendly",
+   "text": "Noted: an issue. I will tell the next shift.",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 1,
+   "file": "audio/en/74c623e21d256b11.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Thanks for reporting a machine problem. It is saved for this machine.",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 2,
+   "file": "audio/en/55184e3884bfbab2.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Thanks for reporting a near miss. It is saved for this machine.",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 2,
+   "file": "audio/en/a2367db6b390bff5.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
    "text": "Thanks for reporting a person in the work zone. It is saved for this machine.",
    "slots": {
     "category": "person_in_zone"
    },
    "variant": 2,
    "file": "audio/en/db8424d29cc48490.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Thanks for reporting an issue. It is saved for this machine.",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 2,
+   "file": "audio/en/3536d152cca58caa.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "एक समस्या बताने के लिए धन्यवाद। यह इस मशीन के लिए सहेज लिया गया है।",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 2,
+   "file": "audio/hi/100884a98bb33e20.mp3"
   },
   {
    "message_key": "incident_logged",
@@ -1144,6 +3144,17 @@
    "message_key": "incident_logged",
    "lang": "hi",
    "mode": "friendly",
+   "text": "दर्ज कर लिया: एक समस्या। धन्यवाद, अगली शिफ्ट को पता रहेगा।",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 0,
+   "file": "audio/hi/0c781ff11b0eacef.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
    "text": "दर्ज कर लिया: काम के क्षेत्र में व्यक्ति। धन्यवाद, अगली शिफ्ट को पता रहेगा।",
    "slots": {
     "category": "person_in_zone"
@@ -1155,12 +3166,89 @@
    "message_key": "incident_logged",
    "lang": "hi",
    "mode": "friendly",
+   "text": "दर्ज कर लिया: बाल-बाल बचाव। धन्यवाद, अगली शिफ्ट को पता रहेगा।",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 0,
+   "file": "audio/hi/7ca368f267763c19.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "दर्ज कर लिया: मशीन में ख़राबी। धन्यवाद, अगली शिफ्ट को पता रहेगा।",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 0,
+   "file": "audio/hi/83cf012558bd0b20.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नोट कर लिया: एक समस्या। अगली शिफ्ट को बता दूँगा।",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 1,
+   "file": "audio/hi/eac9a572e909da44.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
    "text": "नोट कर लिया: काम के क्षेत्र में व्यक्ति। अगली शिफ्ट को बता दूँगा।",
    "slots": {
     "category": "person_in_zone"
    },
    "variant": 1,
    "file": "audio/hi/d35ae4a5076a5dfc.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नोट कर लिया: बाल-बाल बचाव। अगली शिफ्ट को बता दूँगा।",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 1,
+   "file": "audio/hi/27614f930a8ab819.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "नोट कर लिया: मशीन में ख़राबी। अगली शिफ्ट को बता दूँगा।",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 1,
+   "file": "audio/hi/ccce0fae3a532050.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "बाल-बाल बचाव बताने के लिए धन्यवाद। यह इस मशीन के लिए सहेज लिया गया है।",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 2,
+   "file": "audio/hi/f1c33a5a72848486.mp3"
+  },
+  {
+   "message_key": "incident_logged",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "मशीन में ख़राबी बताने के लिए धन्यवाद। यह इस मशीन के लिए सहेज लिया गया है।",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 2,
+   "file": "audio/hi/d738c27a96b5f5bb.mp3"
   },
   {
    "message_key": "lesson_hydration",
@@ -1490,12 +3578,56 @@
    "message_key": "memory_incident",
    "lang": "en",
    "mode": "alert",
+   "text": "Note from the last shift on this machine: a machine problem was reported. Stay alert.",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 0,
+   "file": "audio/en/d26e98152d9fa7fd.mp3"
+  },
+  {
+   "message_key": "memory_incident",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Note from the last shift on this machine: a near miss was reported. Stay alert.",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 0,
+   "file": "audio/en/f760f44aa9ed051d.mp3"
+  },
+  {
+   "message_key": "memory_incident",
+   "lang": "en",
+   "mode": "alert",
    "text": "Note from the last shift on this machine: a person in the work zone was reported. Stay alert.",
    "slots": {
     "category": "person_in_zone"
    },
    "variant": 0,
    "file": "audio/en/7973f7218016840d.mp3"
+  },
+  {
+   "message_key": "memory_incident",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Note from the last shift on this machine: an issue was reported. Stay alert.",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 0,
+   "file": "audio/en/38051ad799a305f5.mp3"
+  },
+  {
+   "message_key": "memory_incident",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "पिछली शिफ्ट का संदेश: इस मशीन पर एक समस्या दर्ज हुआ था। सावधान रहें।",
+   "slots": {
+    "category": "other"
+   },
+   "variant": 0,
+   "file": "audio/hi/4bfe4d12240f52b7.mp3"
   },
   {
    "message_key": "memory_incident",
@@ -1507,6 +3639,28 @@
    },
    "variant": 0,
    "file": "audio/hi/37feffd2085608ac.mp3"
+  },
+  {
+   "message_key": "memory_incident",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "पिछली शिफ्ट का संदेश: इस मशीन पर बाल-बाल बचाव दर्ज हुआ था। सावधान रहें।",
+   "slots": {
+    "category": "near_miss"
+   },
+   "variant": 0,
+   "file": "audio/hi/407cde874c942db2.mp3"
+  },
+  {
+   "message_key": "memory_incident",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "पिछली शिफ्ट का संदेश: इस मशीन पर मशीन में ख़राबी दर्ज हुआ था। सावधान रहें।",
+   "slots": {
+    "category": "machine_issue"
+   },
+   "variant": 0,
+   "file": "audio/hi/d388470073c43e52.mp3"
   },
   {
    "message_key": "plan_order",
@@ -1686,23 +3840,507 @@
    "message_key": "proximity_alert",
    "lang": "en",
    "mode": "alert",
-   "text": "Stop! Someone is 2.1 metres from the machine.",
+   "text": "Stop! Someone is 1 metres from the machine.",
    "slots": {
-    "distance_m": 2.1
+    "distance_m": 1
    },
    "variant": 0,
-   "file": "audio/en/2547b91a651ada69.mp3"
+   "file": "audio/en/d9535cee6737c5a6.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 10 metres from the machine.",
+   "slots": {
+    "distance_m": 10
+   },
+   "variant": 0,
+   "file": "audio/en/605330a7eeea7384.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 11 metres from the machine.",
+   "slots": {
+    "distance_m": 11
+   },
+   "variant": 0,
+   "file": "audio/en/d9cec90607130eda.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 12 metres from the machine.",
+   "slots": {
+    "distance_m": 12
+   },
+   "variant": 0,
+   "file": "audio/en/00bbf23fe0eaa068.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 13 metres from the machine.",
+   "slots": {
+    "distance_m": 13
+   },
+   "variant": 0,
+   "file": "audio/en/17b9511743dedc44.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 14 metres from the machine.",
+   "slots": {
+    "distance_m": 14
+   },
+   "variant": 0,
+   "file": "audio/en/7dac8d122d7305a3.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 15 metres from the machine.",
+   "slots": {
+    "distance_m": 15
+   },
+   "variant": 0,
+   "file": "audio/en/1b37eecc93893b25.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 17 metres from the machine.",
+   "slots": {
+    "distance_m": 17
+   },
+   "variant": 0,
+   "file": "audio/en/c868d5620eef8f1c.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 18 metres from the machine.",
+   "slots": {
+    "distance_m": 18
+   },
+   "variant": 0,
+   "file": "audio/en/86194e673d191a95.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 19 metres from the machine.",
+   "slots": {
+    "distance_m": 19
+   },
+   "variant": 0,
+   "file": "audio/en/d070d5bdd8216ee8.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 2 metres from the machine.",
+   "slots": {
+    "distance_m": 2
+   },
+   "variant": 0,
+   "file": "audio/en/5792731acbba7bcb.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 20 metres from the machine.",
+   "slots": {
+    "distance_m": 20
+   },
+   "variant": 0,
+   "file": "audio/en/42c527111512df92.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 22 metres from the machine.",
+   "slots": {
+    "distance_m": 22
+   },
+   "variant": 0,
+   "file": "audio/en/e62de36517c2744e.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 23 metres from the machine.",
+   "slots": {
+    "distance_m": 23
+   },
+   "variant": 0,
+   "file": "audio/en/fa50453d549afeed.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 24 metres from the machine.",
+   "slots": {
+    "distance_m": 24
+   },
+   "variant": 0,
+   "file": "audio/en/1e7c58802ba2518b.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 25 metres from the machine.",
+   "slots": {
+    "distance_m": 25
+   },
+   "variant": 0,
+   "file": "audio/en/23f0daf31a00debd.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 27 metres from the machine.",
+   "slots": {
+    "distance_m": 27
+   },
+   "variant": 0,
+   "file": "audio/en/6cb9832097cbc846.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 28 metres from the machine.",
+   "slots": {
+    "distance_m": 28
+   },
+   "variant": 0,
+   "file": "audio/en/298c02595a22f08c.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 29 metres from the machine.",
+   "slots": {
+    "distance_m": 29
+   },
+   "variant": 0,
+   "file": "audio/en/141cdde547d26661.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 3 metres from the machine.",
+   "slots": {
+    "distance_m": 3
+   },
+   "variant": 0,
+   "file": "audio/en/0c6ae57814134c0f.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 6 metres from the machine.",
+   "slots": {
+    "distance_m": 6
+   },
+   "variant": 0,
+   "file": "audio/en/5384b9d5fa3f416d.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 7 metres from the machine.",
+   "slots": {
+    "distance_m": 7
+   },
+   "variant": 0,
+   "file": "audio/en/21ca9072cf7caba8.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "en",
+   "mode": "alert",
+   "text": "Stop! Someone is 9 metres from the machine.",
+   "slots": {
+    "distance_m": 9
+   },
+   "variant": 0,
+   "file": "audio/en/0e66c32868c02d28.mp3"
   },
   {
    "message_key": "proximity_alert",
    "lang": "hi",
    "mode": "alert",
-   "text": "रुकिए! मशीन से 2.1 मीटर पर कोई है।",
+   "text": "रुकिए! मशीन से 1 मीटर पर कोई है।",
    "slots": {
-    "distance_m": 2.1
+    "distance_m": 1
    },
    "variant": 0,
-   "file": "audio/hi/f3fc0223ab4da5c5.mp3"
+   "file": "audio/hi/2a0d9edcf5c66d87.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 10 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 10
+   },
+   "variant": 0,
+   "file": "audio/hi/1a516477953b2df0.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 11 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 11
+   },
+   "variant": 0,
+   "file": "audio/hi/de6e42d64bcb5a39.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 12 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 12
+   },
+   "variant": 0,
+   "file": "audio/hi/80cd1bf512d13fbb.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 13 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 13
+   },
+   "variant": 0,
+   "file": "audio/hi/1070db187757d36f.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 14 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 14
+   },
+   "variant": 0,
+   "file": "audio/hi/2ccb878f49631e8d.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 15 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 15
+   },
+   "variant": 0,
+   "file": "audio/hi/1413093771427e6c.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 17 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 17
+   },
+   "variant": 0,
+   "file": "audio/hi/fb13269f8f588e5e.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 18 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 18
+   },
+   "variant": 0,
+   "file": "audio/hi/13504fa0d3efc700.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 19 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 19
+   },
+   "variant": 0,
+   "file": "audio/hi/66d2c33350dbf57f.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 2 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 2
+   },
+   "variant": 0,
+   "file": "audio/hi/65161e3b324b111a.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 20 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 20
+   },
+   "variant": 0,
+   "file": "audio/hi/0d73601b8f2e7414.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 22 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 22
+   },
+   "variant": 0,
+   "file": "audio/hi/61dc5847bd6e46cd.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 23 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 23
+   },
+   "variant": 0,
+   "file": "audio/hi/685c8ce25d1c6640.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 24 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 24
+   },
+   "variant": 0,
+   "file": "audio/hi/a595d167325b1dd4.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 25 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 25
+   },
+   "variant": 0,
+   "file": "audio/hi/72c2fac4ef754b41.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 27 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 27
+   },
+   "variant": 0,
+   "file": "audio/hi/afabec67055a3854.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 28 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 28
+   },
+   "variant": 0,
+   "file": "audio/hi/01b7d1872a1b3894.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 29 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 29
+   },
+   "variant": 0,
+   "file": "audio/hi/9ccfe6fb25249bf9.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 3 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 3
+   },
+   "variant": 0,
+   "file": "audio/hi/2c00c4b8aa993a80.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 6 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 6
+   },
+   "variant": 0,
+   "file": "audio/hi/adb67149e660377d.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 7 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 7
+   },
+   "variant": 0,
+   "file": "audio/hi/8c8e65ba0e1dfeae.mp3"
+  },
+  {
+   "message_key": "proximity_alert",
+   "lang": "hi",
+   "mode": "alert",
+   "text": "रुकिए! मशीन से 9 मीटर पर कोई है।",
+   "slots": {
+    "distance_m": 9
+   },
+   "variant": 0,
+   "file": "audio/hi/24c50a435b5213a1.mp3"
   },
   {
    "message_key": "rain_today",
@@ -1809,6 +4447,17 @@
    "message_key": "shift_hello",
    "lang": "en",
    "mode": "friendly",
+   "text": "Hello! I am Saathi, with you on machine EXC002.",
+   "slots": {
+    "machine_id": "EXC002"
+   },
+   "variant": 0,
+   "file": "audio/en/402be16a917034b0.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "en",
+   "mode": "friendly",
    "text": "Hi, Saathi here on machine EXC001. Let us have a safe shift.",
    "slots": {
     "machine_id": "EXC001"
@@ -1820,12 +4469,34 @@
    "message_key": "shift_hello",
    "lang": "en",
    "mode": "friendly",
+   "text": "Hi, Saathi here on machine EXC002. Let us have a safe shift.",
+   "slots": {
+    "machine_id": "EXC002"
+   },
+   "variant": 2,
+   "file": "audio/en/c8aa73e5b0aeecab.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "en",
+   "mode": "friendly",
    "text": "Welcome to machine EXC001. I am Saathi, I will be with you this shift.",
    "slots": {
     "machine_id": "EXC001"
    },
    "variant": 1,
    "file": "audio/en/400a7c5b2009dad4.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "en",
+   "mode": "friendly",
+   "text": "Welcome to machine EXC002. I am Saathi, I will be with you this shift.",
+   "slots": {
+    "machine_id": "EXC002"
+   },
+   "variant": 1,
+   "file": "audio/en/b9b8c2b85dafccd5.mp3"
   },
   {
    "message_key": "shift_hello",
@@ -1842,6 +4513,17 @@
    "message_key": "shift_hello",
    "lang": "hi",
    "mode": "friendly",
+   "text": "नमस्ते! मैं साथी हूँ, मशीन EXC002 पर आपके साथ।",
+   "slots": {
+    "machine_id": "EXC002"
+   },
+   "variant": 0,
+   "file": "audio/hi/398eae842ae53b6b.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "hi",
+   "mode": "friendly",
    "text": "नमस्ते, मैं साथी, मशीन EXC001 पर। चलिए, शिफ्ट सुरक्षित रखें।",
    "slots": {
     "machine_id": "EXC001"
@@ -1853,12 +4535,34 @@
    "message_key": "shift_hello",
    "lang": "hi",
    "mode": "friendly",
+   "text": "नमस्ते, मैं साथी, मशीन EXC002 पर। चलिए, शिफ्ट सुरक्षित रखें।",
+   "slots": {
+    "machine_id": "EXC002"
+   },
+   "variant": 2,
+   "file": "audio/hi/62bc935f662c85db.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "hi",
+   "mode": "friendly",
    "text": "मशीन EXC001 पर आपका स्वागत है। मैं साथी हूँ, इस शिफ्ट में आपके साथ रहूँगा।",
    "slots": {
     "machine_id": "EXC001"
    },
    "variant": 1,
    "file": "audio/hi/039d0f6268559f79.mp3"
+  },
+  {
+   "message_key": "shift_hello",
+   "lang": "hi",
+   "mode": "friendly",
+   "text": "मशीन EXC002 पर आपका स्वागत है। मैं साथी हूँ, इस शिफ्ट में आपके साथ रहूँगा।",
+   "slots": {
+    "machine_id": "EXC002"
+   },
+   "variant": 1,
+   "file": "audio/hi/1acc4a74b5d4de4e.mp3"
   },
   {
    "message_key": "task_card",

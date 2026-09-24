@@ -288,6 +288,31 @@ export const TEMPLATES = {
       'हम CAT के अनुमान से {over_min} मिनट ऊपर गए। इसमें करीब {uncontrollable_min} मिनट {factors} की वजह से थे, और करीब {controllable_min} मिनट खाली समय के।',
     ],
   },
+  // First tracked shift (no personal history): anchored to the CAT estimate, no personal comparison.
+  debrief_over_first_shift: {
+    en: [
+      '{over_min} minutes over the CAT estimate. About {uncontrollable_min} from {factors}, about {controllable_min} from idle gaps.',
+      'Compared with the CAT estimate, {over_min} minutes over: about {uncontrollable_min} from {factors}, about {controllable_min} from idle gaps.',
+      'The task took {over_min} minutes longer than the CAT estimate. Around {uncontrollable_min} came from {factors}, around {controllable_min} from idle time.',
+    ],
+    hi: [
+      'CAT के अनुमान से {over_min} मिनट ज़्यादा लगे। लगभग {uncontrollable_min} मिनट {factors} की वजह से, और लगभग {controllable_min} मिनट रुकावटों से।',
+      'CAT के अनुमान के मुकाबले {over_min} मिनट ज़्यादा: लगभग {uncontrollable_min} मिनट {factors} के कारण, और लगभग {controllable_min} मिनट रुकावटों से।',
+      'काम CAT के अनुमान से {over_min} मिनट ज़्यादा चला। करीब {uncontrollable_min} मिनट {factors} की वजह से, करीब {controllable_min} मिनट खाली समय के।',
+    ],
+  },
+  debrief_near_time: {
+    en: [
+      '{over_min} minutes over. Close to plan.',
+      'Just {over_min} minutes over the estimate. Close enough.',
+      '{over_min} minutes past the estimate, nearly on plan.',
+    ],
+    hi: [
+      '{over_min} मिनट ज़्यादा लगे। लगभग योजना के अनुसार।',
+      'अनुमान से बस {over_min} मिनट ज़्यादा। लगभग ठीक।',
+      'अनुमान से {over_min} मिनट ऊपर, लगभग योजना के मुताबिक।',
+    ],
+  },
   debrief_on_time: {
     en: [
       'Finished on time. Well done.',
@@ -361,16 +386,19 @@ export const TEMPLATES = {
       '{minutes} मिनट में {count} चेतावनियाँ आईं। थोड़ा धीरे चलते हैं।',
     ],
   },
+  // Intra-shift comparison only (the detector never uses personal history): same for every operator.
   'finding.fatigue_drift': {
+    // main's universal wording first: the detector only compares with earlier in THIS shift,
+    // so no phrasing may claim to know the operator's own habits ("your rhythm").
     en: [
-      'Your rhythm is slowing down. A short break will help.',
-      'You seem to be slowing down. A short rest would help.',
-      'Your pace has dropped over the last hour. Time for a quick break.',
+      'The pace has slowed compared with earlier in this shift. A short break will help.',
+      'Work has slowed over the last hour compared with the start of this shift. Time for a short break.',
+      'This last hour has been slower than earlier in the shift. A quick rest will help.',
     ],
     hi: [
-      'आपकी रफ़्तार धीमी हो रही है। थोड़ा आराम मदद करेगा।',
-      'लगता है आप थक रहे हैं। थोड़ा आराम अच्छा रहेगा।',
-      'पिछले घंटे में आपकी रफ़्तार कम हुई है। थोड़े आराम का समय है।',
+      'इस शिफ्ट में पहले के मुकाबले काम की रफ़्तार कम हुई है। थोड़ा आराम मदद करेगा।',
+      'इस शिफ्ट की शुरुआत के मुकाबले पिछले घंटे में काम धीमा हुआ है। थोड़े आराम का समय है।',
+      'पिछला घंटा इस शिफ्ट में पहले से धीमा रहा है। थोड़ा आराम मदद करेगा।',
     ],
   },
 

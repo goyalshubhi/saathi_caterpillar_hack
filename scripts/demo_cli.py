@@ -22,6 +22,7 @@ warnings.filterwarnings("ignore", message="Using `httpx`")
 from fastapi.testclient import TestClient  # noqa: E402
 
 from backend.api.main import create_app  # noqa: E402
+from backend.ml.estimator import debrief_lines, finding_lines  # noqa: E402
 
 MACHINE = "EXC001"
 DEMO_SEED = 42  # same demo seed as frontend/src/voice/phrasing.js
@@ -199,19 +200,15 @@ def main(echo=True):
 
         step(5, "Debrief")
         d = ok(api.post("/debrief", json={"task_id": task["task_id"], "windows": scenario["windows"]}))
-        over = mins(d["uncontrollable_min"] + d["controllable_min"])
-        if over > 0:
-            factors = [f["name"] for f in sorted(d["top_factors"], key=lambda f: -f["minutes"]) if f["minutes"] > 0][:2]
-            say("debrief_over", {"over_min": over, "uncontrollable_min": mins(d["uncontrollable_min"]),
-                                 "controllable_min": mins(d["controllable_min"]), "factors": factors}, mode="debrief")
-            if d["uncontrollable_min"] >= d["controllable_min"]:
-                say("debrief_not_your_fault", mode="debrief")
-        else:
-            say("debrief_on_time", mode="debrief")
+        # Cold start: on an operator's first tracked shift, no line claims a personal comparison.
+        history = ok(api.get(f"/operators/{scenario['windows'][0]['operator_id']}/history"))
+        out(f"   operator history: {history['shift_count']} past shifts on this device")
+        for line in debrief_lines(d, history["history_available"]):   # attribution only for overruns >= 3 min
+            say(line["message_key"], line["slots"], mode="debrief")
         findings = ok(api.post("/behavior/analyze", json={"windows": scenario["windows"]}))
-        for f in findings:
+        for f, line in zip(findings, finding_lines(findings)):
             out(f"   finding: {f['type']} ({f['severity']}) at {f['window_timestamp']}")
-            say(f["message_key"], f["slots"], mode="debrief")
+            say(line["message_key"], line["slots"], mode="debrief")
 
         step(6, "Shift 2: different operator, same machine")
         _, _, notes = morning(api, "OP1002")
@@ -226,7 +223,8 @@ def main(echo=True):
             fatigue = [f for f in ok(api.post("/behavior/analyze", json={"windows": ok(r)["windows"]}))
                        if f["type"] == "fatigue_drift"]
             if fatigue:
-                say(fatigue[0]["message_key"], fatigue[0]["slots"], mode="care", priority="care")
+                line = finding_lines(fatigue[:1])[0]
+                say(line["message_key"], line["slots"], mode="care", priority="care")
                 say("care_break", mode="care", priority="care")
             else:
                 out("   no fatigue drift detected in the 'fatigue' scenario")

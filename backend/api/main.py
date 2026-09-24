@@ -97,6 +97,11 @@ def create_app(db_path=None, now=datetime.now, train=True):
         plan = intel.day_plan(intel.todays_tasks(), intel.todays_weather())
         return {"name": name, "task_id": plan["tasks_ordered"][0], "windows": windows}
 
+    @app.get("/operators/{operator_id}/history")
+    def operator_history(operator_id: str):
+        # Cold start: how many past shifts exist on this device. Read-only, nothing is stored.
+        return intel.operator_history(operator_id)
+
     @app.post("/behavior/analyze")
     def analyze(body: WindowsIn):
         return intel.findings(body.windows)

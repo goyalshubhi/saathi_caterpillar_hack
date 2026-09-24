@@ -9,6 +9,11 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Opened as file:// (double-clicked), the module below cannot load: say so instead of a blank page.
+      // Same text as SERVE_MESSAGE in src/serving.js (a test keeps them in sync).
+      if (location.protocol === 'file:') document.body.innerHTML = '<p style="font:18px sans-serif;padding:24px">Must be served via a dev server (npm run dev), not opened directly.</p>';
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

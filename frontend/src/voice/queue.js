@@ -6,7 +6,11 @@
 // - quiet mode drops coaching lines only; safety is never muted
 // - each accepted line gets a phrasing (event.variant) from the phraser, unless it already has one;
 //   repeat() replays the exact same words
+// - nothing is spoken before unlockAudio() (the Start button's click): lines wait, then play
+// - onSpeak(result, event) is called with each speak() result ({text, lang, source}), e.g. to
+//   drive the fallback-voice indicator
 import { createPhraser } from './phrasing.js';
+import { isAudioUnlocked, onAudioUnlock } from './unlock.js';
 
 export const PRIORITY_ORDER = ['safety', 'care', 'coaching', 'info'];
 
@@ -15,18 +19,18 @@ const rank = (p) => {
   return i === -1 ? PRIORITY_ORDER.length : i;
 };
 
-export function createQueue({ speaker, phraser = createPhraser() }) {
+export function createQueue({ speaker, phraser = createPhraser(), onSpeak = () => {} }) {
   let current = null; // { event, token }
   let token = 0;
   const pending = [];
   let quiet = false;
   let taskId = null;
   const coachedTasks = new Set();
-  const spoken = []; // history: { event, text, lang }
+  const spoken = []; // history: { event, text, lang, source }
   let lastSpoken = null;
 
   function pump() {
-    if (current || pending.length === 0) return;
+    if (current || pending.length === 0 || !isAudioUnlocked()) return;
     const event = pending.shift();
     const myToken = ++token;
     current = { event, token: myToken };
@@ -38,8 +42,11 @@ export function createQueue({ speaker, phraser = createPhraser() }) {
     };
     lastSpoken = event;
     const result = speaker.speak(event, { onEnd }) ?? {};
-    spoken.push({ event, text: result.text, lang: result.lang });
+    spoken.push({ event, text: result.text, lang: result.lang, source: result.source });
+    onSpeak(result, event);
   }
+
+  onAudioUnlock(() => pump());
 
   function enqueue(event) {
     const r = rank(event.priority);
@@ -89,7 +96,11 @@ export function createQueue({ speaker, phraser = createPhraser() }) {
     repeat,
     clear,
     startTask(id) { taskId = id; },
-    setQuiet(on) { quiet = Boolean(on); },
+    setQuiet(on) {
+      quiet = Boolean(on);
+      // Coaching already waiting (e.g. behind the unlock gate) is dropped too, not played later.
+      if (quiet) for (let i = pending.length - 1; i >= 0; i -= 1) if (pending[i].priority === 'coaching') pending.splice(i, 1);
+    },
     get quiet() { return quiet; },
     get current() { return current ? current.event : null; },
     get pending() { return [...pending]; },

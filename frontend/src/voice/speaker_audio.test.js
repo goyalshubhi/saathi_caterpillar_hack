@@ -3,6 +3,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createSpeaker, loadManifest } from './speaker.js';
 import { render, variantCount } from './templates.js';
+import { unlockAudio } from './unlock.js';
+
+unlockAudio(); // these tests start after the Start button's click (see unlock.test.js for before it)
 
 const BELT_HI = render('belt_before_move', {}, 'hi');
 const BELT_EN = render('belt_before_move', {}, 'en');

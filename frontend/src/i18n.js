@@ -63,7 +63,7 @@ const L = {
   onThisMachine: ['Logged on this machine', 'इस मशीन पर दर्ज'],
   noIncidents: ['No incidents logged', 'कोई घटना दर्ज नहीं'],
   speak: ['Speak', 'बोलें'],
-  micTip: ['Press, then say what happened or a command (repeat, quiet mode, taking a break)', 'दबाएँ, फिर बताएँ क्या हुआ या आदेश बोलें'],
+  micTip: ['Press, then say what happened or a command (repeat that, quiet mode, taking a break)', 'दबाएँ, फिर बताएँ क्या हुआ या आदेश बोलें'],
   send: ['Send', 'भेजें'],
   listening: ['Listening', 'सुन रहा हूँ'],
   listeningNow: ['Listening…', 'सुन रहा हूँ…'],

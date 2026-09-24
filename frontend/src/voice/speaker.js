@@ -11,8 +11,11 @@
 //      show a visible warning.
 // If an MP3 fails to load or play, the same line falls back to speechSynthesis.
 // Without any audio or speech API it is silent and onEnd fires at once.
+// The result's source is 'audio' (MP3), 'tts' (speechSynthesis) or 'silent'. Called before
+// unlockAudio() (unlock.js) it still runs, but warns in development: the browser would block it.
 import { render } from './templates.js';
 import { modeSettings } from './modes.js';
+import { IS_DEV, isAudioUnlocked } from './unlock.js';
 
 export const VOICE_LANGS = { en: ['en-IN', 'en-GB', 'en-US', 'en'], hi: ['hi-IN', 'hi'] };
 export const MANIFEST_URL = '/audio/manifest.json';
@@ -126,6 +129,10 @@ export function createSpeaker({
   }
 
   function speak(event, { onEnd } = {}) {
+    if (!isAudioUnlocked() && IS_DEV) {
+      // Loud in development: this sound will be blocked by autoplay rules on demo day.
+      console.warn(`[saathi] speak('${event.message_key}') before unlockAudio(): call unlockAudio() in the Start button's onClick first`);
+    }
     const key = event.message_key;
     const slots = event.slots ?? {};
     const requested = event.lang ?? 'en';

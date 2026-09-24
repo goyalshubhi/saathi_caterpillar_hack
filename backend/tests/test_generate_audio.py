@@ -68,3 +68,29 @@ def test_manifest_is_up_to_date_with_demo_and_templates(templates):
     for key in ["belt_before_move", "proximity_alert", "greeting", "shift_hello", "break_time",
                 "cmd_quiet_on", "cmd_quiet_off", "debrief_over"]:
         assert (key, "en") in keys and (key, "hi") in keys, key
+
+
+def test_spoken_distance_mirrors_rules_js():
+    js = (ROOT / "frontend" / "src" / "replay" / "rules.js").read_text(encoding="utf-8")
+    assert "export const spokenDistance = (m) => Math.max(1, Math.floor(m));" in js
+    assert [ga.spoken_distance(m) for m in (2.1, 2.5, 2.99, 3, 0.4, 17.8)] == [2, 2, 2, 3, 1, 17]
+
+
+@needs_node
+def test_off_script_extras_are_capped_and_cover_alert_distances(templates):
+    base = {(e["message_key"], e["lang"], e["text"]) for e in ga.collect_entries(extras=False)}
+    full = ga.collect_entries()
+    extras = [e for e in full if (e["message_key"], e["lang"], e["text"]) not in base]
+    assert 0 < len(extras) <= ga.EXTRA_CLIP_CAP
+    assert {e["message_key"] for e in extras} <= {"proximity_alert", "debrief_over"}
+    manifest = {(e["message_key"], e["lang"], e["text"]) for e in _manifest()["entries"]}
+    for _, slots, _ in ga.proximity_lines():                     # every whole metre, both languages
+        assert isinstance(slots["distance_m"], int)
+        for lang in ("en", "hi"):
+            assert any(k == "proximity_alert" and l == lang and f" {slots['distance_m']} " in f" {t} "
+                       for k, l, t in manifest), slots
+    # incident confirmations for all four categories are pre-rendered too, in every phrasing
+    for lang in ("en", "hi"):
+        logged = [e for e in full if e["message_key"] == "incident_logged" and e["lang"] == lang]
+        assert {e["slots"]["category"] for e in logged} == set(ga.CATEGORIES) and len(ga.CATEGORIES) == 4
+        assert len({e["text"] for e in logged}) == len(ga.CATEGORIES) * demo_cli.variant_count("incident_logged")

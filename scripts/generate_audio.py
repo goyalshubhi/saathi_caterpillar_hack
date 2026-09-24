@@ -4,7 +4,11 @@ Lines rendered:
   - every line Saathi says in the headless demo (scripts/demo_cli.py, same template rendering), and
   - every phrasing (variant) of each of those lines, and
   - every fixed line (templates without slots: safety alerts, belt-before-you-move, breaks,
-    lessons, quiet-mode confirmations ...),
+    lessons, quiet-mode confirmations ...), plus greetings, memory notes and incident
+    confirmations per machine / incident category and the near-time debrief (FIXED_SLOT_LINES), and
+  - off-script extras, capped at EXTRA_CLIP_CAP clips: proximity_alert at every whole-metre
+    distance of an alert window in the synthetic telemetry or scripted scenarios, then the most
+    frequent debrief_over lines from debrief() over every synthetic task (demo shift windows),
 in English (en-IN) and Hindi (hi-IN). Each voice mode's pitch/rate/volume from modes.js is mapped
 to edge-tts prosody parameters.
 
@@ -13,8 +17,10 @@ Files are named by a hash of (voice, prosody, text), so unchanged lines are not 
 stale files are removed. Needs network access. Run: make audio
 """
 import asyncio
+import collections
 import hashlib
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -29,10 +35,21 @@ AUDIO_DIR = ROOT / "frontend" / "public" / "audio"
 VOICES = {"en": "en-IN-PrabhatNeural", "hi": "hi-IN-MadhurNeural"}
 LANGS = ("hi", "en")
 CONCURRENCY = 4
+EXTRA_CLIP_CAP = 150        # off-script extras (clips, all phrasings, en + hi) so `make audio` stays small
 
-# Mode used for fixed (slot-free) lines; matches what the replay rules / demo use for these keys.
-ALERT_KEYS = {"belt_before_move", "seatbelt_unfastened", "safety_alert", "proximity_alert"}
-CARE_KEYS = {"break_time", "care_break"}
+# Mode used for fixed lines; matches what the replay rules / demo / UI use for these keys.
+ALERT_KEYS = {"belt_before_move", "seatbelt_unfastened", "safety_alert", "proximity_alert", "memory_incident"}
+CARE_KEYS = {"break_time", "care_break", "finding.fatigue_drift"}   # drift as spoken on the care break
+
+# Lines with slots that the app says outside the scripted demo run, so they get MP3s too.
+MACHINES = ["EXC001", "EXC002"]
+CATEGORIES = ["near_miss", "person_in_zone", "machine_issue", "other"]
+FIXED_SLOT_LINES = (
+    [("shift_hello", {"machine_id": m}) for m in MACHINES]
+    + [("memory_incident", {"category": c}) for c in CATEGORIES]
+    + [("incident_logged", {"category": c}) for c in CATEGORIES]
+    + [("debrief_near_time", {"over_min": m}) for m in (1, 2)]   # below the attribution threshold
+)
 
 
 def default_mode(key):
@@ -55,16 +72,52 @@ def prosody(mode):
     }
 
 
-def collect_lines():
-    """Unique ((message_key, lang, mode, text), (slots, variant)) pairs: demo lines + fixed lines, all phrasings."""
+def spoken_distance(m):
+    """Mirror of spokenDistance() in frontend/src/replay/rules.js: whole metres, rounded down, >= 1."""
+    return max(1, math.floor(m))
+
+
+def proximity_lines():
+    """proximity_alert at every whole-metre distance an alert window can produce."""
+    import pandas as pd
+    from backend.data_gen import scenario
+    from backend.data_gen.generator import SYNTHETIC_DIR
+    windows = pd.read_csv(SYNTHETIC_DIR / "telemetry.csv").to_dict(orient="records")
+    windows += scenario("demo") + scenario("clean")
+    metres = sorted({spoken_distance(w["proximity_distance_m"]) for w in windows
+                     if w["safety_alert_triggered"] == "Yes" and w["proximity_distance_m"] is not None
+                     and not (isinstance(w["proximity_distance_m"], float) and math.isnan(w["proximity_distance_m"]))})
+    return [("proximity_alert", {"distance_m": m}, "alert") for m in metres]
+
+
+def debrief_over_lines():
+    """debrief_over lines from debrief() over every synthetic task, most frequent first."""
+    import pandas as pd
+    from backend.data_gen import scenario
+    from backend.data_gen.generator import SYNTHETIC_DIR
+    from backend.ml import debrief, debrief_lines
+    shift = scenario("demo")
+    counts = collections.Counter()
+    for task in pd.read_csv(SYNTHETIC_DIR / "tasks.csv").to_dict(orient="records"):
+        for line in debrief_lines(debrief(task, shift)):
+            if line["message_key"] == "debrief_over":
+                counts[json.dumps(line["slots"], sort_keys=True)] += 1
+    return [("debrief_over", json.loads(slots), "debrief") for slots, _ in counts.most_common()]
+
+
+def collect_lines(extras=True):
+    """Unique ((message_key, lang, mode, text), (slots, variant)) pairs: demo lines + fixed lines, all
+    phrasings, then the off-script extras up to EXTRA_CLIP_CAP new clips."""
     spoken = demo_cli.main(echo=False)
     lines = {}
 
-    def add(key, slots, mode):
+    def phrasings(key, slots, mode):
         # every phrasing, so whichever variant the app picks has an MP3
-        for v in range(demo_cli.variant_count(key)):
-            for lang in LANGS:
-                lines[(key, lang, mode, demo_cli.render(key, slots, lang, v))] = (slots, v)
+        return {(key, lang, mode, demo_cli.render(key, slots, lang, v)): (slots, v)
+                for v in range(demo_cli.variant_count(key)) for lang in LANGS}
+
+    def add(key, slots, mode):
+        lines.update(phrasings(key, slots, mode))
 
     for s in spoken:
         add(s["message_key"], s["slots"], s["mode"])
@@ -78,7 +131,24 @@ def collect_lines():
         if "{" in json.dumps(t["en"], ensure_ascii=False):
             continue
         add(key, {}, default_mode(key))
+    for key, slots in FIXED_SLOT_LINES:
+        add(key, slots, default_mode(key))
+    if extras:
+        added = 0
+        for key, slots, mode in proximity_lines() + debrief_over_lines():
+            new = {k: v for k, v in phrasings(key, slots, mode).items() if k not in lines}
+            if added + len(new) > EXTRA_CLIP_CAP:
+                break
+            lines.update(new)
+            added += len(new)
     return sorted(lines.items())
+
+
+def collect_entries(extras=True):
+    """Manifest entries {message_key, lang, mode, text, slots, variant, file}."""
+    return [{"message_key": key, "lang": lang, "mode": mode, "text": text, "slots": slots, "variant": variant,
+             "file": file_for(lang, mode, text)}
+            for (key, lang, mode, text), (slots, variant) in collect_lines(extras)]
 
 
 def file_for(lang, mode, text):
@@ -101,26 +171,29 @@ async def synth(sem, lang, mode, text, path):
 
 async def main():
     demo_cli.T = demo_cli.load_templates()
-    lines = collect_lines()
-    entries, jobs = [], []
+    entries = collect_entries()
+    jobs = []
     sem = asyncio.Semaphore(CONCURRENCY)
-    for (key, lang, mode, text), (slots, variant) in lines:
-        rel = file_for(lang, mode, text)
-        path = ROOT / "frontend" / "public" / rel
+    for e in entries:
+        path = ROOT / "frontend" / "public" / e["file"]
         path.parent.mkdir(parents=True, exist_ok=True)
-        entries.append({"message_key": key, "lang": lang, "mode": mode, "text": text, "slots": slots, "variant": variant, "file": rel})
-        if not path.exists():
-            jobs.append(synth(sem, lang, mode, text, path))
+        if not (path.exists() and path.stat().st_size > 0):   # an empty file is a failed download
+            jobs.append(synth(sem, e["lang"], e["mode"], e["text"], path))
     print(f"{len(entries)} lines, {len(jobs)} to synthesize")
     await asyncio.gather(*jobs)
 
     keep = {e["file"] for e in entries}
-    for old in AUDIO_DIR.glob("*/*.mp3"):
-        if f"audio/{old.parent.name}/{old.name}" not in keep:
-            old.unlink()
+    stale = [old for old in AUDIO_DIR.glob("*/*.mp3") if f"audio/{old.parent.name}/{old.name}" not in keep]
+    for old in stale:
+        old.unlink()
     manifest = {"voices": VOICES, "entries": entries}
     (AUDIO_DIR / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(f"wrote frontend/public/audio/manifest.json ({len(entries)} entries)")
+    size_mb = sum((AUDIO_DIR.parent / e["file"]).stat().st_size for e in entries) / 1e6
+    by_key = collections.Counter(e["message_key"] for e in entries)
+    print(f"wrote frontend/public/audio/manifest.json ({len(entries)} entries, {len(stale)} stale MP3s removed)")
+    print(f"  off-script extras: proximity_alert {by_key['proximity_alert']} clips, "
+          f"debrief_over {by_key['debrief_over']} clips (cap {EXTRA_CLIP_CAP} added)")
+    print(f"  manifest: {len(entries)} clips, {size_mb:.1f} MB of MP3")
 
 
 if __name__ == "__main__":

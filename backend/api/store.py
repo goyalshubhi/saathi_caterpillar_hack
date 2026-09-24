@@ -7,7 +7,7 @@ import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 
-from backend.api.config import MEMORY_TTL_HOURS
+from backend.api.config import note_ttl_hours
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS incidents (
@@ -83,7 +83,7 @@ class Store:
     # memory notes
     def add_note(self, machine_id, message_key, slots):
         created = self.now()
-        expires = created + timedelta(hours=MEMORY_TTL_HOURS)
+        expires = created + timedelta(hours=note_ttl_hours(message_key))
         with self._conn() as c:
             cur = c.execute(
                 "INSERT INTO memory_notes (machine_id, created_at, expires_at, message_key, slots) VALUES (?, ?, ?, ?, ?)",

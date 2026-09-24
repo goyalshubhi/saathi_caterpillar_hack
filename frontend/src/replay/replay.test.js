@@ -2,10 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { detectEvents, createPlayer } from './player.js';
-import { createRules, scenarioToSaathiEvents } from './rules.js';
+import { BELT_MIN_IDLE_MIN, createRules, scenarioToSaathiEvents, spokenDistance } from './rules.js';
 import { connectReplay } from './index.js';
 import { createQueue } from '../voice/queue.js';
 import { hasTemplate, render } from '../voice/templates.js';
+import { unlockAudio } from '../voice/unlock.js';
+
+unlockAudio(); // these tests start after the Start button's click (see unlock.test.js for before it)
 
 const loadExample = (name) =>
   JSON.parse(readFileSync(fileURLToPath(new URL(`../../../contracts/examples/${name}`, import.meta.url)), 'utf8'));
@@ -53,7 +56,7 @@ describe('rules', () => {
     expect(scenarioToSaathiEvents(fixture.windows, { lang: 'hi' })).toEqual([
       { priority: 'coaching', mode: 'friendly', message_key: 'lesson_idle_engine_off', slots: {}, lang: 'hi' },
       { priority: 'safety', mode: 'alert', message_key: 'belt_before_move', slots: {}, lang: 'hi' },
-      { priority: 'safety', mode: 'alert', message_key: 'proximity_alert', slots: { distance_m: 2.5 }, lang: 'hi' },
+      { priority: 'safety', mode: 'alert', message_key: 'proximity_alert', slots: { distance_m: 2 }, lang: 'hi' },
     ]);
   });
 
@@ -68,6 +71,52 @@ describe('rules', () => {
       win({ seatbelt_status: 'Fastened' }),
     ]);
     expect(out).toEqual([]);
+  });
+
+  // A stop, unbuckling during it, then work resumes unbelted.
+  const unbeltedResume = (idleMin) => [
+    win(), win({ machine_active: false, idling_time_min: idleMin, seatbelt_status: 'Unfastened' }),
+    win({ seatbelt_status: 'Unfastened' }),
+  ];
+
+  it('a short pause then unbelted resume does not fire belt_before_move', () => {
+    expect(BELT_MIN_IDLE_MIN).toBe(2);
+    const out = scenarioToSaathiEvents(unbeltedResume(1));
+    expect(out.map((e) => e.message_key)).not.toContain('belt_before_move');
+    // still working unbelted, so the ordinary seatbelt line is spoken once (never silence)
+    expect(out.map((e) => e.message_key)).toEqual(['seatbelt_unfastened']);
+  });
+
+  it('a long stop then unbelted resume still fires belt_before_move (threshold inclusive)', () => {
+    for (const idleMin of [BELT_MIN_IDLE_MIN, 12]) {
+      const safety = scenarioToSaathiEvents(unbeltedResume(idleMin)).filter((e) => e.priority === 'safety');
+      expect(safety.map((e) => e.message_key)).toEqual(['belt_before_move']);
+    }
+  });
+
+  it('the belt threshold can be tuned per run', () => {
+    const out = scenarioToSaathiEvents(unbeltedResume(5), { beltMinIdleMin: 10 });
+    expect(out.map((e) => e.message_key)).toEqual(['seatbelt_unfastened']);
+  });
+
+  it('the demo scenario still fires belt_before_move at the same window', () => {
+    const rules = createRules({ lang: 'en' });
+    const fired = detectEvents(fixture.windows).flat()
+      .flatMap((e) => rules(e).map((s) => ({ key: s.message_key, index: e.index })))
+      .filter((x) => x.key === 'belt_before_move');
+    expect(fired).toEqual([{ key: 'belt_before_move', index: 4 }]);
+    const demo = loadExample('demo_scenario.json');
+    const r = createRules({ lang: 'en' });
+    const demoFired = detectEvents(demo.windows).flat()
+      .flatMap((e) => r(e).map((s) => ({ key: s.message_key, ts: e.timestamp })))
+      .filter((x) => x.key === 'belt_before_move');
+    expect(demoFired).toEqual([{ key: 'belt_before_move', ts: '2025-05-03 09:15:00' }]);
+  });
+
+  it('speaks proximity in whole metres, rounded down, at least 1', () => {
+    expect([2.1, 2.5, 2.99, 3, 0.4, 17.8].map(spokenDistance)).toEqual([2, 2, 2, 3, 1, 17]);
+    const out = scenarioToSaathiEvents([win({ safety_alert_triggered: 'Yes', proximity_distance_m: 2.7 })]);
+    expect(out[0].slots).toEqual({ distance_m: 2 });
   });
 
   it('safety alert without proximity uses the generic line', () => {
