@@ -48,7 +48,9 @@ describe('Morning', () => {
     renderAt('/morning');
     await screen.findByTestId('task-card-T101');
     fireEvent.click(screen.getByTestId('lang-toggle'));
-    expect(await screen.findByText('सुप्रभात')).toBeTruthy();
+    // Labels that are always on screen: the "सुप्रभात" heading is replaced by Saathi's caption
+    // while a line is showing, so it may be hidden right after the greeting.
+    expect(await screen.findByText('आज का मौसम')).toBeTruthy();
     expect(screen.getByText('खाई की खुदाई')).toBeTruthy();
   });
 });
