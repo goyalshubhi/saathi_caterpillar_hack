@@ -4,6 +4,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, within, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { resetApp, renderAt } from '../test/helpers.jsx';
+import * as api from '../api.js';
 import { store, initialState, patchDemo, UNLOCK_KEY } from '../state/store.js';
 import { say, setQuiet, configureVoice } from '../saathi/voiceRuntime.js';
 import { StartOverlay } from '../components/Overlays.jsx';
@@ -29,6 +30,37 @@ describe('Morning', () => {
     expect(screen.getByTestId('memory-card').textContent).toMatch(/No notes/);
     expect(screen.getByTestId('avatar')).toBeTruthy();
   });
+
+  // Logs incidents in the offline API, then always clears them so later tests start with no notes.
+  async function withIncidents(categories, check) {
+    await api.reset();
+    try {
+      for (const category of categories) await api.postIncident({ category });
+      await check();
+    } finally {
+      await api.reset();
+    }
+  }
+
+  it('shows and speaks the same incident once, however often it was logged', () => withIncidents(
+    ['person_in_zone', 'person_in_zone'], // the API keeps one note per logged incident
+    async () => {
+      renderAt('/morning');
+      await waitFor(() => expect(screen.getAllByTestId('memory-note')).toHaveLength(1));
+      await waitFor(() => expect(speaker.said.some((e) => e.message_key === 'greeting')).toBe(true));
+      expect(speaker.said.filter((e) => e.message_key === 'memory_incident')).toHaveLength(1);
+    },
+  ));
+
+  it('lists every different incident on the card but speaks only the newest', () => withIncidents(
+    ['near_miss', 'person_in_zone'],
+    async () => {
+      renderAt('/morning');
+      await waitFor(() => expect(screen.getAllByTestId('memory-note')).toHaveLength(2));
+      await waitFor(() => expect(speaker.said.some((e) => e.message_key === 'greeting')).toBe(true));
+      expect(speaker.said.filter((e) => e.message_key === 'memory_incident').map((e) => e.slots.category)).toEqual(['person_in_zone']);
+    },
+  ));
 
   it('on entry speaks one headline line (no playlist of the whole screen)', async () => {
     renderAt('/morning');

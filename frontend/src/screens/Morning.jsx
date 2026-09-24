@@ -7,7 +7,7 @@ import { render } from '../voice/index.js';
 import { store, useStore } from '../state/store.js';
 import { useT, taskTypeLabel, weatherLabel, factorLabel } from '../i18n.js';
 import { loadDay, loadMemory } from '../saathi/actions.js';
-import { morningEvents, orderedTasks, warningsFor } from '../saathi/briefings.js';
+import { morningEvents, orderedTasks, warningsFor, distinctNotes } from '../saathi/briefings.js';
 import { useBriefing } from '../saathi/useBriefing.js';
 import { LiveAvatar } from '../avatar/Avatar.jsx';
 import { Caption } from '../components/Overlays.jsx';
@@ -46,6 +46,7 @@ export default function Morning() {
   useBriefing(`morning@${shift}`, () => morningEvents({ tasks, weather, plan, predictions, memory, machine }), ready);
 
   const ordered = orderedTasks(tasks, plan);
+  const notes = distinctNotes(memory);
   const next = ordered.find((task) => (taskStatus[task.task_id] ?? task.status) !== 'done') ?? ordered[0];
   const date = new Date().toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -86,7 +87,10 @@ export default function Morning() {
               {p && (
                 <ul className="task-card__why" aria-label={t('whyLonger')}>
                   {p.top_factors.filter((f) => f.minutes > 0).slice(0, 2).map((f) => (
-                    <li key={f.name}>{factorLabel(f.name, lang)} +{Math.round(f.minutes)}</li>
+                    <li key={f.name} title={`${factorLabel(f.name, lang)} +${Math.round(f.minutes)}`}>
+                      <span className="task-card__why-name">{factorLabel(f.name, lang)}</span>
+                      <span className="task-card__why-min">&nbsp;+{Math.round(f.minutes)}</span>
+                    </li>
                   ))}
                 </ul>
               )}
@@ -118,10 +122,10 @@ export default function Morning() {
           </ul>
         </div>
 
-        <div className={`panel memory-card ${memory.length ? 'has-note' : ''}`} data-testid="memory-card">
+        <div className={`panel memory-card ${notes.length ? 'has-note' : ''}`} data-testid="memory-card">
           <p className="eyebrow"><MessageSquareWarning size={18} aria-hidden="true" /> {t('lastShift')}</p>
-          {memory.length ? (
-            memory.slice(-2).map((n) => <p key={n.id} className="memory-card__text">{render(n.message_key, n.slots, lang)}</p>)
+          {notes.length ? (
+            notes.map((n) => <p key={n.id} className="memory-card__text" data-testid="memory-note">{render(n.message_key, n.slots, lang)}</p>)
           ) : (
             <p className="memory-card__empty">{t('noNotes')}</p>
           )}

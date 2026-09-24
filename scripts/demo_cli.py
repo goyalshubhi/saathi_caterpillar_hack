@@ -123,6 +123,17 @@ def mins(x):
     return int(round(x))
 
 
+def distinct_notes(notes):
+    """Same as distinctNotes() in frontend/src/saathi/briefings.js: identical notes (same message_key +
+    slots) collapse into the newest one; newest first."""
+    newest = {}
+    for n in notes:
+        key = (n["message_key"], json.dumps(n["slots"], sort_keys=True))
+        if key not in newest or (n["created_at"], n["id"]) > (newest[key]["created_at"], newest[key]["id"]):
+            newest[key] = n
+    return sorted(newest.values(), key=lambda n: (n["created_at"], n["id"]), reverse=True)
+
+
 # ---------- demo ----------
 
 def morning(api, operator):
@@ -133,7 +144,7 @@ def morning(api, operator):
     by_id = {t["task_id"]: t for t in tasks}
     out(f"   operator {operator} on {MACHINE} (operator id stays on the device; never sent to the stores)")
     say("shift_hello", {"machine_id": MACHINE})
-    for note in notes:
+    for note in distinct_notes(notes)[:1]:   # only the first is spoken; the screen lists the rest
         say(note["message_key"], note["slots"], mode="alert", priority="safety")
     say("greeting", {"count": len(tasks)})
     for n, task_id in enumerate(plan["tasks_ordered"], 1):

@@ -46,9 +46,11 @@ export function DemoStepBadge() {
   const next = DEMO_STEPS[demo.step];
   const text = demo.paused ? t('demoPaused')
     : demo.between && next ? `${t('demoNext')}: ${next.short}` : DEMO_STEPS[demo.step - 1]?.short ?? '';
+  const stepOf = t('demoStepOf').replace('{n}', demo.step).replace('{total}', n);
+  // In a narrow top bar the step name truncates; "Step n of 7" always stays readable.
   return (
-    <span className="badge badge--demo" data-testid="demo-step" aria-live="polite">
-      <Clapperboard size={16} aria-hidden="true" /> {t('demoStepOf').replace('{n}', demo.step).replace('{total}', n)} · {text}
+    <span className="badge badge--demo" data-testid="demo-step" aria-live="polite" title={`${stepOf} · ${text}`}>
+      <Clapperboard size={16} aria-hidden="true" /> <span className="badge__keep">{stepOf}</span><span className="badge__rest"> · {text}</span>
     </span>
   );
 }
@@ -84,8 +86,8 @@ export default function TopBar({ inTask = false }) {
         <button type="button" className="tb-btn" onClick={toggleTheme} aria-label={`Theme: ${theme}. Switch to ${theme === 'dark' ? 'light' : 'dark'}`}
           title={t('themeTip')} data-testid="theme-toggle">
           <span className="tb-btn__seg">
-            <b className={theme === 'dark' ? 'on' : ''}><Moon size={18} aria-hidden="true" /> {t('dark')}</b>
-            <b className={theme === 'light' ? 'on' : ''}><Sun size={18} aria-hidden="true" /> {t('light')}</b>
+            <b className={theme === 'dark' ? 'on' : ''}><Moon size={18} aria-hidden="true" /> <span className="tb-btn__label">{t('dark')}</span></b>
+            <b className={theme === 'light' ? 'on' : ''}><Sun size={18} aria-hidden="true" /> <span className="tb-btn__label">{t('light')}</span></b>
           </span>
         </button>
         <button type="button" className={`tb-btn tb-btn--mute ${quiet ? 'tb-btn--muted' : ''}`} onClick={() => setQuiet(!quiet)}

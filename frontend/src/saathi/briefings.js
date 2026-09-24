@@ -19,9 +19,25 @@ export function orderedTasks(tasks, plan) {
   return order.map((id) => byId[id]).filter(Boolean);
 }
 
+// Machine Memory notes as shown and spoken. The API stores one note per logged incident, so the same
+// incident logged twice gives identical notes (same message_key + slots): they collapse into one,
+// keeping the newest. Newest first.
+const slotKey = (slots = {}) => JSON.stringify(Object.keys(slots).sort().map((k) => [k, slots[k]]));
+const newer = (a, b) => (a.created_at === b.created_at ? a.id > b.id : a.created_at > b.created_at);
+export function distinctNotes(memory = []) {
+  const byKey = new Map();
+  for (const n of memory) {
+    const key = `${n.message_key}|${slotKey(n.slots)}`;
+    if (!byKey.has(key) || newer(n, byKey.get(key))) byKey.set(key, n);
+  }
+  return [...byKey.values()].sort((a, b) => (newer(a, b) ? -1 : 1));
+}
+
 export function morningEvents({ tasks, weather, plan, predictions = {}, memory = [], machine }) {
   const out = [ev('shift_hello', { machine_id: machine })];
-  memory.forEach((n) => out.push(ev(n.message_key, n.slots, 'safety', 'alert')));
+  // Only the first (newest) note is spoken; the card lists every distinct note.
+  const [note] = distinctNotes(memory);
+  if (note) out.push(ev(note.message_key, note.slots, 'safety', 'alert'));
   out.push(ev('greeting', { count: tasks.length }));
   orderedTasks(tasks, plan).forEach((t, i) => {
     const p = predictions[t.task_id];

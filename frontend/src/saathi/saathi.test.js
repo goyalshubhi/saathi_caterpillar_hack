@@ -1,7 +1,7 @@
 // Briefing builders, lessons and the voice runtime (no DOM).
 import { describe, it, expect, beforeEach } from 'vitest';
 import { fixture } from '../fixtures.js';
-import { morningEvents, pretaskEvents, debriefEvents, debriefSplit } from './briefings.js';
+import { morningEvents, pretaskEvents, debriefEvents, debriefSplit, distinctNotes } from './briefings.js';
 import { recommendedLessons } from './lessons.js';
 import { configureVoice, say, sayInOrder, whenIdle, setQuiet, triggerLines } from './voiceRuntime.js';
 import { store } from '../state/store.js';
@@ -13,6 +13,20 @@ const weather = fixture('weatherToday');
 const pred = fixture('prediction');
 
 describe('briefings', () => {
+  it('Machine Memory: identical notes collapse to the newest; different notes stay, newest first', () => {
+    const note = (id, category, created_at) => ({ id, machine_id: 'EXC001', created_at, expires_at: '2026-09-26T08:00:00',
+      message_key: 'memory_incident', slots: { category } });
+    const zone1 = note(1, 'person_in_zone', '2026-09-24T07:10:00');
+    const zone2 = note(2, 'person_in_zone', '2026-09-24T07:20:00');   // the same incident logged again
+    const nearMiss = note(3, 'near_miss', '2026-09-24T07:15:00');
+    expect(distinctNotes([zone1, zone2, nearMiss]).map((n) => n.id)).toEqual([2, 3]);
+    expect(distinctNotes([])).toEqual([]);
+    const spoken = (memory) => morningEvents({ tasks, weather, plan, predictions: { T101: pred }, memory, machine: 'EXC001' })
+      .filter((e) => e.message_key === 'memory_incident');
+    expect(spoken([zone1, zone2])).toHaveLength(1);
+    expect(spoken([zone1, zone2, nearMiss]).map((e) => e.slots.category)).toEqual(['person_in_zone']); // only the newest
+  });
+
   it('morning briefing mirrors the headless demo order and uses only known keys', () => {
     const memory = [fixture('memoryNote')];
     const ev = morningEvents({ tasks, weather, plan, predictions: { T101: pred }, memory, machine: 'EXC001' });

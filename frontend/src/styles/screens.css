@@ -37,12 +37,13 @@
 /* ---------- Morning ---------- */
 .morning { gap: var(--s-4); padding-top: var(--s-4); padding-bottom: var(--s-4); }
 .morning__hero { display: flex; align-items: center; gap: var(--s-5); }
-.morning__greeting { flex: 1; min-width: 0; display: grid; gap: var(--s-2); align-content: center; height: 148px; }
+.morning__greeting { flex: 1; min-width: 0; display: grid; gap: var(--s-2); align-content: center; min-height: 148px; }
 .morning__greeting .caption { padding-top: var(--s-2); padding-bottom: var(--s-2); }
 .morning__greeting .caption__text { font-size: 22px; line-height: 1.25; }
 .morning__greeting .display { font-size: 60px; }
 .morning__conditions { display: grid; gap: var(--s-2); }
-.morning__tasks { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
+/* Fills spare height but never shrinks below its cards: the screen scrolls before anything overlaps. */
+.morning__tasks { flex: 1 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
 .task-card {
   position: relative;
   display: flex;
@@ -54,7 +55,6 @@
   background: var(--surface-1);
   border: 2px solid var(--line);
   cursor: pointer;
-  min-height: 0;
   transition: border-color var(--t-fast), transform var(--t-fast);
 }
 .task-card:hover { border-color: var(--line-strong); }
@@ -81,8 +81,10 @@
 .task-card__numbers { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-3); margin-top: auto; padding-top: var(--s-3); border-top: 1px solid var(--line); }
 .task-card__saathi { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 6px; }
 .task-card__saathi .task-card__label { flex-basis: 100%; }
-.task-card__why { display: flex; flex-wrap: wrap; gap: 6px; }
-.task-card__why li { padding: 3px 10px; border-radius: 999px; background: var(--surface-3); color: var(--text-muted); font-size: 16px; }
+.task-card__why { display: flex; gap: 6px; min-width: 0; }
+.task-card__why li { display: flex; min-width: 0; white-space: nowrap; padding: 3px 10px; border-radius: 999px; background: var(--surface-3); color: var(--text-muted); font-size: 16px; }
+.task-card__why-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.task-card__why-min { flex-shrink: 0; }
 .task-card__cat { display: grid; justify-items: end; }
 .task-card__cat .num { font-size: 36px; }
 .task-card__label { font-size: 15px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
@@ -334,6 +336,7 @@
   .morning__greeting .caption__text { font-size: 19px; }
   .task-card { padding: var(--s-3) var(--s-4); }
   .task-card__title { font-size: 28px; }
+  .task-card__why li { padding: 2px 8px; font-size: 15px; }
   .morning__bottom { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) auto; gap: var(--s-3); }
   .morning__actions .btn--xl { font-size: 28px; padding: 0 var(--s-5); }
   .break-chip { padding: 6px 10px; }

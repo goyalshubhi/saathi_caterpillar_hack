@@ -18,7 +18,8 @@ export function Caption({ still = false, inline = false }) {
   const motionProps = still ? {} : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 8 }, transition: { duration: 0.2 } };
   return (
     <div className={inline ? 'caption-inline' : 'caption-slot'} aria-live="polite">
-      <AnimatePresence>
+      {/* one caption at a time: the old one leaves before the next appears */}
+      <AnimatePresence mode="wait">
         {caption && (
           <motion.div key={caption.id} className={`caption caption--${tone}`} data-testid="caption" {...motionProps}>
             <p className="caption__text">{caption.text}</p>
